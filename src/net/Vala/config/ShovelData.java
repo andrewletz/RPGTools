@@ -8,6 +8,7 @@ import net.Vala.shovel.ShovelBlock;
 import net.Vala.shovel.ShovelFactory;
 import net.Vala.traits.AutoRegen;
 import net.Vala.traits.DropChances;
+import net.Vala.traits.Reinforced;
 import net.Vala.util.GeneralUtil;
 
 import org.bukkit.Bukkit;
@@ -23,10 +24,12 @@ public class ShovelData {
 	private FileConfiguration config = null;
 	private AutoRegen autoRegenTimer;
 	private ShovelBlock targetShovelBlock;
+	private Reinforced reinforced;
 	
 	public ShovelData(PlayerData playerData) {
 		this.playerData = playerData;
 		this.config = playerData.getConfig();
+		this.reinforced = new Reinforced(YAMLFile.SHOVELCONFIG);
 	}
 	
 	public void refreshConfig() {
@@ -343,6 +346,10 @@ public class ShovelData {
 			return 1;
 		}
 		return config.getInt("Shovel.Reinforced");
+	}
+	
+	public boolean getShovelShouldProtect() {
+		return reinforced.shouldProtectTool(getShovelReinforced());
 	}
 	
 	public void setShovelKnockback(int value) {

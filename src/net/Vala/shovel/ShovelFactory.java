@@ -9,6 +9,7 @@ import net.Vala.config.ShovelData;
 import net.Vala.config.YAMLFile;
 import net.Vala.general.RPGTools;
 import net.Vala.traits.DropChances;
+import net.Vala.util.EnchantGlow;
 import net.Vala.util.GeneralUtil;
 
 import org.bukkit.ChatColor;
@@ -16,6 +17,7 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
@@ -90,6 +92,10 @@ public class ShovelFactory {
 		shovelLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "REGEN: " + ChatColor.WHITE + shovelData.getShovelAutoregen());
 		shovelLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "REINFORCE: " + ChatColor.WHITE + shovelData.getShovelReinforced());
 		shovelLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "KNOCKBACK: " + ChatColor.WHITE + shovelData.getShovelKnockback());
+		if (shovelData.getShovelSilktouch()) {
+			shovelLore.add(" ");
+			shovelLore.add(ChatColor.BLUE + "Silktouch Active");
+		}
 		shovelLore.add(" ");
 		shovelLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "CURRENT DURA.:" + ChatColor.WHITE + " " + shovelData.getShovelCurrentDurability() + " uses " + ChatColor.BLUE + "("
 				+ String.format("%.0f",
@@ -100,10 +106,7 @@ public class ShovelFactory {
 						ChatColor.GRAY, (double) shovelData.getShovelExp() / (double) shovelData.getShovelExpToNextLevel())
 				+ ChatColor.DARK_PURPLE + ChatColor.BOLD + "]");
 		shovelLore.add(ChatColor.GRAY + "" + ChatColor.ITALIC + "        " + ChatColor.UNDERLINE + "(" + shovelData.getShovelExp() + " XP / " + shovelData.getShovelExpToNextLevel() + " XP)");
-		if (shovelData.getShovelSilktouch()) {
-			shovelLore.add(" ");
-			shovelLore.add(ChatColor.BLUE + "Silktouch Active");
-		}
+
 		return shovelLore;
 	}
 
@@ -137,6 +140,7 @@ public class ShovelFactory {
 	public static void updateShovelInInventory(Player player) {
 		new BukkitRunnable() {
 
+			@SuppressWarnings("deprecation")
 			@Override
 			public void run() {
 				ItemStack shovel = getShovelInInventory(player);
@@ -148,6 +152,15 @@ public class ShovelFactory {
 				shovelMeta.setLore(getShovelLore(playerData));
 				shovel.setItemMeta(shovelMeta);
 				shovel.setType(getShovelTypeForLevel(playerData.getShovelData().getShovelLevel()));
+				if(shovel.getEnchantments().containsKey(Enchantment.getById(255))) {
+					if(!playerData.getShovelData().getShovelSilktouch()) {
+						shovel.removeEnchantment(Enchantment.getById(255));
+					}
+				}
+				if(playerData.getShovelData().getShovelSilktouch()
+						&& !shovel.getEnchantments().containsKey(Enchantment.getById(255))) {
+					EnchantGlow.addGlow(shovel);
+				}
 				updateShovelDurability(playerData, shovel);
 			}
 		}.runTaskLater(RPGTools.getPlugin(), 0L);
@@ -255,7 +268,11 @@ public class ShovelFactory {
 		
 		int expAmount = (int) getFortuneExpMultiplier(dropAmount) * ore.getRandomExp();
 		shovelData.modifyShovelExp(expAmount, dropAmount);
-		shovelData.modifyShovelCurrentDurability(-1);
+		if (!shovelData.getShovelShouldProtect()) {
+			shovelData.modifyShovelCurrentDurability(-1);
+		} else {
+			player.playSound(player.getLocation(), Sound.ITEM_SHIELD_BLOCK, 0.06F, 1.7F);
+		}
 		
 		// This lib is broken rn
 //		ParticleEffect.FIREWORKS_SPARK.send(Bukkit.getOnlinePlayers(), player.getLocation(), 0.1F, 0.1F, 0.1F, 0.1F, 20);

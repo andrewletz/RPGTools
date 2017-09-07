@@ -25,7 +25,9 @@ public class AutoRegen {
 			initiateScheduler(convertLevelToRandomTick(playerData.getPickaxeData().getPickaxeAutoregen()));
 		} else if (yamlEnum == YAMLFile.SHOVELCONFIG) {
 			initiateScheduler(convertLevelToRandomTick(playerData.getShovelData().getShovelAutoregen()));
-		} // do this for axes
+		} else if (yamlEnum == YAMLFile.AXECONFIG) {
+//			initiateScheduler(convertLevelToRandomTick(playerData.getAxeData().getAxeAutoregen()));
+		}
 	}
 	
 	public int convertLevelToRandomTick(int level) {

@@ -7,10 +7,15 @@ import net.Vala.config.YAMLFile;
 public class Reinforced {
 	
 	Random rand = new Random();
+	YAMLFile YML;
+	
+	public Reinforced(YAMLFile yamlEnum) {
+		this.YML = yamlEnum;
+	}
 	
 	public boolean shouldProtectTool(int level) {
 		double newDouble = rand.nextDouble();
-		if (newDouble <= getReductionPerLevel() * level) {
+		if (newDouble <= (getReductionPerLevel() * level) / 100) {
 			return true;
 		}
 		return false;
@@ -18,11 +23,11 @@ public class Reinforced {
 	}
 	
 	public double getReductionPerLevel() {
-		return YAMLFile.CONFIG.getConfig().getDouble("Pickaxe.Reinforcement.ReductionPerLevel");
+		return YML.getConfig().getDouble("Reinforcement.ReductionPerLevel");
 	}
 	
 	public int getMaxLevel() {
-		return YAMLFile.CONFIG.getConfig().getInt("Pickaxe.Reinforcement.MaxLevel");
+		return YML.getConfig().getInt("Reinforcement.MaxLevel");
 	}
 
 }

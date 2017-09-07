@@ -25,3 +25,7 @@ Pickaxe:
     # Equation is x^0.39 - 0.9 (x^exponent - corrector) for SP requirements
     SPExponent: 0.39
     SPCorrector: 0.9
+  Autosmelt:
+    SPtoLearn: 10
+  Silktouch:
+    SPtoLearn: 10

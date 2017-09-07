@@ -8,6 +8,7 @@ import net.Vala.pickaxe.Ore;
 import net.Vala.pickaxe.PickaxeFactory;
 import net.Vala.traits.AutoRegen;
 import net.Vala.traits.DropChances;
+import net.Vala.traits.Reinforced;
 import net.Vala.util.GeneralUtil;
 
 import org.bukkit.Bukkit;
@@ -23,10 +24,12 @@ public class PickaxeData {
 	private FileConfiguration config = null;
 	private AutoRegen autoRegenTimer;
 	private Ore targetOre;
+	private Reinforced reinforced;
 	
 	public PickaxeData(PlayerData playerData) {
 		this.playerData = playerData;
 		this.config = playerData.getConfig();
+		this.reinforced = new Reinforced(YAMLFile.PICKAXECONFIG);
 	}
 	
 	public void refreshConfig() {
@@ -344,6 +347,10 @@ public class PickaxeData {
 			return 1;
 		}
 		return config.getInt("Pickaxe.Reinforced");
+	}
+	
+	public boolean getPickaxeShouldProtect() {
+		return reinforced.shouldProtectTool(getPickaxeReinforced());
 	}
 	
 	public void setPickaxeKnockback(int value) {

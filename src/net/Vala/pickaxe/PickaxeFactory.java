@@ -73,9 +73,7 @@ public class PickaxeFactory {
 		updatePickaxeDurability(playerData, pickaxe);
 		if (playerData.getPickaxeData().getPickaxeAutosmelt() || playerData.getPickaxeData().getPickaxeSilktouch()) {
 			EnchantGlow.addGlow(pickaxe);
-			System.out.println("Its glowing");
 		}
-		System.out.println(pickaxe.getEnchantments());
 		return pickaxe;
 	}
 
@@ -161,10 +159,13 @@ public class PickaxeFactory {
 				pickaxeMeta.setLore(getPickaxeLore(playerData));
 				pickaxe.setItemMeta(pickaxeMeta);
 				pickaxe.setType(getPickaxeTypeForLevel(playerData.getPickaxeData().getPickaxeLevel()));
-				if(!playerData.getPickaxeData().getPickaxeAutosmelt() && !playerData.getPickaxeData().getPickaxeSilktouch()) {
-					pickaxe.removeEnchantment(Enchantment.getById(255));
+				if(pickaxe.getEnchantments().containsKey(Enchantment.getById(255))) {
+					if(!playerData.getPickaxeData().getPickaxeAutosmelt() && !playerData.getPickaxeData().getPickaxeSilktouch()) {
+						pickaxe.removeEnchantment(Enchantment.getById(255));
+					}
 				}
-				if(playerData.getPickaxeData().getPickaxeAutosmelt() || playerData.getPickaxeData().getPickaxeSilktouch()) {
+				if(playerData.getPickaxeData().getPickaxeAutosmelt() || playerData.getPickaxeData().getPickaxeSilktouch()
+						&& !pickaxe.getEnchantments().containsKey(Enchantment.getById(255))) {
 					EnchantGlow.addGlow(pickaxe);
 				}
 				updatePickaxeDurability(playerData, pickaxe);
@@ -273,7 +274,11 @@ public class PickaxeFactory {
 		
 		int expAmount = (int) getFortuneExpMultiplier(dropAmount) * ore.getRandomExp();
 		playerData.getPickaxeData().modifyPickaxeExp(expAmount, dropAmount);
-		playerData.getPickaxeData().modifyPickaxeCurrentDurability(-1);
+		if (!playerData.getPickaxeData().getPickaxeShouldProtect()) {
+			playerData.getPickaxeData().modifyPickaxeCurrentDurability(-1);
+		} else {
+			player.playSound(player.getLocation(), Sound.ITEM_SHIELD_BLOCK, 0.06F, 1.7F);
+		}
 		
 		// This lib is broken rn
 //		ParticleEffect.FIREWORKS_SPARK.send(Bukkit.getOnlinePlayers(), player.getLocation(), 0.1F, 0.1F, 0.1F, 0.1F, 20);
