@@ -1,0 +1,54 @@
+# |_,.-'~'-.,__,.-'~'-.,__,.-'~'-.,__,.-'~'-.,__,.-'~'-.,_ ,.-'~'-.,__,.-'~'-.,__,.-'~'-.,__,.-'~'-.,__,.-'~'-.,_|
+#|												    RPG TOOLS AXE CONFIG													    |
+# |_,.-'~'-.,__,.-'~'-.,__,.-'~'-.,__,.-'~'-.,__,.-'~'-.,_ ,.-'~'-.,__,.-'~'-.,__,.-'~'-.,__,.-'~'-.,__,.-'~'-.,_|
+
+MaxLevel: 100
+
+# The multiplier for how much experience it takes to level up the pickaxe. Default = 1.
+DifficultyMultiplier: 1
+
+SPPerLevel: 1
+
+# Durability for each tier of pickaxe (1 durability = 1 use)
+WoodDurability: 100
+StoneDurability: 200
+IronDurability: 500
+GoldDurability: 1000
+DiamondDurability: 2000
+
+# At what level the pick should transform into the next tier
+UnlockLevels:
+  Stone: 5
+  Iron: 10
+  Gold: 30
+  Diamond: 50
+
+Speed:
+  MaxLevel: 30
+  # The values for how fast speed should scale. 0.125 = 2.5 times speed (reached at level 20
+  # with the default values)
+  Base: 0.075
+  Multiplier: 0.0025
+
+Fortune:
+  MaxLevel: 10
+  # Double drop chance values. Default values give 25% for double drop at level 10.
+  DoubleDropBase: 0.05
+  DoubleDropMultiplier: 0.02
+  DoubleExpMultiplier: 1.2
+  # Triple drop chance values. Default values give 16% chance for triple drop at level 10.
+  TripleDropBase: 0.01
+  TripleDropMultiplier: 0.015
+  TripleExpMultiplier: 1.4
+
+Autoregen:
+  MaxLevel: 10
+  # Must be a whole number! The starting level for how often a pick should regenerate.
+  BaseTickRate: 1700
+  # How fast levelling up lowers the tick time (higher number here = faster regeneration).
+  DecayRate: 40
+
+Reinforcement:
+  MaxLevel: 10
+  # The percent amount per level that the pick does not consume durability (50% chance at max level with defaults).
+  ReductionPerLevel: 5.0

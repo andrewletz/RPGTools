@@ -1,0 +1,19 @@
+# If a block material is not included here, it will be mined as it would be without the plugin (vanilla).
+# To include more blocks, find their respective names here: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
+# If the name isn't correct it will not work!
+DIRT:
+  minLevel: 1
+  toughness: 1.0
+  minExp: 45
+  maxExp: 60
+  minVanillaExp: 1
+  maxVanillaExp: 2
+  drop: DIRT:0
+SAND:
+  minLevel: 3
+  toughness: 3.0
+  minExp: 80
+  maxExp: 100
+  minVanillaExp: 1
+  maxVanillaExp: 2
+  drop: SAND:0

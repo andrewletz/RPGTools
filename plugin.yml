@@ -1,0 +1,12 @@
+name: RPGTools
+main: net.Vala.general.RPGTools
+version: 1.0
+commands:
+  pickaxe:
+    description: Pickaxe
+  pick:
+    description: Pickaxe
+  rpgtools:
+    description: Pickaxe
+  rt:
+    description: Pickaxe
