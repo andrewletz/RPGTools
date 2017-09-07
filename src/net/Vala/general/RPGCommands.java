@@ -83,7 +83,12 @@ public class RPGCommands implements CommandExecutor {
 	}
 	
 	private String inputToPickMethod(String input, String value, PickaxeData pickaxeData) throws IllegalArgumentException {
-		boolean onOrOff = "1".equals(Integer.parseInt(value));
+		boolean onOrOff = false;
+		if (Integer.parseInt(value) == 1) {
+			onOrOff = true;
+		} else if(Integer.parseInt(value) == 0) {
+			onOrOff = false;
+		}
 		switch (input) {
 			case "level":
 				pickaxeData.setPickaxeLevel(Integer.parseInt(value));
@@ -118,8 +123,8 @@ public class RPGCommands implements CommandExecutor {
 				pickaxeData.setPickaxeAutosmelt(onOrOff);
 				return ("'s pickaxe autosmelt set to " + onOrOff);
 			case "silktouch":
-				pickaxeData.setPickaxeAutosmelt(onOrOff);
-				return ("'s pickaxe autosmelt set to " + onOrOff);
+				pickaxeData.setPickaxeSilktouch(onOrOff);
+				return ("'s pickaxe silktouch set to " + onOrOff);
 		}
 		throw new IllegalArgumentException();
 	}
