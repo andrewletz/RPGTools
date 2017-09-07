@@ -19,7 +19,7 @@ public class PlayerData {
 	private static File playersFolder = null;
 	
 	/*
-	 * Per instance player data variables
+	 * Per instance player data variables test
 	 */
 	
 	private FileConfiguration config = null;
