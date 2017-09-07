@@ -8,6 +8,7 @@ import net.Vala.shovel.ShovelBlock;
 import net.Vala.shovel.ShovelFactory;
 import net.Vala.traits.AutoRegen;
 import net.Vala.traits.DropChances;
+import net.Vala.util.GeneralUtil;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -15,8 +16,6 @@ import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import util.GeneralUtil;
 
 public class ShovelData {
 	

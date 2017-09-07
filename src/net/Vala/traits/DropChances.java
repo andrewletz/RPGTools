@@ -18,7 +18,7 @@ public class DropChances {
 				+ (level * YAMLFile.CONFIG.getConfig().getDouble("Pickaxe.Fortune.TripleDropMultiplier")));
 	}
 
-	public float getDoubleDropChance() {0
+	public float getDoubleDropChance() {
 		return doubleDropChance;
 	}
 

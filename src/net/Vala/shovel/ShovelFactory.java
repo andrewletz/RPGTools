@@ -9,6 +9,7 @@ import net.Vala.config.ShovelData;
 import net.Vala.config.YAMLFile;
 import net.Vala.general.RPGTools;
 import net.Vala.traits.DropChances;
+import net.Vala.util.GeneralUtil;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -22,8 +23,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.MaterialData;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import util.GeneralUtil;
 
 public class ShovelFactory {
 	

@@ -9,6 +9,7 @@ import net.Vala.pickaxe.PickaxeFactory;
 import net.Vala.traits.AutoRegen;
 import net.Vala.traits.DropChances;
 import net.Vala.traits.GeneralTraitUtil;
+import net.Vala.util.ScrapUtil;
 import net.md_5.bungee.api.ChatColor;
 
 import org.bukkit.Bukkit;
@@ -17,8 +18,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import util.ScrapUtil;
 
 public class PickaxeGUI {
 	

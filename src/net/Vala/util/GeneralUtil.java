@@ -1,4 +1,4 @@
-package util;
+package net.Vala.util;
 
 import java.util.HashSet;
 

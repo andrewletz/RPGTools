@@ -6,6 +6,7 @@ import net.Vala.config.PlayerData;
 import net.Vala.config.YAMLFile;
 import net.Vala.pickaxe.PickaxeFactory;
 import net.Vala.pickaxe.Ore.Ores;
+import net.Vala.util.GeneralUtil;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -14,8 +15,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-
-import util.GeneralUtil;
 
 public class RPGCommands implements CommandExecutor {
 	

@@ -1,6 +1,7 @@
 package net.Vala.pickaxe;
 
 import net.Vala.GUI.PickaxeGUI;
+import net.Vala.util.GeneralUtil;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -8,8 +9,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import util.GeneralUtil;
 
 public class PickaxeCommands implements CommandExecutor{
 	
