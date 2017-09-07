@@ -80,27 +80,31 @@ public class ShovelFactory {
 	 */
 	private static List<String> getShovelLore(PlayerData playerData) {
 		ShovelData shovelData = playerData.getShovelData();
-		List<String> ShovelLore = new ArrayList<>();
-		ShovelLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "LEVEL: " + ChatColor.WHITE + shovelData.getShovelLevel() + ChatColor.AQUA + " [" + shovelData
+		List<String> shovelLore = new ArrayList<>();
+		shovelLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "LEVEL: " + ChatColor.WHITE + shovelData.getShovelLevel() + ChatColor.AQUA + " [" + shovelData
 				.getShovelSP() + " SP available]");
-		ShovelLore.add("");
-		ShovelLore.add(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + "STATS");
-		ShovelLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "SPEED: " + ChatColor.WHITE + shovelData.getShovelSpeed());
-		ShovelLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "FORTUNE: " + ChatColor.WHITE + shovelData.getShovelFortune());
-		ShovelLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "REGEN: " + ChatColor.WHITE + shovelData.getShovelAutoregen());
-		ShovelLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "REINFORCE: " + ChatColor.WHITE + shovelData.getShovelReinforced());
-		ShovelLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "KNOCKBACK: " + ChatColor.WHITE + shovelData.getShovelKnockback());
-		ShovelLore.add(" ");
-		ShovelLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "CURRENT DURA.:" + ChatColor.WHITE + " " + shovelData.getShovelCurrentDurability() + " uses " + ChatColor.BLUE + "("
+		shovelLore.add("");
+		shovelLore.add(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + "STATS");
+		shovelLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "SPEED: " + ChatColor.WHITE + shovelData.getShovelSpeed());
+		shovelLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "FORTUNE: " + ChatColor.WHITE + shovelData.getShovelFortune());
+		shovelLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "REGEN: " + ChatColor.WHITE + shovelData.getShovelAutoregen());
+		shovelLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "REINFORCE: " + ChatColor.WHITE + shovelData.getShovelReinforced());
+		shovelLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "KNOCKBACK: " + ChatColor.WHITE + shovelData.getShovelKnockback());
+		shovelLore.add(" ");
+		shovelLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "CURRENT DURA.:" + ChatColor.WHITE + " " + shovelData.getShovelCurrentDurability() + " uses " + ChatColor.BLUE + "("
 				+ String.format("%.0f",
 						100D * ((double) shovelData.getShovelCurrentDurability() / (double) shovelData.getShovelMaxDurability()))
 				+ "%)");
-		ShovelLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "EXP: " + ChatColor.DARK_PURPLE + ChatColor.BOLD + "["
+		shovelLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "EXP: " + ChatColor.DARK_PURPLE + ChatColor.BOLD + "["
 				+ GeneralUtil.formatPercentageBar("||||||||||||||||||||||||||||||||||||||||||||||||||", ChatColor.DARK_PURPLE,
 						ChatColor.GRAY, (double) shovelData.getShovelExp() / (double) shovelData.getShovelExpToNextLevel())
 				+ ChatColor.DARK_PURPLE + ChatColor.BOLD + "]");
-		ShovelLore.add(ChatColor.GRAY + "" + ChatColor.ITALIC + "        " + ChatColor.UNDERLINE + "(" + shovelData.getShovelExp() + " XP / " + shovelData.getShovelExpToNextLevel() + " XP)");
-		return ShovelLore;
+		shovelLore.add(ChatColor.GRAY + "" + ChatColor.ITALIC + "        " + ChatColor.UNDERLINE + "(" + shovelData.getShovelExp() + " XP / " + shovelData.getShovelExpToNextLevel() + " XP)");
+		if (shovelData.getShovelSilktouch()) {
+			shovelLore.add(" ");
+			shovelLore.add(ChatColor.BLUE + "Silktouch Active");
+		}
+		return shovelLore;
 	}
 
 	/**

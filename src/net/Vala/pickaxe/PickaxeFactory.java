@@ -9,6 +9,7 @@ import net.Vala.config.PlayerData;
 import net.Vala.config.YAMLFile;
 import net.Vala.general.RPGTools;
 import net.Vala.traits.DropChances;
+import net.Vala.util.EnchantGlow;
 import net.Vala.util.GeneralUtil;
 
 import org.bukkit.ChatColor;
@@ -16,6 +17,7 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
@@ -60,7 +62,6 @@ public class PickaxeFactory {
 	 * @return the generated pickaxe
 	 */
 	public static ItemStack getNewPickaxe(Player player) {
-		
 		PlayerData playerData = PlayerData.getData(player);
 		int pickaxeLevel = playerData.getPickaxeData().getPickaxeLevel();
 		ItemStack pickaxe = new ItemStack(getPickaxeTypeForLevel(pickaxeLevel), 1, (short) 0);
@@ -70,6 +71,11 @@ public class PickaxeFactory {
 		pickaxeMeta.setLore(getPickaxeLore(playerData));
 		pickaxe.setItemMeta(pickaxeMeta);
 		updatePickaxeDurability(playerData, pickaxe);
+		if (playerData.getPickaxeData().getPickaxeAutosmelt() || playerData.getPickaxeData().getPickaxeSilktouch()) {
+			EnchantGlow.addGlow(pickaxe);
+			System.out.println("Its glowing");
+		}
+		System.out.println(pickaxe.getEnchantments());
 		return pickaxe;
 	}
 
@@ -90,6 +96,16 @@ public class PickaxeFactory {
 		pickaxeLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "REGEN: " + ChatColor.WHITE + pickaxeData.getPickaxeAutoregen());
 		pickaxeLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "REINFORCE: " + ChatColor.WHITE + pickaxeData.getPickaxeReinforced());
 		pickaxeLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "KNOCKBACK: " + ChatColor.WHITE + pickaxeData.getPickaxeKnockback());
+		if (pickaxeData.getPickaxeAutosmelt()) {
+			pickaxeLore.add(" ");
+			pickaxeLore.add(ChatColor.BLUE + "" + ChatColor.BOLD + "[ " + ChatColor.BLUE + "Autosmelt Active" + ChatColor.BOLD + " ]");
+		}
+		if (pickaxeData.getPickaxeSilktouch()) {
+			if (!pickaxeData.getPickaxeAutosmelt()) {
+				pickaxeLore.add(" ");
+			}
+			pickaxeLore.add(ChatColor.BLUE + "" + ChatColor.BOLD + "[ " + ChatColor.BLUE + "Silktouch Active" + ChatColor.BOLD + " ]");
+		}
 		pickaxeLore.add(" ");
 		pickaxeLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "CURRENT DURA.:" + ChatColor.WHITE + " " + pickaxeData.getPickaxeCurrentDurability() + " uses " + ChatColor.BLUE + "("
 				+ String.format("%.0f",
@@ -133,6 +149,7 @@ public class PickaxeFactory {
 	public static void updatePickaxeInInventory(Player player) {
 		new BukkitRunnable() {
 
+			@SuppressWarnings("deprecation")
 			@Override
 			public void run() {
 				ItemStack pickaxe = getPickaxeInInventory(player);
@@ -144,6 +161,12 @@ public class PickaxeFactory {
 				pickaxeMeta.setLore(getPickaxeLore(playerData));
 				pickaxe.setItemMeta(pickaxeMeta);
 				pickaxe.setType(getPickaxeTypeForLevel(playerData.getPickaxeData().getPickaxeLevel()));
+				if(!playerData.getPickaxeData().getPickaxeAutosmelt() && !playerData.getPickaxeData().getPickaxeSilktouch()) {
+					pickaxe.removeEnchantment(Enchantment.getById(255));
+				}
+				if(playerData.getPickaxeData().getPickaxeAutosmelt() || playerData.getPickaxeData().getPickaxeSilktouch()) {
+					EnchantGlow.addGlow(pickaxe);
+				}
 				updatePickaxeDurability(playerData, pickaxe);
 			}
 		}.runTaskLater(RPGTools.getPlugin(), 0L);
