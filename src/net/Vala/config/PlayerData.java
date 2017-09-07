@@ -35,8 +35,8 @@ public class PlayerData {
 	private PlayerData(Player player) {
 		this.player = player;
 		this.reloadConfig();
-		this.shovelData = new ShovelData(this);
 		this.pickaxeData = new PickaxeData(this);
+		this.shovelData = new ShovelData(this);
 	}
 	
 	/*
@@ -110,13 +110,13 @@ public class PlayerData {
 	}
 	
 	public void refreshConfig() {
-		shovelData.refreshConfig();
 		pickaxeData.refreshConfig();
+		shovelData.refreshConfig();
 	}
 	
 	public void refreshAutoRegenTimers() {
-		shovelData.refreshAutoRegenTimer();
 		pickaxeData.refreshAutoRegenTimer();
+		shovelData.refreshAutoRegenTimer();
 	}
 	
 	public Player getPlayer() {

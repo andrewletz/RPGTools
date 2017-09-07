@@ -4,19 +4,19 @@
 
 MaxLevel: 100
 
-# The multiplier for how much experience it takes to level up the pickaxe. Default = 1.
+# The multiplier for how much experience it takes to level up the axe. Default = 1.
 DifficultyMultiplier: 1
 
 SPPerLevel: 1
 
-# Durability for each tier of pickaxe (1 durability = 1 use)
+# Durability for each tier of axe durability = 1 use)
 WoodDurability: 100
 StoneDurability: 200
 IronDurability: 500
 GoldDurability: 1000
 DiamondDurability: 2000
 
-# At what level the pick should transform into the next tier
+# At what level the axe should transform into the next tier
 UnlockLevels:
   Stone: 5
   Iron: 10
@@ -43,12 +43,12 @@ Fortune:
 
 Autoregen:
   MaxLevel: 10
-  # Must be a whole number! The starting level for how often a pick should regenerate.
+  # Must be a whole number! The starting level for how often a axe should regenerate.
   BaseTickRate: 1700
   # How fast levelling up lowers the tick time (higher number here = faster regeneration).
   DecayRate: 40
 
 Reinforcement:
   MaxLevel: 10
-  # The percent amount per level that the pick does not consume durability (50% chance at max level with defaults).
+  # The percent amount per level that the axe does not consume durability (50% chance at max level with defaults).
   ReductionPerLevel: 5.0

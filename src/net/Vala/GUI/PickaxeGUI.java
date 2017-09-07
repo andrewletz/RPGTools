@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.Vala.config.PickaxeData;
 import net.Vala.config.PlayerData;
+import net.Vala.config.YAMLFile;
 import net.Vala.pickaxe.PickaxeFactory;
 import net.Vala.traits.AutoRegen;
 import net.Vala.traits.DropChances;
@@ -51,8 +52,8 @@ public class PickaxeGUI {
 		speedIconMeta.setLore(speedIconLore);
 		speedIcon.setItemMeta(speedIconMeta);
 		
-		DropChances currentLevel = new DropChances(pickaxeData.getPickaxeLevel());
-		DropChances nextLevel = new DropChances(pickaxeData.getPickaxeLevel() + 1);
+		DropChances currentLevel = new DropChances(pickaxeData.getPickaxeLevel(), YAMLFile.PICKAXECONFIG);
+		DropChances nextLevel = new DropChances(pickaxeData.getPickaxeLevel() + 1, YAMLFile.PICKAXECONFIG);
 		ItemStack fortuneIcon = new ItemStack(Material.EMERALD);
 		ItemMeta fortuneIconMeta = fortuneIcon.getItemMeta();
 		List<String> fortuneIconLore = new ArrayList<String>(2);

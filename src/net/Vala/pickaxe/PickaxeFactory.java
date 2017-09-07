@@ -315,7 +315,7 @@ public class PickaxeFactory {
 	 * @return the drop chances
 	 */
 	public static DropChances convertPickaxeLuckLevelToPickaxeDropChances(int level) {
-		return new DropChances(level);
+		return new DropChances(level, YAMLFile.PICKAXECONFIG);
 	}
 
 	/**

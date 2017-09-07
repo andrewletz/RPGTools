@@ -316,7 +316,7 @@ public class ShovelFactory {
 	 * @return the drop chances
 	 */
 	public static DropChances convertShovelLuckLevelToShovelDropChances(int level) {
-		return new DropChances(level);
+		return new DropChances(level, YAMLFile.SHOVELCONFIG);
 	}
 
 	/**
