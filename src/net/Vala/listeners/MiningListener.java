@@ -51,7 +51,7 @@ public class MiningListener implements Listener {
         if (targetBlock == null) {
         	return;
         }
-		Ore ore = Ores.getOreFromMaterial(targetBlock.getType());
+		Ore ore = Ores.getOreFromMaterial(targetBlock.getType(), targetBlock.getData());
 		if (ore == null) {
 			// Not mining ore
 			return;

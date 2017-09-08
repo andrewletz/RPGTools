@@ -2,6 +2,7 @@
 # To include more blocks, find their respective names here: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
 # If the name isn't correct it will not work!
 COAL_ORE:
+  blockData: 0
   minLevel: 1
   toughness: 1.0
   minExp: 45
@@ -9,7 +10,10 @@ COAL_ORE:
   minVanillaExp: 1
   maxVanillaExp: 2
   drop: COAL:0
+  silkDrop: COAL_ORE:0
+  autosmeltDrop: COAL:0
 IRON_ORE:
+  blockData: 0
   minLevel: 3
   toughness: 3.0
   minExp: 80
@@ -17,7 +21,10 @@ IRON_ORE:
   minVanillaExp: 1
   maxVanillaExp: 2
   drop: IRON_ORE:0
+  silkDrop: IRON_ORE:0
+  autosmeltDrop: IRON_INGOT:0
 GOLD_ORE:
+  blockData: 0
   minLevel: 5
   toughness: 5.0
   minExp: 150
@@ -25,3 +32,5 @@ GOLD_ORE:
   minVanillaExp: 1
   maxVanillaExp: 2
   drop: GOLD_ORE:0
+  silkDrop: GOLD_ORE:0
+  autosmeltDrop: GOLD_INGOT:0

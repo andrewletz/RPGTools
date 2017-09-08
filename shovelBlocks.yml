@@ -2,6 +2,7 @@
 # To include more blocks, find their respective names here: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
 # If the name isn't correct it will not work!
 DIRT:
+  blockData: 0
   minLevel: 1
   toughness: 1.0
   minExp: 45
@@ -9,7 +10,9 @@ DIRT:
   minVanillaExp: 1
   maxVanillaExp: 2
   drop: DIRT:0
+  silkDrop: DIRT:0
 SAND:
+  blockData: 0
   minLevel: 3
   toughness: 3.0
   minExp: 80
@@ -17,3 +20,4 @@ SAND:
   minVanillaExp: 1
   maxVanillaExp: 2
   drop: SAND:0
+  silkDrop: SAND:0

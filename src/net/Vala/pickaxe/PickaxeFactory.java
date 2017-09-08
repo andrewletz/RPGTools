@@ -258,24 +258,32 @@ public class PickaxeFactory {
 			return;
 		}
 		PlayerData playerData = PlayerData.getData(player);
+		PickaxeData pickaxeData = playerData.getPickaxeData();
 		if (!ore.isMineable(playerData)) {
 			return;
 		}
-		if (playerData.getPickaxeData().getPickaxeCurrentDurability() <= 0) {
+		if (pickaxeData.getPickaxeCurrentDurability() <= 0) {
 			player.sendMessage(ChatColor.RED + "Your pickaxe is too worn out to break anything.");
 			return;
 		}
 		// All checks complete, Pickaxe is safe.
 		
 		// Drops
-		ItemStack drop = ore.getDrop();
+		ItemStack drop;
+		if(pickaxeData.getPickaxeAutosmelt()) {
+			drop = ore.getAutosmeltDrop();
+		} else if(pickaxeData.getPickaxeSilktouch()) {
+			drop = ore.getSilkDrop();
+		} else {
+			drop = ore.getDrop();
+		}
 		int dropAmount = rollDropAmount(playerData);
 		drop.setAmount(dropAmount);
 		
 		int expAmount = (int) getFortuneExpMultiplier(dropAmount) * ore.getRandomExp();
-		playerData.getPickaxeData().modifyPickaxeExp(expAmount, dropAmount);
-		if (!playerData.getPickaxeData().getPickaxeShouldProtect()) {
-			playerData.getPickaxeData().modifyPickaxeCurrentDurability(-1);
+		pickaxeData.modifyPickaxeExp(expAmount, dropAmount);
+		if (!pickaxeData.getPickaxeShouldProtect()) {
+			pickaxeData.modifyPickaxeCurrentDurability(-1);
 		} else {
 			player.playSound(player.getLocation(), Sound.ITEM_SHIELD_BLOCK, 0.06F, 1.7F);
 		}
@@ -296,11 +304,17 @@ public class PickaxeFactory {
 			player.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, x + 0.5, y + 0.5, z + 0.5, 35, 0F, 0F, 0F, 0.05);
 		}
 		
+		if (pickaxeData.getPickaxeAutosmelt()) {
+			player.getWorld().spawnParticle(Particle.FLAME,  x + 0.5, y + 0.5, z + 0.5, 8, 0F, 0F, 0F, 0.024);
+		}
+		
 		player.getWorld().spawnParticle(Particle.BLOCK_CRACK, x + 0.5, y + 0.5, z + 0.5, 35, 0F, 0F, 0F, 1, new MaterialData(block.getType()));
 		player.playSound(block.getLocation(), Sound.BLOCK_STONE_BREAK, 1F, 0.8F);
 		block.setType(Material.AIR);
 		block.getLocation().getWorld().dropItemNaturally(block.getLocation(), drop);
-		((ExperienceOrb)block.getWorld().spawn(block.getLocation(), ExperienceOrb.class)).setExperience(ore.getRandomVanillaExp());
+		if(!pickaxeData.getPickaxeSilktouch()) {
+			((ExperienceOrb)block.getWorld().spawn(block.getLocation(), ExperienceOrb.class)).setExperience(ore.getRandomVanillaExp());
+		}
 		
 //		playerData.resetBlockDamage();
 //		playerData.setTargetBlock(null, null);

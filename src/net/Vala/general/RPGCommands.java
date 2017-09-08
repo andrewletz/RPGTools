@@ -120,9 +120,15 @@ public class RPGCommands implements CommandExecutor {
 				pickaxeData.setPickaxeKnockback(Integer.parseInt(value));
 				return ("'s pickaxe knockback set to " + value);
 			case "autosmelt":
+				if (pickaxeData.getPickaxeSilktouch()) {
+					return ("'s pick " + ChatColor.RED + "has not been modified. " + ChatColor.GREEN + "Cannot modify autosmelt while silktouch is active.");
+				}
 				pickaxeData.setPickaxeAutosmelt(onOrOff);
 				return ("'s pickaxe autosmelt set to " + onOrOff);
 			case "silktouch":
+				if (pickaxeData.getPickaxeAutosmelt()) {
+					return ("'s pick " + ChatColor.RED + "has not been modified. " + ChatColor.GREEN + "Cannot modify silktouch while autosmelt is active.");
+				}
 				pickaxeData.setPickaxeSilktouch(onOrOff);
 				return ("'s pickaxe silktouch set to " + onOrOff);
 		}

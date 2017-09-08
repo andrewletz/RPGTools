@@ -13,27 +13,28 @@ public abstract class Mineable {
 	private static final Random RANDOM = new Random();
 
 	protected Material material;
+	private byte blockData;
 	private int minLevel;
 	private double toughness;
 	private int minExp;
 	private int maxExp;
 	private ItemStack drop;
+	private ItemStack silkDrop;
 	private int minVanillaExp;
 	private int maxVanillaExp;
 
-	@SuppressWarnings("deprecation")
-	protected Mineable(Material material, ItemStack drop, int dropData, int minLevel, double toughness, int minExp, int maxExp, int minVanillaExp, int maxVanillaExp) {
+	protected Mineable(Material material, byte blockData, Material drop, byte dropData, Material silkDrop, byte silkDropData, int minLevel, double toughness, 
+			int minExp, int maxExp, int minVanillaExp, int maxVanillaExp) {
 		this.material = material;
-		this.drop = drop;
+		this.blockData = blockData;
+		this.drop = new ItemStack(drop, 1, dropData);
+		this.silkDrop = new ItemStack(silkDrop, 1, silkDropData);
 		this.minLevel = minLevel;
 		this.toughness = toughness;
 		this.minExp = minExp;
 		this.maxExp = maxExp;
 		this.minVanillaExp = minVanillaExp;
 		this.maxVanillaExp = maxVanillaExp;
-		MaterialData mData = drop.getData();
-		mData.setData((byte) dropData);
-		drop.setData(mData);
 	}
 
 	public Material getMaterial() {
@@ -56,12 +57,20 @@ public abstract class Mineable {
 		return drop;
 	}
 	
+	public ItemStack getSilkDrop() {
+		return silkDrop;
+	}
+	
 	public int getRandomVanillaExp() {
 		if (minVanillaExp < 1) {
 			return 0;
 		} else {
 			return (int) ((RANDOM.nextInt((maxVanillaExp - minVanillaExp) + 1) + minVanillaExp));
 		}
+	}
+	
+	public byte getBlockData() {
+		return blockData;
 	}
 
 	public abstract boolean isMineable(PlayerData playerData);
