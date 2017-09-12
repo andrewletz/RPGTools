@@ -262,10 +262,6 @@ public class PickaxeFactory {
 		if (!ore.isMineable(playerData)) {
 			return;
 		}
-		if (pickaxeData.getPickaxeCurrentDurability() <= 0) {
-			player.sendMessage(ChatColor.RED + "Your pickaxe is too worn out to break anything.");
-			return;
-		}
 		// All checks complete, Pickaxe is safe.
 		
 		// Drops
@@ -298,14 +294,14 @@ public class PickaxeFactory {
 		
 		if (dropAmount == 3) {
 			// Triple effect
-			player.getWorld().spawnParticle(Particle.DRAGON_BREATH,  x + 0.5, y + 0.5, z + 0.5, 35, 0F, 0F, 0F, 0.025);
+			player.getWorld().spawnParticle(Particle.DRAGON_BREATH,  x + 0.5, y + 0.5, z + 0.5, 8, 0F, 0F, 0F, 0.01);
 		} else if (dropAmount == 2) {
 			// Double effect
-			player.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, x + 0.5, y + 0.5, z + 0.5, 35, 0F, 0F, 0F, 0.05);
+			player.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, x + 0.5, y + 0.5, z + 0.5, 8, 0F, 0F, 0F, 0.01);
 		}
 		
 		if (pickaxeData.getPickaxeAutosmelt()) {
-			player.getWorld().spawnParticle(Particle.FLAME,  x + 0.5, y + 0.5, z + 0.5, 8, 0F, 0F, 0F, 0.024);
+			player.getWorld().spawnParticle(Particle.FLAME,  x + 0.5, y + 0.5, z + 0.5, 4, 0F, 0F, 0F, 0.009);
 		}
 		
 		player.getWorld().spawnParticle(Particle.BLOCK_CRACK, x + 0.5, y + 0.5, z + 0.5, 35, 0F, 0F, 0F, 1, new MaterialData(block.getType()));
@@ -328,8 +324,9 @@ public class PickaxeFactory {
 	 */
 	
 	public static double convertPickSpeedToDamagePerTick(int level) {
-		return YAMLFile.PICKAXECONFIG.getConfig().getDouble("Speed.Base") 
+		double newDouble = YAMLFile.PICKAXECONFIG.getConfig().getDouble("Speed.Base") 
 				+ (level * YAMLFile.PICKAXECONFIG.getConfig().getDouble("Speed.Multiplier"));
+		return (double)Math.round(newDouble * 100000d) / 100000d;
 	}
 
 	/**
@@ -381,20 +378,6 @@ public class PickaxeFactory {
 	
 	public static int getMaxLevel() {
 		return MAX_LEVEL;
-	}
-	
-	public static double getPickaxeDifficultyMultiplier(int level) {
-		if (level >= YAMLFile.PICKAXECONFIG.getConfig().getInt("UnlockLevels.Diamond")) {
-			return 385 * DIFFICULTY_MULTIPLIER;
-		} else if (level >= YAMLFile.PICKAXECONFIG.getConfig().getInt("UnlockLevels.Gold")) {
-			return 213 * DIFFICULTY_MULTIPLIER;
-		} else if (level >= YAMLFile.PICKAXECONFIG.getConfig().getInt("UnlockLevels.Iron")) {
-			return 99 * DIFFICULTY_MULTIPLIER;
-		} else if (level >= YAMLFile.PICKAXECONFIG.getConfig().getInt("UnlockLevels.Stone")) {
-			return 30 * DIFFICULTY_MULTIPLIER;
-		}
-		
-		return 6.5 * DIFFICULTY_MULTIPLIER;
 	}
 
 }

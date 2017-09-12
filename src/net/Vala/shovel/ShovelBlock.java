@@ -42,7 +42,7 @@ public class ShovelBlock extends Mineable{
 					String silkDrop = silkDropSplit[0];
 					int silkDropData = Integer.parseInt(silkDropSplit[1]);
 					
-					ShovelBlock newShovelBlock = new ShovelBlock(Material.getMaterial(key),
+					ShovelBlock newShovelBlock = new ShovelBlock(Material.getMaterial(YAMLFile.SHOVELBLOCKS.getConfig().getString(key + ".bukkitMaterial")),
 							(byte) YAMLFile.SHOVELBLOCKS.getConfig().getInt(key + ".blockData"),
 							Material.getMaterial(drop),
 							(byte) dropData,

@@ -188,7 +188,7 @@ public class PickaxeData {
 	
 	public int getPickaxeExpToNextLevel() {
 		int level = getPickaxeLevel();
-		return (int) (PickaxeFactory.getPickaxeDifficultyMultiplier(level) * Math.pow(level, 1.4) + 2 * level + 50);
+		return (int) (PickaxeFactory.DIFFICULTY_MULTIPLIER * Math.pow(level, 1.8) + (4 * level) + 40);
 	}
 
 	public void levelUpPickaxe() {
@@ -199,7 +199,7 @@ public class PickaxeData {
 		int newExp = getPickaxeExp() - getPickaxeExpToNextLevel();
 		modifyPickaxeLevel(1);
 		modifyPickaxeSP(YAMLFile.PICKAXECONFIG.getConfig().getInt("SPPerLevel"));
-		playerData.getPlayer().playSound(playerData.getPlayer().getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 10f, 10f);
+		GeneralUtil.playLevelSound(playerData.getPlayer());
 		playerData.getPlayer().sendMessage(" ");
 		playerData.getPlayer().sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Pickaxe LEVEL " + getPickaxeLevel());
 		playerData.getPlayer().sendMessage(ChatColor.AQUA + "" + ChatColor.BOLD + "Pickaxe Stat Points" + ChatColor.AQUA + " + 1");
@@ -406,6 +406,42 @@ public class PickaxeData {
 			return false;
 		}
 		return config.getBoolean("Pickaxe.Special.Silktouch");
+	}
+	
+	public static int getMaxSpeed() {
+		return YAMLFile.PICKAXECONFIG.getConfig().getInt("Speed.MaxLevel");
+	}
+	
+	public boolean isMaxSpeed() {
+		return getPickaxeSpeed() == getMaxSpeed();
+	}
+	
+	public static int getMaxFortune() {
+		return YAMLFile.PICKAXECONFIG.getConfig().getInt("Fortune.MaxLevel");
+	}
+	
+	public boolean isMaxFortune() {
+		return getPickaxeFortune() == getMaxFortune();
+	}
+	
+	public static int getMaxAutoregen() {
+		return YAMLFile.PICKAXECONFIG.getConfig().getInt("Autoregen.MaxLevel");
+	}
+	
+	public boolean isMaxAutoregen() {
+		return getPickaxeAutoregen() == getMaxAutoregen();
+	}
+	
+	public static int getMaxReinforced() {
+		return YAMLFile.PICKAXECONFIG.getConfig().getInt("Reinforcement.MaxLevel");
+	}
+	
+	public boolean isMaxReinforced() {
+		return getPickaxeReinforced() == getMaxReinforced();
+	}
+	
+	public boolean isBroken() {
+		return getPickaxeCurrentDurability() <= 0;
 	}
 
 }

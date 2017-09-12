@@ -2,6 +2,7 @@
 # To include more blocks, find their respective names here: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
 # If the name isn't correct it will not work!
 OAK_LOG:
+  bukkitMaterial: OAK_LOG
   blockData: 0
   minLevel: 1
   toughness: 1.0
@@ -12,6 +13,7 @@ OAK_LOG:
   drop: OAK_LOG:0
   autosmeltDrop: COAL:0
 BIRCH_LOG:
+  bukkitMaterial: BIRCH_LOG
   blockData: 0
   minLevel: 3
   toughness: 3.0

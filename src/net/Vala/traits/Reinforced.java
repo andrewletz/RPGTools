@@ -22,6 +22,10 @@ public class Reinforced {
 		
 	}
 	
+	public double getTotalPercent(int level) {
+		return getReductionPerLevel() * level;
+	}
+	
 	public double getReductionPerLevel() {
 		return YML.getConfig().getDouble("Reinforcement.ReductionPerLevel");
 	}

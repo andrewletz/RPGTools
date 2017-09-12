@@ -1,36 +1,87 @@
 # If a block material is not included here, it will be mined as it would be without the plugin (vanilla).
 # To include more blocks, find their respective names here: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
 # If the name isn't correct it will not work!
-COAL_ORE:
+STONE:
+  bukkitMaterial: STONE
   blockData: 0
   minLevel: 1
-  toughness: 1.0
-  minExp: 45
-  maxExp: 60
+  toughness: 0.4
+  minExp: 1
+  maxExp: 1
+  minVanillaExp: 0
+  maxVanillaExp: 0
+  drop: COBBLESTONE:0
+  silkDrop: STONE:0
+  autosmeltDrop: STONE:0
+GRANITE:
+  bukkitMaterial: STONE
+  blockData: 1
+  minLevel: 1
+  toughness: 0.4
+  minExp: 2
+  maxExp: 3
+  minVanillaExp: 0
+  maxVanillaExp: 0
+  drop: STONE:1
+  silkDrop: STONE:1
+  autosmeltDrop: STONE:2
+DIORITE:
+  bukkitMaterial: STONE
+  blockData: 3
+  minLevel: 1
+  toughness: 0.4
+  minExp: 2
+  maxExp: 3
+  minVanillaExp: 0
+  maxVanillaExp: 0
+  drop: STONE:3
+  silkDrop: STONE:3
+  autosmeltDrop: STONE:4
+ANDESITE:
+  bukkitMaterial: STONE
+  blockData: 5
+  minLevel: 1
+  toughness: 0.4
+  minExp: 2
+  maxExp: 3
+  minVanillaExp: 0
+  maxVanillaExp: 0
+  drop: STONE:5
+  silkDrop: STONE:5
+  autosmeltDrop: STONE:6
+COAL_ORE:
+  bukkitMaterial: COAL_ORE
+  blockData: 0
+  minLevel: 1
+  toughness: 0.6
+  minExp: 3
+  maxExp: 5
   minVanillaExp: 1
   maxVanillaExp: 2
   drop: COAL:0
   silkDrop: COAL_ORE:0
   autosmeltDrop: COAL:0
 IRON_ORE:
+  bukkitMaterial: IRON_ORE
   blockData: 0
-  minLevel: 3
-  toughness: 3.0
-  minExp: 80
-  maxExp: 100
-  minVanillaExp: 1
-  maxVanillaExp: 2
+  minLevel: 5
+  toughness: 0.8
+  minExp: 4
+  maxExp: 6
+  minVanillaExp: 2
+  maxVanillaExp: 3
   drop: IRON_ORE:0
   silkDrop: IRON_ORE:0
   autosmeltDrop: IRON_INGOT:0
 GOLD_ORE:
+  bukkitMaterial: GOLD_ORE
   blockData: 0
-  minLevel: 5
-  toughness: 5.0
-  minExp: 150
-  maxExp: 300
-  minVanillaExp: 1
-  maxVanillaExp: 2
+  minLevel: 15
+  toughness: 0.8
+  minExp: 8
+  maxExp: 22
+  minVanillaExp: 2
+  maxVanillaExp: 8
   drop: GOLD_ORE:0
   silkDrop: GOLD_ORE:0
   autosmeltDrop: GOLD_INGOT:0

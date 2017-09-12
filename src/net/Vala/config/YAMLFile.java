@@ -18,11 +18,13 @@ public enum YAMLFile {
 	CONFIG("config"),
 	PICKAXEBLOCKS("pickaxeBlocks"),
 	PICKAXECONFIG("pickaxeConfig"),
+	PICKAXESPCOSTS("pickaxeSpCosts"),
 	SHOVELBLOCKS("shovelBlocks"),
 	SHOVELCONFIG("shovelConfig"),
+	SHOVELSPCOSTS("shovelSpCosts"),
 	AXEBLOCKS("axeBlocks"),
 	AXECONFIG("axeConfig"),
-	ADVANCED("advanced");
+	AXESPCOSTS("axeSpCosts");
 	;
 	// @formatter:on
 

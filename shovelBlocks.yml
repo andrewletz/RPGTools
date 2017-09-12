@@ -2,6 +2,7 @@
 # To include more blocks, find their respective names here: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
 # If the name isn't correct it will not work!
 DIRT:
+  bukkitMaterial: DIRT
   blockData: 0
   minLevel: 1
   toughness: 1.0
@@ -12,6 +13,7 @@ DIRT:
   drop: DIRT:0
   silkDrop: DIRT:0
 SAND:
+  bukkitMaterial: SAND
   blockData: 0
   minLevel: 3
   toughness: 3.0

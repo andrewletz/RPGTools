@@ -7,7 +7,7 @@ MaxLevel: 100
 # The multiplier for how much experience it takes to level up the axe. Default = 1.
 DifficultyMultiplier: 1
 
-SPPerLevel: 1
+SPPerLevel: 2
 
 # Durability for each tier of axe durability = 1 use)
 WoodDurability: 100

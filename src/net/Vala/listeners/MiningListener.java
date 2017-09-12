@@ -32,6 +32,11 @@ public class MiningListener implements Listener {
 			return;
 		}
 		Player player = event.getPlayer();
+		PlayerData playerData = PlayerData.getData(player);
+		player.addPotionEffect(MINING_POTION_EFFECT, true); // Stops the cracking
+		if (playerData.getPickaxeData().isBroken()) {
+			return;
+		}
 		
 		Block targetBlock = null;
         RayTrace rayTrace = new RayTrace(player.getEyeLocation().toVector(),player.getEyeLocation().getDirection());
@@ -57,9 +62,10 @@ public class MiningListener implements Listener {
 			return;
 		}
 		
-		player.addPotionEffect(MINING_POTION_EFFECT, true); // Stops the cracking
 		
-		PlayerData playerData = PlayerData.getData(player);
+		if (playerData.getPickaxeData().getPickaxeLevel() < ore.getMinLevel()) {
+			return;
+		}
 		if (playerData.getTargetBlock() == null || !playerData.getTargetBlock().equals(targetBlock)) {
 			// New block, reset block damage
 			playerData.getPickaxeData().setTargetBlock(targetBlock, ore);

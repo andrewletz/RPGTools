@@ -7,21 +7,21 @@ MaxLevel: 100
 # The multiplier for how much experience it takes to level up the pickaxe. Default = 1.
 DifficultyMultiplier: 1
 
-SPPerLevel: 1
+SPPerLevel: 2
 
 # Durability for each tier of pickaxe (1 durability = 1 use)
-WoodDurability: 100
-StoneDurability: 200
-IronDurability: 500
-GoldDurability: 1000
-DiamondDurability: 2000
+WoodDurability: 80
+StoneDurability: 240
+IronDurability: 480
+GoldDurability: 720
+DiamondDurability: 1440
 
 # At what level the pick should transform into the next tier
 UnlockLevels:
   Stone: 5
-  Iron: 10
-  Gold: 30
-  Diamond: 50
+  Iron: 15
+  Gold: 45
+  Diamond: 70
 
 Speed:
   MaxLevel: 30

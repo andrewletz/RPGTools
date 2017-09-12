@@ -2,14 +2,18 @@ package net.Vala.util;
 
 import java.util.HashSet;
 
+import net.Vala.pickaxe.PickaxeFactory;
+import net.Vala.shovel.ShovelFactory;
 import net.minecraft.server.v1_12_R1.BlockPosition;
 import net.minecraft.server.v1_12_R1.PacketPlayOutBlockBreakAnimation;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 public class GeneralUtil {
 	
@@ -81,5 +85,17 @@ public class GeneralUtil {
         }
         return trans; 
     } 
+    
+    public static boolean isProfessionItem(ItemStack item) {
+    	return PickaxeFactory.isProfessionPickaxe(item) || ShovelFactory.isProfessionShovel(item);
+    }
+    
+	public static void playErrorSound(Player player) {
+		player.playSound(player.getLocation(), Sound.BLOCK_NOTE_SNARE, 1F, 1F);
+	}
+	
+	public static void playLevelSound(Player player) {
+		player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 5F, 10F);
+	}
 
 }

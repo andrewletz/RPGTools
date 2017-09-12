@@ -198,7 +198,7 @@ public class ShovelData {
 		int newExp = getShovelExp() - getShovelExpToNextLevel();
 		modifyShovelLevel(1);
 		modifyShovelSP(YAMLFile.SHOVELCONFIG.getConfig().getInt("SPPerLevel"));
-		playerData.getPlayer().playSound(playerData.getPlayer().getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 10f, 10f);
+		GeneralUtil.playLevelSound(playerData.getPlayer());
 		playerData.getPlayer().sendMessage(" ");
 		playerData.getPlayer().sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Shovel LEVEL " + getShovelLevel());
 		playerData.getPlayer().sendMessage(ChatColor.AQUA + "" + ChatColor.BOLD + "Shovel Stat Points" + ChatColor.AQUA + " + 1");

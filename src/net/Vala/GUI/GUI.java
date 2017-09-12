@@ -3,8 +3,10 @@ package net.Vala.GUI;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.Vala.config.PickaxeData;
 import net.Vala.config.PlayerData;
 import net.Vala.pickaxe.PickaxeFactory;
+import net.Vala.util.GeneralUtil;
 import net.md_5.bungee.api.ChatColor;
 
 import org.bukkit.Bukkit;
@@ -113,7 +115,7 @@ public class GUI implements Listener {
 		if (event.getCurrentItem() == null) {
 			return;
 		}
-		if (PickaxeFactory.isProfessionPickaxe(event.getCurrentItem()) && !(event.getInventory() instanceof CraftingInventory)) {
+		if (GeneralUtil.isProfessionItem(event.getCurrentItem()) && !(event.getInventory() instanceof CraftingInventory)) {
 //			event.getWhoClicked().sendMessage(event.getInventory().getType().toString());
 			event.setCancelled(true);
 		}
@@ -121,7 +123,9 @@ public class GUI implements Listener {
 			event.setCancelled(true);
 		}
 		if ((event.getInventory().getTitle().equals(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "RPG Tools Management Menu") || 
-				event.getInventory().getTitle().equals(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Pickaxe Management")) && 
+				event.getInventory().getTitle().equals(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Pickaxe Management") || 
+				event.getInventory().getTitle().equals(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Shovel Management") || 
+				event.getInventory().getTitle().equals(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Axe Management")) && 
 				(event.getWhoClicked() instanceof Player)) {
 			
 			event.setCancelled(true);
@@ -139,6 +143,14 @@ public class GUI implements Listener {
 			}
 			
 			PlayerData playerData = PlayerData.getData(player);
+			PickaxeData pickData = playerData.getPickaxeData();
+			
+			// In pickaxe Management
+			if (event.getInventory().getTitle().equals(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Pickaxe Management")) {
+				if (event.getRawSlot() == 2) {
+					LevelUtil.levelPickSpeed(player);
+				}
+			}
 		
 		}
 		

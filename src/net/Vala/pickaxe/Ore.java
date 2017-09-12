@@ -39,7 +39,7 @@ public class Ore extends Mineable{
 		public static void initializeOres() {
 			clearOreList();
 			for (String key : YAMLFile.PICKAXEBLOCKS.getConfig().getKeys(false)) {
-				if(Material.getMaterial(key) != null) {
+				if(Material.getMaterial(YAMLFile.PICKAXEBLOCKS.getConfig().getString(key + ".bukkitMaterial")) != null) {
 					
 					// Get drop and drop data
 					String[] dropSplit = YAMLFile.PICKAXEBLOCKS.getConfig().getString(key + ".drop").split(":");
@@ -56,7 +56,7 @@ public class Ore extends Mineable{
 					String autosmeltDrop = autosmeltDropSplit[0];
 					int autosmeltDropData = Integer.parseInt(autosmeltDropSplit[1]);
 					
-					Ore newOre = new Ore(Material.getMaterial(key),
+					Ore newOre = new Ore(Material.getMaterial(YAMLFile.PICKAXEBLOCKS.getConfig().getString(key + ".bukkitMaterial")),
 							(byte) YAMLFile.PICKAXEBLOCKS.getConfig().getInt(key + ".blockData"),
 							Material.getMaterial(drop),
 							(byte) dropData,
