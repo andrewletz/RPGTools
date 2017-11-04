@@ -137,6 +137,9 @@ public class ShovelData {
 	}
 
 	public void modifyShovelExp(int value, int dropAmount) {
+		if (getShovelSilktouch() && value > YAMLFile.SHOVELCONFIG.getConfig().getInt("Silktouch.MaxExpGain")) {
+			return;
+		}
 		if (!config.contains("Shovel.Exp")) {
 			setShovelExp(1);
 		}

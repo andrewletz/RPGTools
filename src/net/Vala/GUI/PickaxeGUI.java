@@ -11,6 +11,7 @@ import net.Vala.traits.AutoRegen;
 import net.Vala.traits.DropChances;
 import net.Vala.traits.GeneralTraitUtil;
 import net.Vala.traits.Reinforced;
+import net.Vala.util.EnchantGlow;
 import net.Vala.util.ScrapUtil;
 import net.md_5.bungee.api.ChatColor;
 
@@ -129,19 +130,55 @@ public class PickaxeGUI {
 		reinforcedIconMeta.setLore(reinforcedIconLore);
 		reinforcedIcon.setItemMeta(reinforcedIconMeta);
 		
-		ItemStack knockbackIcon = new ItemStack(Material.ARROW);
-		ItemMeta knockbackIconMeta = knockbackIcon.getItemMeta();
-		knockbackIconMeta.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Knockback");
-		knockbackIcon.setItemMeta(knockbackIconMeta);
+//		ItemStack knockbackIcon = new ItemStack(Material.ARROW);
+//		ItemMeta knockbackIconMeta = knockbackIcon.getItemMeta();
+//		knockbackIconMeta.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Knockback");
+//		knockbackIcon.setItemMeta(knockbackIconMeta);
 		
 		ItemStack autosmeltIcon = new ItemStack(Material.BLAZE_POWDER);
+		if (pickaxeData.getPickaxeAutosmelt()) {
+			EnchantGlow.addGlow(autosmeltIcon);
+		}
 		ItemMeta autosmeltIconMeta = autosmeltIcon.getItemMeta();
-		autosmeltIconMeta.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Autosmelt" + ChatColor.GRAY + " (TOGGLE)");
+		List<String> autosmeltIconLore = new ArrayList<String>(2);
+		if (pickaxeData.getPickaxeAutosmeltUnlocked()) {
+			autosmeltIconMeta.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Autosmelt" + ChatColor.AQUA + " [UNLOCKED]");
+		} else {
+			autosmeltIconMeta.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Autosmelt" + ChatColor.AQUA + " [" + GeneralTraitUtil.getPickAutosmeltSPReq() + " SP TO UNLOCK]");
+		}
+		autosmeltIconLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "Toggled: " + ChatColor.WHITE + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + String.valueOf(pickaxeData.getPickaxeAutosmelt()).toUpperCase());
+		autosmeltIconLore.add("");
+		if (!pickaxeData.getPickaxeAutosmeltUnlocked()) {
+			autosmeltIconLore.add(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "Left-click" + ChatColor.GRAY + " here to unlock");
+			autosmeltIconLore.add(ChatColor.GRAY + "autosmelt permanently.");
+		} else {
+			autosmeltIconLore.add(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "Left-click" + ChatColor.GRAY + " here to toggle");
+			autosmeltIconLore.add(ChatColor.GRAY + "autosmelt on your pickaxe.");
+		}
+		autosmeltIconMeta.setLore(autosmeltIconLore);
 		autosmeltIcon.setItemMeta(autosmeltIconMeta);
 		
 		ItemStack silktouchIcon = new ItemStack(Material.GRASS);
+		if (pickaxeData.getPickaxeSilktouch()) {
+			EnchantGlow.addGlow(silktouchIcon);
+		}
 		ItemMeta silktouchIconMeta = silktouchIcon.getItemMeta();
-		silktouchIconMeta.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Silktouch" + ChatColor.GRAY + " (TOGGLE)");
+		List<String> silktouchIconLore = new ArrayList<String>(2);
+		if (pickaxeData.getPickaxeSilktouchUnlocked()) {
+			silktouchIconMeta.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Silktouch" + ChatColor.AQUA + " [UNLOCKED]");
+		} else {
+			silktouchIconMeta.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Silktouch" + ChatColor.AQUA + " [" + GeneralTraitUtil.getPickSilktouchSPReq() + " SP TO UNLOCK]");
+		}
+		silktouchIconLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "Toggled: " + ChatColor.WHITE + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + String.valueOf(pickaxeData.getPickaxeSilktouch()).toUpperCase());
+		silktouchIconLore.add("");
+		if (!pickaxeData.getPickaxeSilktouchUnlocked()) {
+			silktouchIconLore.add(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "Left-click" + ChatColor.GRAY + " here to unlock");
+			silktouchIconLore.add(ChatColor.GRAY + "silktouch permanently.");
+		} else {
+			silktouchIconLore.add(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "Left-click" + ChatColor.GRAY + " here to toggle");
+			silktouchIconLore.add(ChatColor.GRAY + "silktouch on your pickaxe.");
+		}
+		silktouchIconMeta.setLore(silktouchIconLore);
 		silktouchIcon.setItemMeta(silktouchIconMeta);
 		
 		inv.setItem(0, pickIcon);
@@ -149,7 +186,7 @@ public class PickaxeGUI {
 		inv.setItem(3, fortuneIcon);
 		inv.setItem(4, regenIcon);
 		inv.setItem(5, reinforcedIcon);
-		inv.setItem(6, knockbackIcon);
+		inv.setItem(6, blankPane); // knockback can wait cuz im lazy
 		inv.setItem(7, autosmeltIcon);
 		inv.setItem(8, silktouchIcon);
 		

@@ -85,15 +85,15 @@ public class PickaxeFactory {
 	private static List<String> getPickaxeLore(PlayerData playerData) {
 		List<String> pickaxeLore = new ArrayList<>();
 		PickaxeData pickaxeData = playerData.getPickaxeData();
-		pickaxeLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "LEVEL: " + ChatColor.WHITE + pickaxeData.getPickaxeLevel() + ChatColor.AQUA + " [" + pickaxeData
+		pickaxeLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "LVL: " + ChatColor.WHITE + pickaxeData.getPickaxeLevel() + ChatColor.AQUA + " [" + pickaxeData
 				.getPickaxeSP() + " SP available]");
 		pickaxeLore.add("");
 		pickaxeLore.add(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + "STATS");
-		pickaxeLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "SPEED: " + ChatColor.WHITE + pickaxeData.getPickaxeSpeed());
-		pickaxeLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "FORTUNE: " + ChatColor.WHITE + pickaxeData.getPickaxeFortune());
-		pickaxeLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "REGEN: " + ChatColor.WHITE + pickaxeData.getPickaxeAutoregen());
-		pickaxeLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "REINFORCE: " + ChatColor.WHITE + pickaxeData.getPickaxeReinforced());
-		pickaxeLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "KNOCKBACK: " + ChatColor.WHITE + pickaxeData.getPickaxeKnockback());
+		pickaxeLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "Speed: " + ChatColor.WHITE + pickaxeData.getPickaxeSpeed());
+		pickaxeLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "Fortune: " + ChatColor.WHITE + pickaxeData.getPickaxeFortune());
+		pickaxeLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "Regen: " + ChatColor.WHITE + pickaxeData.getPickaxeAutoregen());
+		pickaxeLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "Reinforce: " + ChatColor.WHITE + pickaxeData.getPickaxeReinforced());
+//		pickaxeLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "KNOCKBACK: " + ChatColor.WHITE + pickaxeData.getPickaxeKnockback());
 		if (pickaxeData.getPickaxeAutosmelt()) {
 			pickaxeLore.add(" ");
 			pickaxeLore.add(ChatColor.BLUE + "" + ChatColor.BOLD + "[ " + ChatColor.BLUE + "Autosmelt Active" + ChatColor.BOLD + " ]");
@@ -159,13 +159,13 @@ public class PickaxeFactory {
 				pickaxeMeta.setLore(getPickaxeLore(playerData));
 				pickaxe.setItemMeta(pickaxeMeta);
 				pickaxe.setType(getPickaxeTypeForLevel(playerData.getPickaxeData().getPickaxeLevel()));
-				if(pickaxe.getEnchantments().containsKey(Enchantment.getById(255))) {
+				if(EnchantGlow.isGlowing(pickaxe)) {
 					if(!playerData.getPickaxeData().getPickaxeAutosmelt() && !playerData.getPickaxeData().getPickaxeSilktouch()) {
-						pickaxe.removeEnchantment(Enchantment.getById(255));
+						EnchantGlow.removeGlow(pickaxe);
 					}
 				}
 				if(playerData.getPickaxeData().getPickaxeAutosmelt() || playerData.getPickaxeData().getPickaxeSilktouch()
-						&& !pickaxe.getEnchantments().containsKey(Enchantment.getById(255))) {
+						&& !EnchantGlow.isGlowing(pickaxe)) {
 					EnchantGlow.addGlow(pickaxe);
 				}
 				updatePickaxeDurability(playerData, pickaxe);

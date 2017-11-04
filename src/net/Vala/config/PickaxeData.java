@@ -43,6 +43,8 @@ public class PickaxeData {
 		this.modifyPickaxeCurrentDurability(0);
 		this.refreshPickaxeAutosmelt();
 		this.refreshPickaxeSilktouch();
+		this.refreshPickaxeAutosmeltUnlocked();
+		this.refreshPickaxeSilktouchUnlocked();
 		this.refreshAutoRegenTimer();
 	}
 	
@@ -138,6 +140,9 @@ public class PickaxeData {
 	}
 
 	public void modifyPickaxeExp(int value, int dropAmount) {
+		if (getPickaxeSilktouch() && value > YAMLFile.PICKAXECONFIG.getConfig().getInt("Silktouch.MaxExpGain")) {
+			return;
+		}
 		if (!config.contains("Pickaxe.Exp")) {
 			setPickaxeExp(1);
 		}
@@ -373,39 +378,75 @@ public class PickaxeData {
 	}
 	
 	public void setPickaxeAutosmelt(boolean value) {
-		config.set( "Pickaxe.Special.Autosmelt", value);
+		config.set( "Pickaxe.Special.Autosmelt.Toggle", value);
 		playerData.saveConfig();
 	}
 	
 	public void refreshPickaxeAutosmelt() {
-		if (!config.contains("Pickaxe.Special.Autosmelt")) {
+		if (!config.contains("Pickaxe.Special.Autosmelt.Toggle")) {
 			setPickaxeAutosmelt(false);
 		}
 	}
 	
 	public boolean getPickaxeAutosmelt() {
-		if (!config.contains("Pickaxe.Special.Autosmelt")) {
+		if (!config.contains("Pickaxe.Special.Autosmelt.Toggle")) {
 			return false;
 		}
-		return config.getBoolean("Pickaxe.Special.Autosmelt");
+		return config.getBoolean("Pickaxe.Special.Autosmelt.Toggle");
+	}
+	
+	public boolean getPickaxeAutosmeltUnlocked() {
+		if (!config.contains("Pickaxe.Special.Autosmelt.Unlocked")) {
+			return false;
+		}
+		return config.getBoolean("Pickaxe.Special.Autosmelt.Unlocked");
+	}
+	
+	public void setPickaxeAutosmeltUnlocked(boolean value) {
+		config.set("Pickaxe.Special.Autosmelt.Unlocked", value);
+		playerData.saveConfig();
+	}
+	
+	public void refreshPickaxeAutosmeltUnlocked() {
+		if (!config.contains("Pickaxe.Special.Autosmelt.Unlocked")) {
+			setPickaxeAutosmeltUnlocked(false);
+		}
 	}
 	
 	public void setPickaxeSilktouch(boolean value) {
-		config.set( "Pickaxe.Special.Silktouch", value);
+		config.set( "Pickaxe.Special.Silktouch.Toggle", value);
 		playerData.saveConfig();
 	}
 	
 	public void refreshPickaxeSilktouch() {
-		if (!config.contains("Pickaxe.Special.Silktouch")) {
+		if (!config.contains("Pickaxe.Special.Silktouch.Toggle")) {
 			setPickaxeSilktouch(false);
 		}
 	}
 	
 	public boolean getPickaxeSilktouch() {
-		if (!config.contains("Pickaxe.Special.Silktouch")) {
+		if (!config.contains("Pickaxe.Special.Silktouch.Toggle")) {
 			return false;
 		}
-		return config.getBoolean("Pickaxe.Special.Silktouch");
+		return config.getBoolean("Pickaxe.Special.Silktouch.Toggle");
+	}
+	
+	public boolean getPickaxeSilktouchUnlocked() {
+		if (!config.contains("Pickaxe.Special.Silktouch.Unlocked")) {
+			return false;
+		}
+		return config.getBoolean("Pickaxe.Special.Silktouch.Unlocked");
+	}
+	
+	public void setPickaxeSilktouchUnlocked(boolean value) {
+		config.set("Pickaxe.Special.Silktouch.Unlocked", value);
+		playerData.saveConfig();
+	}
+	
+	public void refreshPickaxeSilktouchUnlocked() {
+		if (!config.contains("Pickaxe.Special.Silktouch.Unlocked")) {
+			setPickaxeSilktouchUnlocked(false);
+		}
 	}
 	
 	public static int getMaxSpeed() {

@@ -89,7 +89,7 @@ public class RPGCommands implements CommandExecutor {
 		} else if(Integer.parseInt(value) == 0) {
 			onOrOff = false;
 		}
-		switch (input) {
+		switch (input.toLowerCase()) {
 			case "level":
 				pickaxeData.setPickaxeLevel(Integer.parseInt(value));
 				return ("'s pickaxe level set to " + value);
@@ -131,6 +131,16 @@ public class RPGCommands implements CommandExecutor {
 				}
 				pickaxeData.setPickaxeSilktouch(onOrOff);
 				return ("'s pickaxe silktouch set to " + onOrOff);
+			case "au":
+			case "autosmeltul":
+			case "autosmeltunlock":
+				pickaxeData.setPickaxeAutosmeltUnlocked(onOrOff);
+				return ("'s pickaxe autosmelt unlock state set to " + onOrOff);
+			case "su":
+			case "silktouchul":
+			case "silktouchunlock":
+				pickaxeData.setPickaxeSilktouchUnlocked(onOrOff);
+				return ("'s pickaxe silktouch unlock state set to " + onOrOff);
 		}
 		throw new IllegalArgumentException();
 	}

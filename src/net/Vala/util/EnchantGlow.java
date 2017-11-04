@@ -81,4 +81,17 @@ public class EnchantGlow extends EnchantmentWrapper
 		item.addEnchantment(glow , 1);
 	}
 	
+	@SuppressWarnings("deprecation")
+	public static boolean isGlowing(ItemStack item) {
+		if (item.getEnchantments().containsKey(Enchantment.getById(255))) {
+			return true;
+		}
+		return false;
+	}
+	
+	@SuppressWarnings("deprecation")
+	public static void removeGlow(ItemStack item) {
+		item.removeEnchantment(Enchantment.getById(255));
+	}
+	
 }

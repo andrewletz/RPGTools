@@ -15,7 +15,7 @@ public class LevelUtil {
 		PickaxeData pickData = PlayerData.getData(player).getPickaxeData();
 		int spReq = GeneralTraitUtil.getPickSpeedSPReq(pickData.getPickaxeSpeed());
 		
-		if(pickData.getPickaxeSpeed() <= PickaxeData.getMaxSpeed()) {
+		if(pickData.getPickaxeSpeed() < PickaxeData.getMaxSpeed()) {
 			if(pickData.getPickaxeSP() >= spReq) {
 				GeneralUtil.playLevelSound(player);
 				sendPickaxeLevelUpMessage(player, "speed", pickData.getPickaxeSpeed(), pickData.getPickaxeSpeed() + 1);

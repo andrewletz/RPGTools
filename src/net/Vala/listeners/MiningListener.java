@@ -17,6 +17,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerAnimationEvent;
+import org.bukkit.event.player.PlayerAnimationType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
@@ -33,14 +34,14 @@ public class MiningListener implements Listener {
 		}
 		Player player = event.getPlayer();
 		PlayerData playerData = PlayerData.getData(player);
-		player.addPotionEffect(MINING_POTION_EFFECT, true); // Stops the cracking
+		
 		if (playerData.getPickaxeData().isBroken()) {
 			return;
 		}
 		
 		Block targetBlock = null;
         RayTrace rayTrace = new RayTrace(player.getEyeLocation().toVector(),player.getEyeLocation().getDirection());
-        ArrayList<Vector> positions = rayTrace.traverse(5,0.01);
+        ArrayList<Vector> positions = rayTrace.traverse(4.582,0.01);
         for(int i = 0; i < positions.size();i++) {
 
             Location position = positions.get(i).toLocation(player.getWorld());
@@ -58,10 +59,10 @@ public class MiningListener implements Listener {
         }
 		Ore ore = Ores.getOreFromMaterial(targetBlock.getType(), targetBlock.getData());
 		if (ore == null) {
-			// Not mining ore
 			return;
 		}
 		
+		player.addPotionEffect(MINING_POTION_EFFECT, true); // Stops the cracking
 		
 		if (playerData.getPickaxeData().getPickaxeLevel() < ore.getMinLevel()) {
 			return;
