@@ -60,8 +60,12 @@ public class PickaxeGUI {
 		speedIconMeta.setLore(speedIconLore);
 		speedIcon.setItemMeta(speedIconMeta);
 		
-		DropChances currentLevel = new DropChances(pickaxeData.getPickaxeLevel(), YAMLFile.PICKAXECONFIG);
-		DropChances nextLevel = new DropChances(pickaxeData.getPickaxeLevel() + 1, YAMLFile.PICKAXECONFIG);
+		DropChances currentLevel = new DropChances(pickaxeData.getPickaxeFortune(), YAMLFile.PICKAXECONFIG);
+		double currDoubleDrop = (double)Math.round(currentLevel.getDoubleDropChance() * 100 * 1000d) / 1000d;
+		double currTripleDrop = (double)Math.round(currentLevel.getTripleDropChance() * 100 * 1000d) / 1000d;
+		DropChances nextLevel = new DropChances(pickaxeData.getPickaxeFortune() + 1, YAMLFile.PICKAXECONFIG);
+		double nextDoubleDrop = (double)Math.round(nextLevel.getDoubleDropChance() * 100 * 1000d) / 1000d;
+		double nextTripleDrop = (double)Math.round(nextLevel.getTripleDropChance() * 100 * 1000d) / 1000d;
 		ItemStack fortuneIcon = new ItemStack(Material.EMERALD);
 		ItemMeta fortuneIconMeta = fortuneIcon.getItemMeta();
 		List<String> fortuneIconLore = new ArrayList<String>(2);
@@ -72,10 +76,10 @@ public class PickaxeGUI {
 		}
 		fortuneIconLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "Current Level: " + ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + pickaxeData.getPickaxeFortune());
 		fortuneIconLore.add("");
-		fortuneIconLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "Double Drop: " + ChatColor.BLUE + currentLevel.getDoubleDropChance() + "%" + 
-				(!pickaxeData.isMaxFortune() ? ChatColor.BOLD + " -> " + ChatColor.BLUE + nextLevel.getDoubleDropChance() + "%" : ""));
-		fortuneIconLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "Triple Drop: " + ChatColor.BLUE + currentLevel.getTripleDropChance() + "%" + 
-				(!pickaxeData.isMaxFortune() ? ChatColor.BOLD + " -> " + ChatColor.BLUE + nextLevel.getTripleDropChance() + "%" : ""));
+		fortuneIconLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "Double Drop: " + ChatColor.BLUE + currDoubleDrop + "%" + 
+				(!pickaxeData.isMaxFortune() ? ChatColor.BOLD + " -> " + ChatColor.BLUE + nextDoubleDrop + "%" : ""));
+		fortuneIconLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "Triple Drop: " + ChatColor.BLUE + currTripleDrop + "%" + 
+				(!pickaxeData.isMaxFortune() ? ChatColor.BOLD + " -> " + ChatColor.BLUE + nextTripleDrop + "%" : ""));
 		if (!pickaxeData.isMaxFortune()) {
 			fortuneIconLore.add("");
 			fortuneIconLore.add(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "Left-click" + ChatColor.GRAY + " here to level up");

@@ -1,7 +1,5 @@
 package net.Vala.general;
 
-import java.util.logging.Logger;
-
 import net.Vala.GUI.GUI;
 import net.Vala.config.PlayerData;
 import net.Vala.config.YAMLFile;
@@ -9,37 +7,42 @@ import net.Vala.listeners.GeneralListener;
 import net.Vala.listeners.MiningListener;
 import net.Vala.pickaxe.PickaxeCommands;
 import net.Vala.pickaxe.Ore.Ores;
+import net.Vala.shovel.ShovelBlock.ShovelBlocks;
 
-import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class RPGTools extends JavaPlugin {
 	
 	private static RPGTools plugin;
-	public final Logger logger = Logger.getLogger("Minecraft");
 	
     @Override
     public void onEnable() {
-    	// Logging
-    	PluginDescriptionFile pdfFile = this.getDescription();
-    	this.logger.info(pdfFile.getName() + " \n\n\nRPGTools Has Been Enabled!\n\n\n");
-    	
     	// Enable listeners and commands
     	this.enableListeners();
     	this.enableCommands();
     	
     	// Everything else
     	RPGTools.plugin = this;
-    	PlayerData.prepareFiles();
+    	
 		YAMLFile.prepareFiles();
+		Logger.log("YAML file preparation complete");
+		
+    	PlayerData.prepareFiles();
+    	Logger.log("Player data preparation complete");
 		
 		Ores.initializeOres();
+		ShovelBlocks.initializeShovelBlocks();
+		Logger.log("Mineables initialization complete");
+		
+		Logger.log("&7RPG Tools has completed initialization");
+		if (!YAMLFile.CONFIG.getConfig().getBoolean("DisableConsoleColors")) {
+			Logger.log("Console colors are currently enabled, option in config.yml.");
+		}
+		
     }
     
     @Override
     public void onDisable() {
-    	PluginDescriptionFile pdfFile = this.getDescription();
-    	this.logger.info(pdfFile.getName() + " Has Been Disabled!");
     }
 
 	public static RPGTools getPlugin() {

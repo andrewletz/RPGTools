@@ -25,10 +25,9 @@ UnlockLevels:
 
 Speed:
   MaxLevel: 30
-  # The values for how fast speed should scale. 0.125 = 2.5 times speed (reached at level 20
-  # with the default values)
-  Base: 0.075
-  Multiplier: 0.0025
+  # The values for how fast speed should scale. 0.125 = 2.5 times speed
+  Base: 0.0365
+  Multiplier: 0.00228
 
 Fortune:
   MaxLevel: 10

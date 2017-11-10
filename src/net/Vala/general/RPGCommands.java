@@ -1,5 +1,9 @@
 package net.Vala.general;
 
+import java.util.Arrays;
+import java.util.Set;
+import java.util.HashSet;
+
 import net.Vala.GUI.GUI;
 import net.Vala.config.PickaxeData;
 import net.Vala.config.PlayerData;
@@ -17,6 +21,9 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 public class RPGCommands implements CommandExecutor {
+	
+	//private static final Set<String> VALIDMODIFYINPUT = new HashSet<String>(Arrays.asList(new String[] {"level","sp","dura","durability","speed",
+	//		"fortune","autoregen","reinforced","knockback","autosmelt","au","autosmeltul","autosmeltunlock","su","silktouchul","silktouchunlock"}));
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String commandLabel, String[] args) {
@@ -39,7 +46,8 @@ public class RPGCommands implements CommandExecutor {
 						playerD.refreshAutoRegenTimers();
 					}
 					Ores.initializeOres();
-				
+					Logger.log("&aReload complete.");
+					
 				// GUI Open command
 				} else if (args[0].equalsIgnoreCase("menu") || args[0].equalsIgnoreCase("gui")) {
 					GUI.openMain((Player) sender);
@@ -62,7 +70,7 @@ public class RPGCommands implements CommandExecutor {
 						try {
 							sendBack = inputToPickMethod(args[1], args[3], playerData.getPickaxeData());
 						} catch (IllegalArgumentException e) {
-							sender.sendMessage(ChatColor.RED + "Invalid argument!");
+							sender.sendMessage(ChatColor.RED + args[1] + " is an invalid argument!");
 							return false;
 						}
 						playerData.reloadConfig();

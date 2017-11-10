@@ -207,7 +207,7 @@ public class PickaxeData {
 		GeneralUtil.playLevelSound(playerData.getPlayer());
 		playerData.getPlayer().sendMessage(" ");
 		playerData.getPlayer().sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Pickaxe LEVEL " + getPickaxeLevel());
-		playerData.getPlayer().sendMessage(ChatColor.AQUA + "" + ChatColor.BOLD + "Pickaxe Stat Points" + ChatColor.AQUA + " + 1");
+		playerData.getPlayer().sendMessage(ChatColor.AQUA + "" + ChatColor.BOLD + "Pickaxe Stat Points" + ChatColor.AQUA + " + " + YAMLFile.PICKAXECONFIG.getConfig().getInt("SPPerLevel"));
 		playerData.getPlayer().sendMessage(ChatColor.GRAY + "" + ChatColor.ITALIC + getPickaxeExpToNextLevel() + " xp to lvl " + (getPickaxeLevel() + 1));
 		playerData.getPlayer().sendMessage(" ");
 		playerData.saveConfig();

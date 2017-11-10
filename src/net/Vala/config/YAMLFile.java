@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import net.Vala.general.Logger;
 import net.Vala.general.RPGTools;
 
 import org.apache.commons.io.IOUtils;
