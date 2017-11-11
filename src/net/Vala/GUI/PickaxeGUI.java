@@ -28,173 +28,158 @@ public class PickaxeGUI {
 		Inventory inv = Bukkit.createInventory(player, 9, ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Pickaxe Management");
 		PickaxeData pickaxeData = PlayerData.getData(player).getPickaxeData();
 		
+		// Get our pick icon for the first slot
 		ItemStack pickIcon = PickaxeFactory.getNewPickaxe(player);
 		
-		ItemStack blankPane = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 15);
-		blankPane.setItemMeta(GUI.getBlankStainedBlackGlassPaneMeta());
-		
-		ItemStack speedIcon = new ItemStack(Material.NETHER_STAR);
-		ItemMeta speedIconMeta = speedIcon.getItemMeta();
-		List<String> speedIconLore = new ArrayList<String>(2);
+		// Set up speed icon/button
+		Icon speedIcon = new Icon(Material.NETHER_STAR);
 		if (pickaxeData.isMaxSpeed()) {
-			speedIconMeta.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Mining Speed" + ChatColor.AQUA + " [MAX LEVEL]");
+			speedIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Mining Speed" + ChatColor.AQUA + " [MAX LEVEL]");
 		} else {
-			speedIconMeta.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Mining Speed" + ChatColor.AQUA + " [" + GeneralTraitUtil.getPickSpeedSPReq(pickaxeData.getPickaxeSpeed() + 1) + " SP to level]");
+			speedIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Mining Speed" + ChatColor.AQUA + " [" + GeneralTraitUtil.getPickSpeedSPReq(pickaxeData.getPickaxeSpeed() + 1) + " SP to level]");
 		}
-		speedIconLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "Current Level: " + ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + pickaxeData.getPickaxeSpeed());
-		speedIconLore.add("");
-		speedIconLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "Speed: " + ChatColor.BLUE + PickaxeFactory.convertPickSpeedToDamagePerTick(pickaxeData.getPickaxeSpeed()) + (!pickaxeData.isMaxSpeed() ? ChatColor.BOLD + " -> " 
+		speedIcon.addLore(ChatColor.GRAY + "" + ChatColor.BOLD + "Current Level: " + ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + pickaxeData.getPickaxeSpeed());
+		speedIcon.addLore("");
+		speedIcon.addLore(ChatColor.GRAY + "" + ChatColor.BOLD + "Speed: " + ChatColor.BLUE + PickaxeFactory.convertPickSpeedToDamagePerTick(pickaxeData.getPickaxeSpeed()) + (!pickaxeData.isMaxSpeed() ? ChatColor.BOLD + " -> " 
 						+ ChatColor.BLUE + PickaxeFactory.convertPickSpeedToDamagePerTick(pickaxeData.getPickaxeSpeed() + 1) : ""));
-		speedIconLore.add("");
+		speedIcon.addLore("");
 		if (!pickaxeData.isMaxSpeed()) {
-			speedIconLore.add(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "Left-click" + ChatColor.GRAY + " here to level up");
-			speedIconLore.add(ChatColor.GRAY + "your max pick speed to level " + ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + (pickaxeData.getPickaxeSpeed() + 1) + ".");
-			speedIconLore.add("");
+			speedIcon.addLore(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "Left-click" + ChatColor.GRAY + " here to level up");
+			speedIcon.addLore(ChatColor.GRAY + "your max pick speed to level " + ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + (pickaxeData.getPickaxeSpeed() + 1) + ".");
+			speedIcon.addLore("");
 		}
-		speedIconLore.add(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "Shift-click" + ChatColor.GRAY + " here to manually set your");
-		speedIconLore.add(ChatColor.GRAY + "pick speed to anything up to level " + ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + (pickaxeData.getPickaxeSpeed()) + ".");
-		speedIconLore.add("");
-		speedIconLore.add(ChatColor.GRAY + "" + ChatColor.ITALIC + "Manual setting doesn't use SP, it is for");
-		speedIconLore.add(ChatColor.GRAY + "" + ChatColor.ITALIC + "when you want your pick to go slower!");
-		speedIconLore.add(ChatColor.GRAY + "" + ChatColor.ITALIC + "(this option will prompt you in chat)");
-		speedIconMeta.setLore(speedIconLore);
-		speedIcon.setItemMeta(speedIconMeta);
+		speedIcon.addLore(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "Shift-click" + ChatColor.GRAY + " here to manually set your");
+		speedIcon.addLore(ChatColor.GRAY + "pick speed to anything up to level " + ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + (pickaxeData.getPickaxeSpeed()) + ".");
+		speedIcon.addLore("");
+		speedIcon.addLore(ChatColor.GRAY + "" + ChatColor.ITALIC + "Manual setting doesn't use SP, it is for");
+		speedIcon.addLore(ChatColor.GRAY + "" + ChatColor.ITALIC + "when you want your pick to go slower!");
+		speedIcon.addLore(ChatColor.GRAY + "" + ChatColor.ITALIC + "(this option will prompt you in chat)");
 		
+		// Set up fortune icon/button
 		DropChances currentLevel = new DropChances(pickaxeData.getPickaxeFortune(), YAMLFile.PICKAXECONFIG);
 		double currDoubleDrop = (double)Math.round(currentLevel.getDoubleDropChance() * 100 * 1000d) / 1000d;
 		double currTripleDrop = (double)Math.round(currentLevel.getTripleDropChance() * 100 * 1000d) / 1000d;
+		
 		DropChances nextLevel = new DropChances(pickaxeData.getPickaxeFortune() + 1, YAMLFile.PICKAXECONFIG);
 		double nextDoubleDrop = (double)Math.round(nextLevel.getDoubleDropChance() * 100 * 1000d) / 1000d;
 		double nextTripleDrop = (double)Math.round(nextLevel.getTripleDropChance() * 100 * 1000d) / 1000d;
-		ItemStack fortuneIcon = new ItemStack(Material.EMERALD);
-		ItemMeta fortuneIconMeta = fortuneIcon.getItemMeta();
-		List<String> fortuneIconLore = new ArrayList<String>(2);
+		
+		Icon fortuneIcon = new Icon(Material.EMERALD);
 		if (pickaxeData.isMaxFortune()) {
-			fortuneIconMeta.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Fortune" + ChatColor.AQUA + " [MAX LEVEL]");
+			fortuneIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Fortune" + ChatColor.AQUA + " [MAX LEVEL]");
 		} else {
-			fortuneIconMeta.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Fortune" + ChatColor.AQUA + " [" + GeneralTraitUtil.getPickFortuneSPReq(pickaxeData.getPickaxeFortune() + 1) + " SP to level]");
+			fortuneIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Fortune" + ChatColor.AQUA + " [" + GeneralTraitUtil.getPickFortuneSPReq(pickaxeData.getPickaxeFortune() + 1) + " SP to level]");
 		}
-		fortuneIconLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "Current Level: " + ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + pickaxeData.getPickaxeFortune());
-		fortuneIconLore.add("");
-		fortuneIconLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "Double Drop: " + ChatColor.BLUE + currDoubleDrop + "%" + 
+		fortuneIcon.addLore(ChatColor.GRAY + "" + ChatColor.BOLD + "Current Level: " + ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + pickaxeData.getPickaxeFortune());
+		fortuneIcon.addLore("");
+		fortuneIcon.addLore(ChatColor.GRAY + "" + ChatColor.BOLD + "Double Drop: " + ChatColor.BLUE + currDoubleDrop + "%" + 
 				(!pickaxeData.isMaxFortune() ? ChatColor.BOLD + " -> " + ChatColor.BLUE + nextDoubleDrop + "%" : ""));
-		fortuneIconLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "Triple Drop: " + ChatColor.BLUE + currTripleDrop + "%" + 
+		fortuneIcon.addLore(ChatColor.GRAY + "" + ChatColor.BOLD + "Triple Drop: " + ChatColor.BLUE + currTripleDrop + "%" + 
 				(!pickaxeData.isMaxFortune() ? ChatColor.BOLD + " -> " + ChatColor.BLUE + nextTripleDrop + "%" : ""));
 		if (!pickaxeData.isMaxFortune()) {
-			fortuneIconLore.add("");
-			fortuneIconLore.add(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "Left-click" + ChatColor.GRAY + " here to level up");
-			fortuneIconLore.add(ChatColor.GRAY + "your pick fortune to level " + ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + (pickaxeData.getPickaxeFortune() + 1) + ".");
+			fortuneIcon.addLore("");
+			fortuneIcon.addLore(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "Left-click" + ChatColor.GRAY + " here to level up");
+			fortuneIcon.addLore(ChatColor.GRAY + "your pick fortune to level " + ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + (pickaxeData.getPickaxeFortune() + 1) + ".");
 		}
-		fortuneIconMeta.setLore(fortuneIconLore);
-		fortuneIcon.setItemMeta(fortuneIconMeta);
 		
-		ItemStack regenIcon = new ItemStack(Material.VINE);
-		ItemMeta regenIconMeta = regenIcon.getItemMeta();
-		List<String> regenIconLore = new ArrayList<String>(2);
+		// Set up auto-regeneration icon/button
+		Icon regenIcon = new Icon(Material.VINE);
 		if (pickaxeData.isMaxAutoregen()) {
-			regenIconMeta.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Auto-regen" + ChatColor.AQUA + " [MAX LEVEL]");
+			regenIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Auto-regen" + ChatColor.AQUA + " [MAX LEVEL]");
 		} else {
-			regenIconMeta.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Auto-regen" + ChatColor.AQUA + " [" + GeneralTraitUtil.getPickAutoRegenSPReq(pickaxeData.getPickaxeAutoregen() + 1) + " SP to level]");
+			regenIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Auto-regen" + ChatColor.AQUA + " [" + GeneralTraitUtil.getPickAutoRegenSPReq(pickaxeData.getPickaxeAutoregen() + 1) + " SP to level]");
 		}
-		regenIconLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "Current Level: " + ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + pickaxeData.getPickaxeAutoregen());
-		regenIconLore.add("");
-		regenIconLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "Regen rate: " + ChatColor.BLUE + "per " + pickaxeData.getAutoRegenClass().convertLevelToRandomTick(pickaxeData.getPickaxeLevel()) + " ticks");
+		regenIcon.addLore(ChatColor.GRAY + "" + ChatColor.BOLD + "Current Level: " + ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + pickaxeData.getPickaxeAutoregen());
+		regenIcon.addLore("");
+		regenIcon.addLore(ChatColor.GRAY + "" + ChatColor.BOLD + "Regen rate: " + ChatColor.BLUE + "per " + pickaxeData.getAutoRegenClass().convertLevelToRandomTick(pickaxeData.getPickaxeLevel()) + " ticks");
 		if (!pickaxeData.isMaxAutoregen()) {
-			regenIconLore.add(ChatColor.BLUE + "" + ChatColor.BOLD + "               -> " + ChatColor.BLUE + "per " + pickaxeData.getAutoRegenClass().convertLevelToRandomTick(pickaxeData.getPickaxeLevel() + 1) + " ticks");
+			regenIcon.addLore(ChatColor.BLUE + "" + ChatColor.BOLD + "               -> " + ChatColor.BLUE + "per " + pickaxeData.getAutoRegenClass().convertLevelToRandomTick(pickaxeData.getPickaxeLevel() + 1) + " ticks");
 		}
 		if (!pickaxeData.isMaxAutoregen()) {
-			regenIconLore.add("");
-			regenIconLore.add(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "Left-click" + ChatColor.GRAY + " here to level up");
-			regenIconLore.add(ChatColor.GRAY + "your pick auto-regen to level " + ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + (pickaxeData.getPickaxeAutoregen() + 1) + ".");
+			regenIcon.addLore("");
+			regenIcon.addLore(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "Left-click" + ChatColor.GRAY + " here to level up");
+			regenIcon.addLore(ChatColor.GRAY + "your pick auto-regen to level " + ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + (pickaxeData.getPickaxeAutoregen() + 1) + ".");
 		}
-		regenIconMeta.setLore(regenIconLore);
-		regenIcon.setItemMeta(regenIconMeta);
 		
+		// Set up reinforcement icon/button
 		Reinforced reinforced = new Reinforced(YAMLFile.PICKAXECONFIG);
-		ItemStack reinforcedIcon = new ItemStack(Material.ANVIL);
-		ItemMeta reinforcedIconMeta = reinforcedIcon.getItemMeta();
-		List<String> reinforcedIconLore = new ArrayList<String>(2);
+		Icon reinforcedIcon = new Icon(Material.ANVIL);
 		if (pickaxeData.isMaxReinforced()) {
-			reinforcedIconMeta.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Reinforced" + ChatColor.AQUA + " [MAX LEVEL]");
+			reinforcedIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Reinforced" + ChatColor.AQUA + " [MAX LEVEL]");
 		} else {
-			reinforcedIconMeta.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Reinforced" + ChatColor.AQUA + " [" + GeneralTraitUtil.getPickReinforcedSPReq(pickaxeData.getPickaxeReinforced() + 1) + " SP to level]");
+			reinforcedIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Reinforced" + ChatColor.AQUA + " [" + GeneralTraitUtil.getPickReinforcedSPReq(pickaxeData.getPickaxeReinforced() + 1) + " SP to level]");
 		}
-		reinforcedIconLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "Current Level: " + ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + pickaxeData.getPickaxeReinforced());
-		reinforcedIconLore.add("");
-		reinforcedIconLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "Protection chance: " + (pickaxeData.isMaxReinforced() ? ChatColor.BLUE + "" + reinforced.getTotalPercent(pickaxeData.getPickaxeReinforced()) + "%" : ""));
+		reinforcedIcon.addLore(ChatColor.GRAY + "" + ChatColor.BOLD + "Current Level: " + ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + pickaxeData.getPickaxeReinforced());
+		reinforcedIcon.addLore("");
+		reinforcedIcon.addLore(ChatColor.GRAY + "" + ChatColor.BOLD + "Protection chance: " + (pickaxeData.isMaxReinforced() ? ChatColor.BLUE + "" + reinforced.getTotalPercent(pickaxeData.getPickaxeReinforced()) + "%" : ""));
 		if(!pickaxeData.isMaxReinforced()) {
-			reinforcedIconLore.add(ChatColor.BLUE + "         " + reinforced.getTotalPercent(pickaxeData.getPickaxeReinforced()) + "%" + ChatColor.BOLD + " -> " 
+			reinforcedIcon.addLore(ChatColor.BLUE + "         " + reinforced.getTotalPercent(pickaxeData.getPickaxeReinforced()) + "%" + ChatColor.BOLD + " -> " 
 					+ ChatColor.BLUE + "" + reinforced.getTotalPercent(pickaxeData.getPickaxeReinforced() + 1) + "%");
 		}
 		if (!pickaxeData.isMaxReinforced()) {
-			reinforcedIconLore.add("");
-			reinforcedIconLore.add(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "Left-click" + ChatColor.GRAY + " here to level up");
-			reinforcedIconLore.add(ChatColor.GRAY + "your reinforced to level " + ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + (pickaxeData.getPickaxeReinforced() + 1) + ".");
+			reinforcedIcon.addLore("");
+			reinforcedIcon.addLore(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "Left-click" + ChatColor.GRAY + " here to level up");
+			reinforcedIcon.addLore(ChatColor.GRAY + "your reinforced to level " + ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + (pickaxeData.getPickaxeReinforced() + 1) + ".");
 		}
-		reinforcedIconMeta.setLore(reinforcedIconLore);
-		reinforcedIcon.setItemMeta(reinforcedIconMeta);
 		
-//		ItemStack knockbackIcon = new ItemStack(Material.ARROW);
+		// Set up fortune icon/button
+//		Icon knockbackIcon = new Icon(Material.ARROW);
 //		ItemMeta knockbackIconMeta = knockbackIcon.getItemMeta();
-//		knockbackIconMeta.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Knockback");
+//		knockbackIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Knockback");
 //		knockbackIcon.setItemMeta(knockbackIconMeta);
 		
-		ItemStack autosmeltIcon = new ItemStack(Material.BLAZE_POWDER);
+		// Set up autosmelt icon/button
+		Icon autosmeltIcon = new Icon(Material.BLAZE_POWDER);
 		if (pickaxeData.getPickaxeAutosmelt()) {
 			EnchantGlow.addGlow(autosmeltIcon);
 		}
-		ItemMeta autosmeltIconMeta = autosmeltIcon.getItemMeta();
-		List<String> autosmeltIconLore = new ArrayList<String>(2);
 		if (pickaxeData.getPickaxeAutosmeltUnlocked()) {
-			autosmeltIconMeta.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Autosmelt" + ChatColor.AQUA + " [UNLOCKED]");
+			autosmeltIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Autosmelt" + ChatColor.AQUA + " [UNLOCKED]");
 		} else {
-			autosmeltIconMeta.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Autosmelt" + ChatColor.AQUA + " [" + GeneralTraitUtil.getPickAutosmeltSPReq() + " SP TO UNLOCK]");
+			autosmeltIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Autosmelt" + ChatColor.AQUA + " [" + GeneralTraitUtil.getPickAutosmeltSPReq() + " SP TO UNLOCK]");
 		}
-		autosmeltIconLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "Toggled: " + ChatColor.WHITE + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + String.valueOf(pickaxeData.getPickaxeAutosmelt()).toUpperCase());
-		autosmeltIconLore.add("");
+		autosmeltIcon.addLore(ChatColor.GRAY + "" + ChatColor.BOLD + "Toggled: " + ChatColor.WHITE + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + String.valueOf(pickaxeData.getPickaxeAutosmelt()).toUpperCase());
+		autosmeltIcon.addLore("");
 		if (!pickaxeData.getPickaxeAutosmeltUnlocked()) {
-			autosmeltIconLore.add(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "Left-click" + ChatColor.GRAY + " here to unlock");
-			autosmeltIconLore.add(ChatColor.GRAY + "autosmelt permanently.");
+			autosmeltIcon.addLore(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "Left-click" + ChatColor.GRAY + " here to unlock");
+			autosmeltIcon.addLore(ChatColor.GRAY + "autosmelt permanently.");
 		} else {
-			autosmeltIconLore.add(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "Left-click" + ChatColor.GRAY + " here to toggle");
-			autosmeltIconLore.add(ChatColor.GRAY + "autosmelt on your pickaxe.");
+			autosmeltIcon.addLore(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "Left-click" + ChatColor.GRAY + " here to toggle");
+			autosmeltIcon.addLore(ChatColor.GRAY + "autosmelt on your pickaxe.");
 		}
-		autosmeltIconMeta.setLore(autosmeltIconLore);
-		autosmeltIcon.setItemMeta(autosmeltIconMeta);
 		
-		ItemStack silktouchIcon = new ItemStack(Material.GRASS);
+		// Set up silktouch icon/button
+		Icon silktouchIcon = new Icon(Material.GRASS);
 		if (pickaxeData.getPickaxeSilktouch()) {
 			EnchantGlow.addGlow(silktouchIcon);
 		}
-		ItemMeta silktouchIconMeta = silktouchIcon.getItemMeta();
-		List<String> silktouchIconLore = new ArrayList<String>(2);
 		if (pickaxeData.getPickaxeSilktouchUnlocked()) {
-			silktouchIconMeta.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Silktouch" + ChatColor.AQUA + " [UNLOCKED]");
+			silktouchIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Silktouch" + ChatColor.AQUA + " [UNLOCKED]");
 		} else {
-			silktouchIconMeta.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Silktouch" + ChatColor.AQUA + " [" + GeneralTraitUtil.getPickSilktouchSPReq() + " SP TO UNLOCK]");
+			silktouchIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Silktouch" + ChatColor.AQUA + " [" + GeneralTraitUtil.getPickSilktouchSPReq() + " SP TO UNLOCK]");
 		}
-		silktouchIconLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "Toggled: " + ChatColor.WHITE + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + String.valueOf(pickaxeData.getPickaxeSilktouch()).toUpperCase());
-		silktouchIconLore.add("");
+		silktouchIcon.addLore(ChatColor.GRAY + "" + ChatColor.BOLD + "Toggled: " + ChatColor.WHITE + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + String.valueOf(pickaxeData.getPickaxeSilktouch()).toUpperCase());
+		silktouchIcon.addLore("");
 		if (!pickaxeData.getPickaxeSilktouchUnlocked()) {
-			silktouchIconLore.add(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "Left-click" + ChatColor.GRAY + " here to unlock");
-			silktouchIconLore.add(ChatColor.GRAY + "silktouch permanently.");
+			silktouchIcon.addLore(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "Left-click" + ChatColor.GRAY + " here to unlock");
+			silktouchIcon.addLore(ChatColor.GRAY + "silktouch permanently.");
 		} else {
-			silktouchIconLore.add(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "Left-click" + ChatColor.GRAY + " here to toggle");
-			silktouchIconLore.add(ChatColor.GRAY + "silktouch on your pickaxe.");
+			silktouchIcon.addLore(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "Left-click" + ChatColor.GRAY + " here to toggle");
+			silktouchIcon.addLore(ChatColor.GRAY + "silktouch on your pickaxe.");
 		}
-		silktouchIconMeta.setLore(silktouchIconLore);
-		silktouchIcon.setItemMeta(silktouchIconMeta);
 		
+		// Set all the inventory slots to their respective icons
 		inv.setItem(0, pickIcon);
 		inv.setItem(2, speedIcon);
 		inv.setItem(3, fortuneIcon);
 		inv.setItem(4, regenIcon);
 		inv.setItem(5, reinforcedIcon);
-		inv.setItem(6, blankPane); // knockback can wait cuz im lazy
 		inv.setItem(7, autosmeltIcon);
 		inv.setItem(8, silktouchIcon);
 		
-		inv.setItem(1, blankPane);
+		inv.setItem(6, GUI.BLANK_PANE); // knockback currently not implemented
+		inv.setItem(1, GUI.BLANK_PANE);
+		
 		player.openInventory(inv);
 	}
 	
@@ -202,29 +187,24 @@ public class PickaxeGUI {
 		Inventory inv = Bukkit.createInventory(player, 27, ChatColor.BLUE + "" + ChatColor.BOLD + "Pickaxe Repair");
 		PickaxeData pickaxeData = PlayerData.getData(player).getPickaxeData();
 		
-		ItemStack blankPane = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 15);
-		blankPane.setItemMeta(GUI.getBlankStainedBlackGlassPaneMeta());
-		
-		ItemStack repairIcon = new ItemStack(Material.INK_SACK, 1, (byte) 10);
-		ItemMeta repairIconMeta = repairIcon.getItemMeta();
-		List<String> repairIconLore = new ArrayList<String>(2);
-		repairIconMeta.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "Consume Items and Repair Pickaxe");
-		repairIconLore.add(ChatColor.GRAY + "To repair your pickaxe, you need");
-		repairIconLore.add(ChatColor.GRAY + "to place items that are made of");
-		repairIconLore.add(ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + 
+		// Repair button at bottom right of menu set-up
+		Icon repairIcon = new Icon(Material.INK_SACK, (byte) 10);
+		repairIcon.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "Consume Items and Repair Pickaxe");
+		repairIcon.addLore(ChatColor.GRAY + "To repair your pickaxe, you need");
+		repairIcon.addLore(ChatColor.GRAY + "to place items that are made of");
+		repairIcon.addLore(ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + 
 				ScrapUtil.matToString(ScrapUtil.toolMatToScrapMat(PickaxeFactory.getPickaxeTypeForLevel(pickaxeData.getPickaxeLevel()))) + ChatColor.GRAY + " in this inventory and left");
-		repairIconLore.add(ChatColor.GRAY + "click this button." + ChatColor.RED +  " Must be near an anvil.");
-		repairIconMeta.setLore(repairIconLore);
-		repairIcon.setItemMeta(repairIconMeta);
+		repairIcon.addLore(ChatColor.GRAY + "click this button." + ChatColor.RED +  " Must be near an anvil.");
 		
+		// Set all the inventory slots to their respective icons
 		inv.setItem(18, PickaxeFactory.getNewPickaxe(player));
-		inv.setItem(19, blankPane);
-		inv.setItem(20, blankPane);
-		inv.setItem(21, blankPane);
-		inv.setItem(22, blankPane);
-		inv.setItem(23, blankPane);
-		inv.setItem(24, blankPane);
-		inv.setItem(25, blankPane);
+		inv.setItem(19, GUI.BLANK_PANE);
+		inv.setItem(20, GUI.BLANK_PANE);
+		inv.setItem(21, GUI.BLANK_PANE);
+		inv.setItem(22, GUI.BLANK_PANE);
+		inv.setItem(23, GUI.BLANK_PANE);
+		inv.setItem(24, GUI.BLANK_PANE);
+		inv.setItem(25, GUI.BLANK_PANE);
 		inv.setItem(26, repairIcon);
 		
 		player.openInventory(inv);

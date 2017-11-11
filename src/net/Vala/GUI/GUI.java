@@ -1,7 +1,8 @@
 package net.Vala.GUI;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import net.Vala.config.PickaxeData;
 import net.Vala.config.PlayerData;
@@ -17,88 +18,62 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class GUI implements Listener {
-			
-	public static ItemMeta getBlankStainedBlackGlassPaneMeta() {
-		ItemStack i = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 15);
-		ItemMeta iMeta = i.getItemMeta();
-		iMeta.setDisplayName(ChatColor.GRAY + "");
-		return iMeta;
+	
+	public static final Icon BLANK_PANE = getBlankPane();
+	
+	public static Icon getBlankPane() {
+		Icon i = new Icon(Material.STAINED_GLASS_PANE, (byte) 15);
+		i.setDisplayName(ChatColor.GRAY + "");
+		return i;
 	}
 	
 	public static void openMain(Player player) {
 		PlayerData playerData = PlayerData.getData(player);
 		Inventory inv = Bukkit.createInventory(player, 18, ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "RPG Tools Management Menu");
 		
-		ItemStack pickIcon = new ItemStack(PickaxeFactory.getPickaxeTypeForLevel(playerData.getPickaxeData().getPickaxeLevel()));
-		ItemMeta pickIconMeta = pickIcon.getItemMeta();
-		pickIconMeta.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Pickaxe Options");
-		List<String> pickIconLore = new ArrayList<String>(2);
-		pickIconLore.add(ChatColor.GRAY + "" + "Click here to access");
-		pickIconLore.add(ChatColor.GRAY + "" + "your pickaxe options.");
-		pickIconMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		pickIconMeta.setLore(pickIconLore);
-		pickIcon.setItemMeta(pickIconMeta);
+		Icon pickIcon = new Icon(PickaxeFactory.getPickaxeTypeForLevel(playerData.getPickaxeData().getPickaxeLevel()));
+		pickIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Pickaxe Options");
+		pickIcon.addLore(ChatColor.GRAY + "" + "Click here to access");
+		pickIcon.addLore(ChatColor.GRAY + "" + "your pickaxe options.");
+		pickIcon.hideItemFlags();
 		
-		ItemStack pickRepairIcon = new ItemStack(Material.ANVIL);
-		ItemMeta pickRepairIconMeta = pickRepairIcon.getItemMeta();
-		pickRepairIconMeta.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Pickaxe Repair");
-		List<String> pickRepairIconLore = new ArrayList<String>(2);
-		pickRepairIconLore.add(ChatColor.GRAY + "" + "Click here to repair your pickaxe");
-		pickRepairIconLore.add(ChatColor.GRAY + "" + "with its respective material.");
-		pickRepairIconLore.add("");
-		pickRepairIconLore.add(ChatColor.RED + "" + ChatColor.ITALIC + "(must be near an anvil to repair!)");
-		pickRepairIconMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		pickRepairIconMeta.setLore(pickRepairIconLore);
-		pickRepairIcon.setItemMeta(pickRepairIconMeta);
+		Icon pickRepairIcon = new Icon(Material.ANVIL);
+		pickRepairIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Pickaxe Repair");
+		pickRepairIcon.addLore(ChatColor.GRAY + "" + "Click here to repair your pickaxe");
+		pickRepairIcon.addLore(ChatColor.GRAY + "" + "with its respective material.");
+		pickRepairIcon.addLore("");
+		pickRepairIcon.addLore(ChatColor.RED + "" + ChatColor.ITALIC + "(must be near an anvil to repair!)");
+		pickRepairIcon.hideItemFlags();
 		
-		ItemStack shovelIcon = new ItemStack(Material.WOOD_SPADE);
-		ItemMeta shovelIconMeta = shovelIcon.getItemMeta();
-		shovelIconMeta.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Shovel Options");
-		List<String> shovelIconLore = new ArrayList<String>(2);
-		shovelIconLore.add(ChatColor.GRAY + "" + "Click here to access");
-		shovelIconLore.add(ChatColor.GRAY + "" + "your shovel options.");
-		shovelIconMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		shovelIconMeta.setLore(shovelIconLore);
-		shovelIcon.setItemMeta(shovelIconMeta);
+		Icon shovelIcon = new Icon(Material.WOOD_SPADE);
+		shovelIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Shovel Options");
+		shovelIcon.addLore(ChatColor.GRAY + "" + "Click here to access");
+		shovelIcon.addLore(ChatColor.GRAY + "" + "your shovel options.");
+		shovelIcon.hideItemFlags();
 		
-		ItemStack shovelRepairIcon = new ItemStack(Material.ANVIL);
-		ItemMeta shovelRepairIconMeta = shovelRepairIcon.getItemMeta();
-		shovelRepairIconMeta.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Shovel Repair");
-		List<String> shovelRepairIconLore = new ArrayList<String>(2);
-		shovelRepairIconLore.add(ChatColor.GRAY + "" + "Click here to repair your shovel");
-		shovelRepairIconLore.add(ChatColor.GRAY + "" + "with its respective material.");
-		shovelRepairIconLore.add("");
-		shovelRepairIconLore.add(ChatColor.RED + "" + ChatColor.ITALIC + "(must be near an anvil to repair!)");
-		shovelRepairIconMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		shovelRepairIconMeta.setLore(shovelRepairIconLore);
-		shovelRepairIcon.setItemMeta(shovelRepairIconMeta);
+		Icon shovelRepairIcon = new Icon(Material.ANVIL);
+		shovelRepairIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Shovel Repair");
+		shovelRepairIcon.addLore(ChatColor.GRAY + "" + "Click here to repair your shovel");
+		shovelRepairIcon.addLore(ChatColor.GRAY + "" + "with its respective material.");
+		shovelRepairIcon.addLore("");
+		shovelRepairIcon.addLore(ChatColor.RED + "" + ChatColor.ITALIC + "(must be near an anvil to repair!)");
+		shovelRepairIcon.hideItemFlags();
 		
-		ItemStack axeIcon = new ItemStack(Material.WOOD_AXE);
-		ItemMeta axeIconMeta = axeIcon.getItemMeta();
-		axeIconMeta.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Axe Options");
-		List<String> axeIconLore = new ArrayList<String>(2);
-		axeIconLore.add(ChatColor.GRAY + "" + "Click here to access");
-		axeIconLore.add(ChatColor.GRAY + "" + "your axe options.");
-		axeIconMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		axeIconMeta.setLore(axeIconLore);
-		axeIcon.setItemMeta(axeIconMeta);
+		Icon axeIcon = new Icon(Material.WOOD_AXE);
+		axeIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Axe Options");
+		axeIcon.addLore(ChatColor.GRAY + "" + "Click here to access");
+		axeIcon.addLore(ChatColor.GRAY + "" + "your axe options.");
+		axeIcon.hideItemFlags();
 		
-		ItemStack axeRepairIcon = new ItemStack(Material.ANVIL);
-		ItemMeta axeRepairIconMeta = axeRepairIcon.getItemMeta();
-		axeRepairIconMeta.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Axe Repair");
-		List<String> axeRepairIconLore = new ArrayList<String>(2);
-		axeRepairIconLore.add(ChatColor.GRAY + "" + "Click here to repair your axe");
-		axeRepairIconLore.add(ChatColor.GRAY + "" + "with its respective material.");
-		axeRepairIconLore.add("");
-		axeRepairIconLore.add(ChatColor.RED + "" + ChatColor.ITALIC + "(must be near an anvil to repair!)");
-		axeRepairIconMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		axeRepairIconMeta.setLore(axeRepairIconLore);
-		axeRepairIcon.setItemMeta(axeRepairIconMeta);
+		Icon axeRepairIcon = new Icon(Material.ANVIL);
+		axeRepairIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Axe Repair");
+		axeRepairIcon.addLore(ChatColor.GRAY + "" + "Click here to repair your axe");
+		axeRepairIcon.addLore(ChatColor.GRAY + "" + "with its respective material.");
+		axeRepairIcon.addLore("");
+		axeRepairIcon.addLore(ChatColor.RED + "" + ChatColor.ITALIC + "(must be near an anvil to repair!)");
+		axeRepairIcon.hideItemFlags();
 		
 		inv.setItem(3, pickIcon);
 		inv.setItem(4, shovelIcon);
@@ -110,30 +85,39 @@ public class GUI implements Listener {
 		player.openInventory(inv);
 	}
 	
+	private static final Set<String> VALIDTITLES = new HashSet<String>(Arrays.asList(new String[] {
+			ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "RPG Tools Management Menu",
+			ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Pickaxe Management",
+			ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Shovel Management",
+			ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Axe Management",
+			ChatColor.BLUE + "" + ChatColor.BOLD + "Pickaxe Repair",
+			ChatColor.BLUE + "" + ChatColor.BOLD + "Shovel Repair",
+			ChatColor.BLUE + "" + ChatColor.BOLD + "Axe Repair",
+			}));
+	
 	@EventHandler
 	public void onGUIClick(InventoryClickEvent event) {
 		if (event.getCurrentItem() == null) {
 			return;
 		}
+		
 		if (GeneralUtil.isProfessionItem(event.getCurrentItem()) && !(event.getInventory() instanceof CraftingInventory)) {
-//			event.getWhoClicked().sendMessage(event.getInventory().getType().toString());
+			// Helpful debug to see which type of inventory they are in
+			// Logger.debug(event.getInventory().getType().toString());
 			event.setCancelled(true);
 		}
+		
 		if (event.getInventory().getTitle().contains("Repair") && (event.getCurrentItem().getType().equals(Material.STAINED_GLASS_PANE) || event.getCurrentItem().getType().equals(Material.INK_SACK))) {
 			event.setCancelled(true);
 		}
-		if ((event.getInventory().getTitle().equals(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "RPG Tools Management Menu") || 
-				event.getInventory().getTitle().equals(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Pickaxe Management") || 
-				event.getInventory().getTitle().equals(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Shovel Management") || 
-				event.getInventory().getTitle().equals(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Axe Management")) && 
-				(event.getWhoClicked() instanceof Player)) {
-			
+		
+		String title = event.getInventory().getTitle();
+		if (VALIDTITLES.contains(title) && (event.getWhoClicked() instanceof Player)) {
 			event.setCancelled(true);
-			
 			Player player = (Player) event.getWhoClicked();
 			
-			// In main menu
-			if (event.getInventory().getTitle().equals(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "RPG Tools Management Menu")) {
+			// In hub menu
+			if (title.equals(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "RPG Tools Management Menu")) {
 				if (event.getRawSlot() == 3) {
 					PickaxeGUI.openManagementInventory(player);
 				}
@@ -142,11 +126,12 @@ public class GUI implements Listener {
 				}
 			}
 			
+			// We don't need player data until we get to more specific menus
 			PlayerData playerData = PlayerData.getData(player);
 			PickaxeData pickData = playerData.getPickaxeData();
 			
-			// In pickaxe Management
-			if (event.getInventory().getTitle().equals(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Pickaxe Management")) {
+			// In pickaxe management
+			if (title.equals(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Pickaxe Management")) {
 				if (event.getRawSlot() == 2) {
 					LevelUtil.levelPickSpeed(player);
 				}
