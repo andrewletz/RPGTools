@@ -22,11 +22,11 @@ public class AutoRegen {
 		YML = yamlEnum;
 		
 		if (yamlEnum == YAMLFile.PICKAXECONFIG) {
-			initiateScheduler(convertLevelToRandomTick(playerData.getPickaxeData().getPickaxeAutoregen()));
+			initiatePickaxeScheduler(convertLevelToRandomTick(playerData.getPickaxeData().getPickaxeAutoregen()));
 		} else if (yamlEnum == YAMLFile.SHOVELCONFIG) {
-			initiateScheduler(convertLevelToRandomTick(playerData.getShovelData().getShovelAutoregen()));
+//			initiateShovelScheduler(convertLevelToRandomTick(playerData.getShovelData().getShovelAutoregen()));
 		} else if (yamlEnum == YAMLFile.AXECONFIG) {
-//			initiateScheduler(convertLevelToRandomTick(playerData.getAxeData().getAxeAutoregen()));
+//			initiateAxeScheduler(convertLevelToRandomTick(playerData.getAxeData().getAxeAutoregen()));
 		}
 	}
 	
@@ -39,7 +39,7 @@ public class AutoRegen {
 	}
 
 	// Make multiple versions of this for each tool
-	public void initiateScheduler(int tickRate) {
+	public void initiatePickaxeScheduler(int tickRate) {
 		Integer taskId = scheduler.scheduleSyncRepeatingTask(RPGTools.getPlugin(), new Runnable() {
             @SuppressWarnings("deprecation")
 			@Override

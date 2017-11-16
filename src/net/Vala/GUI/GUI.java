@@ -6,6 +6,7 @@ import java.util.Set;
 
 import net.Vala.config.PickaxeData;
 import net.Vala.config.PlayerData;
+import net.Vala.general.Logger;
 import net.Vala.pickaxe.PickaxeFactory;
 import net.Vala.util.GeneralUtil;
 import net.md_5.bungee.api.ChatColor;
@@ -132,8 +133,42 @@ public class GUI implements Listener {
 			
 			// In pickaxe management
 			if (title.equals(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Pickaxe Management")) {
-				if (event.getRawSlot() == 2) {
-					LevelUtil.levelPickSpeed(player);
+				switch (event.getRawSlot()) {
+					case 2:
+						PickaxeLevelUtil.levelSpeed(player);
+						break;
+					case 3:
+						PickaxeLevelUtil.levelFortune(player);
+						break;
+					case 4:
+						PickaxeLevelUtil.levelAutoregen(player);
+						break;
+					case 5:
+						PickaxeLevelUtil.levelReinforced(player);
+						break;
+					case 7:
+						if (!pickData.getPickaxeAutosmeltUnlocked()) {
+							PickaxeLevelUtil.unlockAutosmelt(player);
+						} else {
+							if (pickData.getPickaxeSilktouch()) { break; }
+							boolean toggleState = pickData.getPickaxeAutosmelt();
+							pickData.setPickaxeAutosmelt(!toggleState);
+							PickaxeFactory.updatePickaxeInInventory(player);
+							PickaxeGUI.openManagementInventory(player);
+						}
+						break;
+					case 8:
+						if (!pickData.getPickaxeSilktouchUnlocked()) {
+							PickaxeLevelUtil.unlockSilktouch(player);
+						} else {
+							if (pickData.getPickaxeAutosmelt()) { break; }
+							boolean toggleState = pickData.getPickaxeSilktouch();
+							pickData.setPickaxeSilktouch(!toggleState);
+							PickaxeFactory.updatePickaxeInInventory(player);
+							PickaxeGUI.openManagementInventory(player);
+						}
+						break;
+				
 				}
 			}
 		

@@ -6,6 +6,7 @@ import java.util.List;
 import net.Vala.config.PickaxeData;
 import net.Vala.config.PlayerData;
 import net.Vala.config.YAMLFile;
+import net.Vala.general.Logger;
 import net.Vala.pickaxe.PickaxeFactory;
 import net.Vala.traits.AutoRegen;
 import net.Vala.traits.DropChances;
@@ -91,11 +92,9 @@ public class PickaxeGUI {
 		}
 		regenIcon.addLore(ChatColor.GRAY + "" + ChatColor.BOLD + "Current Level: " + ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + pickaxeData.getPickaxeAutoregen());
 		regenIcon.addLore("");
-		regenIcon.addLore(ChatColor.GRAY + "" + ChatColor.BOLD + "Regen rate: " + ChatColor.BLUE + "per " + pickaxeData.getAutoRegenClass().convertLevelToRandomTick(pickaxeData.getPickaxeLevel()) + " ticks");
+		regenIcon.addLore(ChatColor.GRAY + "" + ChatColor.BOLD + "Regen rate: " + ChatColor.BLUE + "per " + pickaxeData.getAutoRegenClass().convertLevelToRandomTick(pickaxeData.getPickaxeAutoregen()) + " ticks");
 		if (!pickaxeData.isMaxAutoregen()) {
-			regenIcon.addLore(ChatColor.BLUE + "" + ChatColor.BOLD + "               -> " + ChatColor.BLUE + "per " + pickaxeData.getAutoRegenClass().convertLevelToRandomTick(pickaxeData.getPickaxeLevel() + 1) + " ticks");
-		}
-		if (!pickaxeData.isMaxAutoregen()) {
+			regenIcon.addLore(ChatColor.BLUE + "" + ChatColor.BOLD + "               -> " + ChatColor.BLUE + "per " + pickaxeData.getAutoRegenClass().convertLevelToRandomTick(pickaxeData.getPickaxeAutoregen() + 1) + " ticks");
 			regenIcon.addLore("");
 			regenIcon.addLore(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "Left-click" + ChatColor.GRAY + " here to level up");
 			regenIcon.addLore(ChatColor.GRAY + "your pick auto-regen to level " + ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + (pickaxeData.getPickaxeAutoregen() + 1) + ".");
@@ -115,8 +114,6 @@ public class PickaxeGUI {
 		if(!pickaxeData.isMaxReinforced()) {
 			reinforcedIcon.addLore(ChatColor.BLUE + "         " + reinforced.getTotalPercent(pickaxeData.getPickaxeReinforced()) + "%" + ChatColor.BOLD + " -> " 
 					+ ChatColor.BLUE + "" + reinforced.getTotalPercent(pickaxeData.getPickaxeReinforced() + 1) + "%");
-		}
-		if (!pickaxeData.isMaxReinforced()) {
 			reinforcedIcon.addLore("");
 			reinforcedIcon.addLore(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "Left-click" + ChatColor.GRAY + " here to level up");
 			reinforcedIcon.addLore(ChatColor.GRAY + "your reinforced to level " + ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + (pickaxeData.getPickaxeReinforced() + 1) + ".");
@@ -130,9 +127,6 @@ public class PickaxeGUI {
 		
 		// Set up autosmelt icon/button
 		Icon autosmeltIcon = new Icon(Material.BLAZE_POWDER);
-		if (pickaxeData.getPickaxeAutosmelt()) {
-			EnchantGlow.addGlow(autosmeltIcon);
-		}
 		if (pickaxeData.getPickaxeAutosmeltUnlocked()) {
 			autosmeltIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Autosmelt" + ChatColor.AQUA + " [UNLOCKED]");
 		} else {
@@ -147,12 +141,12 @@ public class PickaxeGUI {
 			autosmeltIcon.addLore(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "Left-click" + ChatColor.GRAY + " here to toggle");
 			autosmeltIcon.addLore(ChatColor.GRAY + "autosmelt on your pickaxe.");
 		}
+		if (pickaxeData.getPickaxeAutosmelt()) {
+			autosmeltIcon.addGlow();
+		}
 		
 		// Set up silktouch icon/button
 		Icon silktouchIcon = new Icon(Material.GRASS);
-		if (pickaxeData.getPickaxeSilktouch()) {
-			EnchantGlow.addGlow(silktouchIcon);
-		}
 		if (pickaxeData.getPickaxeSilktouchUnlocked()) {
 			silktouchIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Silktouch" + ChatColor.AQUA + " [UNLOCKED]");
 		} else {
@@ -166,6 +160,9 @@ public class PickaxeGUI {
 		} else {
 			silktouchIcon.addLore(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "Left-click" + ChatColor.GRAY + " here to toggle");
 			silktouchIcon.addLore(ChatColor.GRAY + "silktouch on your pickaxe.");
+		}
+		if (pickaxeData.getPickaxeSilktouch()) {
+			silktouchIcon.addGlow();
 		}
 		
 		// Set all the inventory slots to their respective icons

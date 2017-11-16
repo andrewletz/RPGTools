@@ -332,6 +332,7 @@ public class PickaxeData {
 	}
 	
 	public AutoRegen getAutoRegenClass() {
+		refreshAutoRegenTimer();
 		return autoRegenTimer;
 	}
 	

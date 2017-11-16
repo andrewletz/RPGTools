@@ -3,6 +3,8 @@ package net.Vala.GUI;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.Vala.util.EnchantGlow;
+
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -43,6 +45,17 @@ public class Icon extends ItemStack {
 		lore = newLore;
 		itemMeta.setLore(lore);
 		super.setItemMeta(itemMeta);
+	}
+	
+	
+	/**
+	 * Add's the enchantment effect to the icon. Make sure to use this method only after all 
+	 * other meddling is done! (after adding all lore, setting all names).
+	 * @param
+	 * @return
+	 */
+	public void addGlow() {
+		EnchantGlow.addGlow(this);
 	}
 	
 	public void hideItemFlags() {
