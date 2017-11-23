@@ -25,7 +25,8 @@ public enum YAMLFile {
 	SHOVELSPCOSTS("shovelSpCosts"),
 	AXEBLOCKS("axeBlocks"),
 	AXECONFIG("axeConfig"),
-	AXESPCOSTS("axeSpCosts");
+	AXESPCOSTS("axeSpCosts"),
+	REPAIR("repair");
 	;
 	// @formatter:on
 

@@ -9,6 +9,7 @@ import net.Vala.config.PlayerData;
 import net.Vala.general.Logger;
 import net.Vala.pickaxe.PickaxeFactory;
 import net.Vala.util.GeneralUtil;
+import net.Vala.util.ScrapUtil;
 import net.md_5.bungee.api.ChatColor;
 
 import org.bukkit.Bukkit;
@@ -108,17 +109,18 @@ public class GUI implements Listener {
 			event.setCancelled(true);
 		}
 		
-		if (event.getInventory().getTitle().contains("Repair") && (event.getCurrentItem().getType().equals(Material.STAINED_GLASS_PANE) || event.getCurrentItem().getType().equals(Material.INK_SACK))) {
-			event.setCancelled(true);
-		}
-		
 		String title = event.getInventory().getTitle();
 		if (VALIDTITLES.contains(title) && (event.getWhoClicked() instanceof Player)) {
-			event.setCancelled(true);
+			// Cover general repair menu case where we need to cancel
+			if (event.getInventory().getTitle().contains("Repair") && (event.getCurrentItem().getType().equals(Material.STAINED_GLASS_PANE) || event.getCurrentItem().getType().equals(Material.INK_SACK))) {
+				event.setCancelled(true);
+			}
+			
 			Player player = (Player) event.getWhoClicked();
 			
 			// In hub menu
 			if (title.equals(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "RPG Tools Management Menu")) {
+				event.setCancelled(true);
 				if (event.getRawSlot() == 3) {
 					PickaxeGUI.openManagementInventory(player);
 				}
@@ -133,6 +135,7 @@ public class GUI implements Listener {
 			
 			// In pickaxe management
 			if (title.equals(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Pickaxe Management")) {
+				event.setCancelled(true);
 				switch (event.getRawSlot()) {
 					case 2:
 						PickaxeLevelUtil.levelSpeed(player);
@@ -170,6 +173,13 @@ public class GUI implements Listener {
 						break;
 				
 				}
+			}
+			
+			// In pickaxe repair menu
+			if(title.equals(ChatColor.BLUE + "" + ChatColor.BOLD + "Pickaxe Repair")) {
+				double scrapVal = ScrapUtil.getMaterialScrapValue(event.getCurrentItem().getType(), ScrapUtil.matToString(ScrapUtil.toolMatToScrapMat(PickaxeFactory.getPickaxeTypeForLevel(pickData.getPickaxeLevel()))));
+				Logger.debug(Double.toString(scrapVal));
+				
 			}
 		
 		}

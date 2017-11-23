@@ -12,6 +12,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -68,6 +69,15 @@ public class GeneralListener implements Listener{
 				if (item != null) {
 					event.getPlayer().getLocation().getWorld().dropItemNaturally(event.getPlayer().getLocation(), item);
 				}
+			}
+		}
+	}
+	
+	@EventHandler
+	public void onPlayerDeath(PlayerDeathEvent event) {
+		for (ItemStack i : event.getDrops()) {
+			if (PickaxeFactory.isProfessionPickaxe(i)) {
+				event.getDrops().remove(i);
 			}
 		}
 	}

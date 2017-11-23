@@ -1,5 +1,7 @@
 package net.Vala.util;
 
+import net.Vala.config.YAMLFile;
+
 import org.bukkit.Material;
 
 public class ScrapUtil {
@@ -36,7 +38,7 @@ public class ScrapUtil {
     	case WOOD:
     		return "Wood";
     	case COBBLESTONE:
-    		return "Cobble";
+    		return "Stone";
     	case IRON_INGOT:
     		return "Iron";
     	case GOLD_INGOT:
@@ -48,8 +50,9 @@ public class ScrapUtil {
     	}
     }
     
-    public int diamondScrapMatToValue(Material mat) {
-    	return 1;
+    public static double getMaterialScrapValue(Material mat, String type) {
+    	double multiplier = YAMLFile.REPAIR.getConfig().getDouble(type + ".multiplier");
+    	return multiplier * YAMLFile.REPAIR.getConfig().getDouble(type + "." + mat.toString());
     }
 	
 }

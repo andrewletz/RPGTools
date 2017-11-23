@@ -1,0 +1,126 @@
+# Should durability be taken into account for repair value (default true)
+useDurability: true
+
+# Durability restored for each item type
+# Wood items
+Wood:
+  LOG: 4
+  WOOD: 1
+  WOOD_AXE: 3
+  WOOD_BUTTON: 2
+  WOOD_DOOR: 6
+  WOOD_HOE: 2
+  WOOD_PICKAXE: 3
+  WOOD_PLATE: 2
+  WOOD_SPADE: 1
+  WOOD_STAIRS: 2
+  WOOD_STEP: 1
+  WOOD_SWORD: 2
+  WOODEN_DOOR: 6
+  BOAT: 5
+  BOAT_ACACIA: 5
+  BOAT_BIRCH: 5
+  BOAT_DARK_OAK: 5
+  BOAT_JUNGLE: 5
+  BOAT_SPRUCE: 5
+  SPRUCE_DOOR: 6
+  SPRUCE_DOOR_ITEM: 6
+  SPRUCE_FENCE: 2
+  SPRUCE_FENCE_GATE: 4
+  SPRUCE_WOOD_STAIRS: 2
+  BIRCH_DOOR: 6
+  BIRCH_DOOR_ITEM: 6
+  BIRCH_FENCE: 2
+  BIRCH_FENCE_GATE: 4
+  BIRCH_WOOD_STAIRS: 2
+  JUNGLE_DOOR: 6
+  JUNGLE_DOOR_ITEM: 6
+  JUNGLE_FENCE: 2
+  JUNGLE_FENCE_GATE: 4
+  JUNGLE_WOOD_STAIRS: 2
+  ACACIA_DOOR: 6
+  ACACIA_DOOR_ITEM: 6
+  ACACIA_FENCE: 2
+  ACACIA_FENCE_GATE: 4
+  ACACIA_STAIRS: 2
+  DARK_OAK_DOOR: 6
+  DARK_OAK_DOOR_ITEM: 6
+  DARK_OAK_FENCE: 2
+  DARK_OAK_FENCE_GATE: 4
+  DARK_OAK_STAIR: 2
+
+# Stone items
+Stone:
+  STONE: 2
+  COBBLESTONE: 1
+  STONE_AXE: 3
+  STONE_BUTTON: 2
+  STONE_HOE: 2
+  STONE_PICKAXE: 3
+  STONE_PLATE: 2
+  STONE_SLAB2: 2
+  STONE_SPADE: 1
+  STONE_SWORD: 2
+  COBBLESTONE_STAIRS: 2
+  COBBLE_WALL: 1
+
+# Iron items
+Iron:
+  # How much these values should be multiplied by (default 3)
+  multiplier: 3.0
+  IRON_AXE: 3
+  IRON_BARDING: 6
+  IRON_BLOCK: 9
+  IRON_BOOTS: 4
+  IRON_CHESTPLATE: 8
+  IRON_DOOR: 6
+  IRON_FENCE: 2
+  IRON_HELMET: 5
+  IRON_HOE: 2
+  IRON_INGOT: 1
+  IRON_LEGGINGS: 7
+  IRON_NUGGET: 0.1
+  IRON_ORE: 0.5
+  IRON_PICKAXE: 3
+  IRON_PLATE: 2
+  IRON_SPADE: 1
+  IRON_SWORD: 2
+  IRON_TRAPDOOR: 2
+
+# Gold items
+Gold:
+  # How much these values should be multiplied by (default 5)
+  multiplier: 5.0
+  GOLD_AXE: 3
+  GOLD_BARDING: 6
+  GOLD_BLOCK: 9
+  GOLD_BOOTS: 4
+  GOLD_CHESTPLATE: 8
+  GOLD_HELMET: 5
+  GOLD_HOE: 2
+  GOLD_INGOT: 1
+  GOLD_LEGGINGS: 7
+  GOLD_NUGGET: 0.1
+  GOLD_ORE: 0.5
+  GOLD_PICKAXE: 3
+  GOLD_PLATE: 2
+  GOLD_RECORD: 12
+  GOLD_SPADE: 1
+  GOLD_SWORD: 2  
+
+# Diamond items
+Diamond:
+  # How much these values should be multiplied by (default 7)
+  multiplier: 7.0
+  DIAMOND_AXE: 3
+  DIAMOND_BARDING: 6
+  DIAMOND_BLOCK: 9
+  DIAMOND_BOOTS: 4
+  DIAMOND_CHESTPLATE: 8
+  DIAMOND_HELMET: 5
+  DIAMOND_HOE: 2
+  DIAMOND_LEGGINGS: 7
+  DIAMOND_ORE: 0.5
+  DIAMOND_PICKAXE: 3
+  DIAMOND_SPADE: 1
+  DIAMOND_SWORD: 2
