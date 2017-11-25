@@ -419,8 +419,10 @@ public class PickaxeData {
 		autoRegenTimer = new AutoRegen(playerData, YAMLFile.PICKAXECONFIG);
 	}
 	
-	public AutoRegen getAutoRegenClass() {
-		refreshAutoRegenTimer();
+	public AutoRegen getAutoRegenClass(boolean refresh) {
+		if (refresh) {
+			refreshAutoRegenTimer();
+		}
 		return autoRegenTimer;
 	}
 	

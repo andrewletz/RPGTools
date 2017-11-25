@@ -51,6 +51,9 @@ public class GeneralListener implements Listener{
 	
 	@EventHandler
 	public void onBlockPlace(BlockPlaceEvent event) {
+		// Track metadata so they can't place and destroy blocks over and over
+		// Not a fullproof solution, they can still place blocks and on server restart they
+		// will get full exp and drops again. Look at mcMMO's solution for more elegance.
 		Block block = event.getBlock();
 		block.setMetadata("placedByPlayer", new FixedMetadataValue(RPGTools.getPlugin(), true));
 	}

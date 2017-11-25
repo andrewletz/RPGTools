@@ -1,8 +1,11 @@
 package net.Vala.listeners;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import net.Vala.config.PlayerData;
+import net.Vala.general.Logger;
+import net.Vala.general.RPGTools;
 import net.Vala.pickaxe.Ore;
 import net.Vala.pickaxe.Ore.Ores;
 import net.Vala.pickaxe.Pickaxe;
@@ -19,6 +22,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerAnimationEvent;
 import org.bukkit.event.player.PlayerAnimationType;
+import org.bukkit.metadata.MetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
@@ -42,7 +46,7 @@ public class MiningListener implements Listener {
 		
 		Block targetBlock = null;
         RayTrace rayTrace = new RayTrace(player.getEyeLocation().toVector(),player.getEyeLocation().getDirection());
-        ArrayList<Vector> positions = rayTrace.traverse(4.582,0.01);
+        ArrayList<Vector> positions = rayTrace.traverse(4.582,0.01); // 4.582 was the best value I could get for mining range by just testing
         for(int i = 0; i < positions.size();i++) {
 
             Location position = positions.get(i).toLocation(player.getWorld());
@@ -58,6 +62,19 @@ public class MiningListener implements Listener {
         if (targetBlock == null) {
         	return;
         }
+        
+        // Make sure this block wasn't placed by a player
+        List<MetadataValue> metas = targetBlock.getMetadata("placedByPlayer");
+        for (MetadataValue m : metas) {
+        	if (m.getOwningPlugin() == RPGTools.getPlugin()) {
+        		if (m.value() != null) {
+        			if ((boolean) m.value()) {
+        				return;
+        			}
+        		}
+        	}
+        }
+        
 		Ore ore = Ores.getOreFromMaterial(targetBlock.getType(), targetBlock.getData());
 		if (ore == null) {
 			return;
