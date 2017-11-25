@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import net.Vala.config.PlayerData;
 import net.Vala.pickaxe.Ore;
 import net.Vala.pickaxe.Ore.Ores;
-import net.Vala.pickaxe.PickaxeFactory;
+import net.Vala.pickaxe.Pickaxe;
+import net.Vala.pickaxe.PickaxeUtil;
 import net.Vala.raytrace.BoundingBox;
 import net.Vala.raytrace.RayTrace;
 
@@ -29,7 +30,7 @@ public class MiningListener implements Listener {
 	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onPlayerAnimation(PlayerAnimationEvent event) throws InstantiationException, IllegalAccessException {
-		if (!PickaxeFactory.isProfessionPickaxe(event.getPlayer().getItemInHand())) {
+		if (!PickaxeUtil.isProfessionPickaxe(event.getPlayer().getItemInHand())) {
 			return;
 		}
 		Player player = event.getPlayer();
@@ -78,7 +79,7 @@ public class MiningListener implements Listener {
 	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent event) {
-		if (!PickaxeFactory.isProfessionPickaxe(event.getPlayer().getItemInHand())) {
+		if (!PickaxeUtil.isProfessionPickaxe(event.getPlayer().getItemInHand())) {
 			return;
 		}
 		
@@ -90,7 +91,7 @@ public class MiningListener implements Listener {
 		}
 		playerData.getPickaxeData().modifyPickaxeCurrentDurability(-1);
 		
-		PickaxeFactory.updatePickaxeInInventory(event.getPlayer());
+		Pickaxe.updatePickaxeInInventory(event.getPlayer());
 
 	}
 

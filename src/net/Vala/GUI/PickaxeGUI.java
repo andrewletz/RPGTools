@@ -7,7 +7,8 @@ import net.Vala.config.PickaxeData;
 import net.Vala.config.PlayerData;
 import net.Vala.config.YAMLFile;
 import net.Vala.general.Logger;
-import net.Vala.pickaxe.PickaxeFactory;
+import net.Vala.pickaxe.Pickaxe;
+import net.Vala.pickaxe.PickaxeUtil;
 import net.Vala.traits.AutoRegen;
 import net.Vala.traits.DropChances;
 import net.Vala.traits.GeneralTraitUtil;
@@ -30,7 +31,7 @@ public class PickaxeGUI {
 		PickaxeData pickaxeData = PlayerData.getData(player).getPickaxeData();
 		
 		// Get our pick icon for the first slot
-		ItemStack pickIcon = PickaxeFactory.getNewPickaxe(player);
+		ItemStack pickIcon = Pickaxe.getNewPickaxe(player);
 		
 		// Set up speed icon/button
 		Icon speedIcon = new Icon(Material.NETHER_STAR);
@@ -42,8 +43,8 @@ public class PickaxeGUI {
 		}
 		speedIcon.addLore(ChatColor.GRAY + "" + ChatColor.BOLD + "Current Level: " + ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + currentSpeed);
 		speedIcon.addLore("");
-		speedIcon.addLore(ChatColor.GRAY + "" + ChatColor.BOLD + "Speed: " + ChatColor.BLUE + PickaxeFactory.convertSpeedToReadable(PickaxeFactory.convertPickSpeedToDamagePerTick(currentSpeed))
-						+ (!pickaxeData.isMaxSpeed() ? ChatColor.BOLD + " -> " + ChatColor.BLUE + PickaxeFactory.convertSpeedToReadable(PickaxeFactory.convertPickSpeedToDamagePerTick(currentSpeed + 1)) : ""));
+		speedIcon.addLore(ChatColor.GRAY + "" + ChatColor.BOLD + "Speed: " + ChatColor.BLUE + PickaxeUtil.convertSpeedToReadable(PickaxeUtil.convertPickSpeedToDamagePerTick(currentSpeed))
+						+ (!pickaxeData.isMaxSpeed() ? ChatColor.BOLD + " -> " + ChatColor.BLUE + PickaxeUtil.convertSpeedToReadable(PickaxeUtil.convertPickSpeedToDamagePerTick(currentSpeed + 1)) : ""));
 		speedIcon.addLore("");
 		if (!pickaxeData.isMaxSpeed()) {
 			speedIcon.addLore(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "Left-click" + ChatColor.GRAY + " here to level up");
@@ -191,11 +192,11 @@ public class PickaxeGUI {
 		repairIcon.addLore(ChatColor.GRAY + "To repair your pickaxe, you need");
 		repairIcon.addLore(ChatColor.GRAY + "to place items that are made of");
 		repairIcon.addLore(ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + 
-				ScrapUtil.matToString(ScrapUtil.toolMatToScrapMat(PickaxeFactory.getPickaxeTypeForLevel(pickaxeData.getPickaxeLevel()))) + ChatColor.GRAY + " in this inventory and left");
+				ScrapUtil.matToString(ScrapUtil.toolMatToScrapMat(Pickaxe.getPickaxeTypeForLevel(pickaxeData.getPickaxeLevel()))) + ChatColor.GRAY + " in this inventory and left");
 		repairIcon.addLore(ChatColor.GRAY + "click this button." + ChatColor.RED +  " Must be near an anvil.");
 		
 		// Set all the inventory slots to their respective icons
-		inv.setItem(18, PickaxeFactory.getNewPickaxe(player));
+		inv.setItem(18, Pickaxe.getNewPickaxe(player));
 		inv.setItem(19, GUI.BLANK_PANE);
 		inv.setItem(20, GUI.BLANK_PANE);
 		inv.setItem(21, GUI.BLANK_PANE);

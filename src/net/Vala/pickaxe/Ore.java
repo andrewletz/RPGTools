@@ -26,7 +26,7 @@ public class Ore extends Mineable{
 	@Override
 	public boolean isMineable(PlayerData playerData) {
 		return playerData.getPickaxeData().getPickaxeLevel() >= getMinLevel()
-				&& PickaxeFactory.isPickaxeMaterial(playerData.getPlayer().getItemInHand().getType());
+				&& PickaxeUtil.isPickaxeMaterial(playerData.getPlayer().getItemInHand().getType());
 	}
 	
 	public ItemStack getAutosmeltDrop() {

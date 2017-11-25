@@ -5,7 +5,8 @@ import java.lang.reflect.Method;
 
 import net.Vala.general.RPGTools;
 import net.Vala.pickaxe.Ore;
-import net.Vala.pickaxe.PickaxeFactory;
+import net.Vala.pickaxe.Pickaxe;
+import net.Vala.pickaxe.PickaxeUtil;
 import net.Vala.traits.AutoRegen;
 import net.Vala.traits.DropChances;
 import net.Vala.traits.Reinforced;
@@ -13,9 +14,15 @@ import net.Vala.util.GeneralUtil;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.ExperienceOrb;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.material.MaterialData;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class PickaxeData {
@@ -25,6 +32,7 @@ public class PickaxeData {
 	private AutoRegen autoRegenTimer;
 	private Ore targetOre;
 	private Reinforced reinforced;
+	private boolean canMine = true;
 	
 	public PickaxeData(PlayerData playerData) {
 		this.playerData = playerData;
@@ -53,7 +61,7 @@ public class PickaxeData {
 	 */
 	
 	public int getPickaxeMaxDurability() {
-		return PickaxeFactory.convertPickLevelToDurability(getPickaxeLevel());
+		return Pickaxe.convertPickLevelToDurability(getPickaxeLevel());
 	}
 	
 	public void setPickaxeCurrentDurability(int value) {
@@ -62,7 +70,7 @@ public class PickaxeData {
 		}
 		config.set("Pickaxe.CurrentDurability", value);
 		playerData.saveConfig();
-		PickaxeFactory.updatePickaxeInInventory(playerData.getPlayer());
+		Pickaxe.updatePickaxeInInventory(playerData.getPlayer());
 	}
 	
 	public void modifyPickaxeCurrentDurability(int value) {
@@ -122,7 +130,7 @@ public class PickaxeData {
 	 */
 	
 	public void setPickaxeExp(int value) {
-		if (getPickaxeLevel() >= PickaxeFactory.getMaxLevel()) {
+		if (getPickaxeLevel() >= Pickaxe.MAX_LEVEL) {
 			return;
 		}
 		config.set("Pickaxe.Exp", value);
@@ -193,11 +201,11 @@ public class PickaxeData {
 	
 	public int getPickaxeExpToNextLevel() {
 		int level = getPickaxeLevel();
-		return (int) (PickaxeFactory.DIFFICULTY_MULTIPLIER * Math.pow(level, 1.8) + (4 * level) + 40);
+		return (int) (Pickaxe.DIFFICULTY_MULTIPLIER * Math.pow(level, 1.8) + (4 * level) + 40);
 	}
 
 	public void levelUpPickaxe() {
-		if (getPickaxeLevel() >= PickaxeFactory.getMaxLevel()) {
+		if (getPickaxeLevel() >= Pickaxe.MAX_LEVEL) {
 			return;
 		}
 
@@ -215,7 +223,7 @@ public class PickaxeData {
 			@Override
 			public void run() {
 				setPickaxeExp(newExp);
-				PickaxeFactory.updatePickaxeInInventory(playerData.getPlayer());
+				Pickaxe.updatePickaxeInInventory(playerData.getPlayer());
 			}
 		}.runTaskLater(RPGTools.getPlugin(), 1L);
 	}
@@ -234,19 +242,99 @@ public class PickaxeData {
 	}
 
 	public void damageBlock() {
-		if (playerData.getTargetBlock() == null || this.targetOre == null) {
-			resetBlockDamage();
+		if (canMine) {
+			canMine = false;
+			if (playerData.getTargetBlock() == null || this.targetOre == null) {
+				resetBlockDamage();
+				return;
+			}
+			playerData.modifyBlockDamage(getPickaxeTotalSpeed());
+			GeneralUtil.sendBreakPacket(playerData.getPlayer(), playerData.getTargetBlock(), (int) (9 * (playerData.getBlockDamage() / (float) this.targetOre.getToughness())));
+			if (playerData.getBlockDamage() >= this.targetOre.getToughness()) {
+				// Break the block
+				GeneralUtil.sendBreakPacket(playerData.getPlayer(), playerData.getTargetBlock(), -1);
+				breakBlock(playerData.getPlayer(), playerData.getTargetBlock(), this.targetOre);
+				playerData.setTargetBlock(null);
+				this.targetOre = null;
+				resetBlockDamage();
+				
+			}
+			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RPGTools.getPlugin(), new Runnable() {
+			     public void run() {
+			          canMine = true;
+			     }
+			}, 1);
+			
+		}
+	}
+	
+	/**
+	 * Breaks the block as though the player mined it
+	 * @param player the player who is breaking
+	 * @param block the block to be broken
+	 * @param ore the corresponding ore for the block
+	 */
+	private void breakBlock(Player player, Block block, Ore ore) {
+		if (ore == null) {
 			return;
 		}
-		playerData.modifyBlockDamage(getPickaxeTotalSpeed());
-		GeneralUtil.sendBreakPacket(playerData.getPlayer(), playerData.getTargetBlock(), (int) (9 * (playerData.getBlockDamage() / (float) this.targetOre.getToughness())));
-		if (playerData.getBlockDamage() >= this.targetOre.getToughness()) {
-			// Break the block
-			PickaxeFactory.breakBlock(playerData.getPlayer(), playerData.getTargetBlock(), this.targetOre);
-			playerData.setTargetBlock(null);
-			this.targetOre = null;
-			resetBlockDamage();
+		if (!ore.isMineable(playerData)) {
+			return;
 		}
+		// All checks complete, Pickaxe is safe.
+		
+		// Drops
+		ItemStack drop;
+		if(getPickaxeAutosmelt()) {
+			drop = ore.getAutosmeltDrop();
+		} else if(getPickaxeSilktouch()) {
+			drop = ore.getSilkDrop();
+		} else {
+			drop = ore.getDrop();
+		}
+		int dropAmount = PickaxeUtil.rollDropAmount(playerData);
+		drop.setAmount(dropAmount);
+		
+		int expAmount = (int) PickaxeUtil.getFortuneExpMultiplier(dropAmount) * ore.getRandomExp();
+		modifyPickaxeExp(expAmount, dropAmount);
+		if (!getPickaxeShouldProtect()) {
+			modifyPickaxeCurrentDurability(-1);
+		} else {
+			player.playSound(player.getLocation(), Sound.ITEM_SHIELD_BLOCK, 0.06F, 1.7F);
+		}
+		
+		// This lib is broken rn
+//		ParticleEffect.FIREWORKS_SPARK.send(Bukkit.getOnlinePlayers(), player.getLocation(), 0.1F, 0.1F, 0.1F, 0.1F, 20);
+		
+		double x, y, z;
+		x = block.getLocation().getX();
+		y = block.getLocation().getY();
+		z = block.getLocation().getZ();
+		
+		if (dropAmount == 3) {
+			// Triple effect
+			player.getWorld().spawnParticle(Particle.DRAGON_BREATH,  x + 0.5, y + 0.5, z + 0.5, 8, 0F, 0F, 0F, 0.01);
+		} else if (dropAmount == 2) {
+			// Double effect
+			player.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, x + 0.5, y + 0.5, z + 0.5, 8, 0F, 0F, 0F, 0.01);
+		}
+		
+		if (getPickaxeAutosmelt()) {
+			player.getWorld().spawnParticle(Particle.FLAME,  x + 0.5, y + 0.5, z + 0.5, 4, 0F, 0F, 0F, 0.009);
+		}
+		
+		player.getWorld().spawnParticle(Particle.BLOCK_CRACK, x + 0.5, y + 0.5, z + 0.5, 35, 0F, 0F, 0F, 1, new MaterialData(block.getType()));
+		player.playSound(block.getLocation(), Sound.BLOCK_STONE_BREAK, 1F, 0.8F);
+		block.setType(Material.AIR);
+		block.getLocation().getWorld().dropItemNaturally(block.getLocation(), drop);
+		int randExp = ore.getRandomVanillaExp();
+		if(!getPickaxeSilktouch() && randExp != 0) {
+			((ExperienceOrb)block.getWorld().spawn(block.getLocation(), ExperienceOrb.class)).setExperience(randExp);
+		}
+		
+//		playerData.resetBlockDamage();
+//		playerData.setTargetBlock(null, null);
+		Pickaxe.updatePickaxeInInventory(player);
 	}
 
 	public void resetBlockDamage() {
@@ -277,7 +365,7 @@ public class PickaxeData {
 	}
 	
 	public double getPickaxeTotalSpeed() {
-		return PickaxeFactory.convertPickSpeedToDamagePerTick(getPickaxeSpeed());
+		return PickaxeUtil.convertPickSpeedToDamagePerTick(getPickaxeSpeed());
 	}
 	
 	public void setPickaxeFortune(int value) {
@@ -300,7 +388,7 @@ public class PickaxeData {
 	}
 	
 	public DropChances getPickaxeFortuneDrop() {
-		return PickaxeFactory.convertPickaxeLuckLevelToPickaxeDropChances(getPickaxeFortune());
+		return PickaxeUtil.convertPickaxeLuckLevelToPickaxeDropChances(getPickaxeFortune());
 	}
 	
 	public void setPickaxeAutoregen(int value) {

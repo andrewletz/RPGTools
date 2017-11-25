@@ -2,7 +2,8 @@ package net.Vala.util;
 
 import java.util.HashSet;
 
-import net.Vala.pickaxe.PickaxeFactory;
+import net.Vala.pickaxe.Pickaxe;
+import net.Vala.pickaxe.PickaxeUtil;
 import net.Vala.shovel.ShovelFactory;
 import net.minecraft.server.v1_12_R1.BlockPosition;
 import net.minecraft.server.v1_12_R1.PacketPlayOutBlockBreakAnimation;
@@ -54,9 +55,7 @@ public class GeneralUtil {
 	 * @param data an int from 1 to 9 that increases the cracking size
 	 */
 	public static void sendBreakPacket(Player player, Block block, int data) {
-		if (data < 1) {
-			data = 1;
-		} else if (data > 9) {
+		if (data > 9) {
 			data = 9;
 		}
 		BlockPosition bp = new BlockPosition(block.getX(), block.getY(), block.getZ());
@@ -87,7 +86,7 @@ public class GeneralUtil {
     } 
     
     public static boolean isProfessionItem(ItemStack item) {
-    	return PickaxeFactory.isProfessionPickaxe(item) || ShovelFactory.isProfessionShovel(item);
+    	return PickaxeUtil.isProfessionPickaxe(item) || ShovelFactory.isProfessionShovel(item);
     }
     
 	public static void playErrorSound(Player player) {

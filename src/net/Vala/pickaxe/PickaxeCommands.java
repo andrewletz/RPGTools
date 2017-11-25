@@ -22,12 +22,12 @@ public class PickaxeCommands implements CommandExecutor{
 					return false;
 				}
 				Player player = (Player) sender;
-				if (PickaxeFactory.hasPickaxeInInventory(player)) {
+				if (PickaxeUtil.hasPickaxeInInventory(player)) {
 					player.sendMessage(ChatColor.RED + "You already have your pickaxe!");
 					return false;
 				}
 				// Spawn pickaxe
-				if (PickaxeFactory.giveNewPickaxe(player)) {
+				if (Pickaxe.giveNewPickaxe(player)) {
 					player.sendMessage(ChatColor.GREEN + "Your pickaxe appeared in your inventory.");
 					player.playSound(player.getLocation(), Sound.ENTITY_BLAZE_AMBIENT, 0.25F, 1.8F);
 					return true;

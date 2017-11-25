@@ -4,20 +4,24 @@ import java.util.UUID;
 
 import net.Vala.config.PlayerData;
 import net.Vala.general.RPGTools;
-import net.Vala.pickaxe.PickaxeFactory;
+import net.Vala.pickaxe.Pickaxe;
+import net.Vala.pickaxe.PickaxeUtil;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class GeneralListener implements Listener{
@@ -46,11 +50,17 @@ public class GeneralListener implements Listener{
 	}
 	
 	@EventHandler
+	public void onBlockPlace(BlockPlaceEvent event) {
+		Block block = event.getBlock();
+		block.setMetadata("placedByPlayer", new FixedMetadataValue(RPGTools.getPlugin(), true));
+	}
+	
+	@EventHandler
 	public void onItemDrop(PlayerDropItemEvent event) {
 		Player player = event.getPlayer();
 		if (event.getItemDrop().getItemStack().hasItemMeta()) {
 			ItemStack item = event.getItemDrop().getItemStack();
-			if (PickaxeFactory.isProfessionPickaxe(item)) {
+			if (PickaxeUtil.isProfessionPickaxe(item)) {
 					event.setCancelled(true);
 					item.setAmount(0);
 					player.getWorld().spawnParticle(Particle.FALLING_DUST, player.getLocation(), 25, 0.5F, 1F, 0.5F, 0.05);
@@ -77,7 +87,7 @@ public class GeneralListener implements Listener{
 	public void onPlayerDeath(PlayerDeathEvent event) {
 		try {
 			for (ItemStack i : event.getDrops()) {
-				if (PickaxeFactory.isProfessionPickaxe(i)) {
+				if (PickaxeUtil.isProfessionPickaxe(i)) {
 					event.getDrops().remove(i);
 				}
 			}
