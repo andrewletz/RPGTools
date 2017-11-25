@@ -34,23 +34,24 @@ public class PickaxeGUI {
 		
 		// Set up speed icon/button
 		Icon speedIcon = new Icon(Material.NETHER_STAR);
+		int currentSpeed = pickaxeData.getPickaxeSpeed();
 		if (pickaxeData.isMaxSpeed()) {
 			speedIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Mining Speed" + ChatColor.AQUA + " [MAX LEVEL]");
 		} else {
-			speedIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Mining Speed" + ChatColor.AQUA + " [" + GeneralTraitUtil.getPickSpeedSPReq(pickaxeData.getPickaxeSpeed() + 1) + " SP to level]");
+			speedIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Mining Speed" + ChatColor.AQUA + " [" + GeneralTraitUtil.getPickSpeedSPReq(currentSpeed + 1) + " SP to level]");
 		}
-		speedIcon.addLore(ChatColor.GRAY + "" + ChatColor.BOLD + "Current Level: " + ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + pickaxeData.getPickaxeSpeed());
+		speedIcon.addLore(ChatColor.GRAY + "" + ChatColor.BOLD + "Current Level: " + ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + currentSpeed);
 		speedIcon.addLore("");
-		speedIcon.addLore(ChatColor.GRAY + "" + ChatColor.BOLD + "Speed: " + ChatColor.BLUE + PickaxeFactory.convertPickSpeedToDamagePerTick(pickaxeData.getPickaxeSpeed()) + (!pickaxeData.isMaxSpeed() ? ChatColor.BOLD + " -> " 
-						+ ChatColor.BLUE + PickaxeFactory.convertPickSpeedToDamagePerTick(pickaxeData.getPickaxeSpeed() + 1) : ""));
+		speedIcon.addLore(ChatColor.GRAY + "" + ChatColor.BOLD + "Speed: " + ChatColor.BLUE + PickaxeFactory.convertSpeedToReadable(PickaxeFactory.convertPickSpeedToDamagePerTick(currentSpeed))
+						+ (!pickaxeData.isMaxSpeed() ? ChatColor.BOLD + " -> " + ChatColor.BLUE + PickaxeFactory.convertSpeedToReadable(PickaxeFactory.convertPickSpeedToDamagePerTick(currentSpeed + 1)) : ""));
 		speedIcon.addLore("");
 		if (!pickaxeData.isMaxSpeed()) {
 			speedIcon.addLore(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "Left-click" + ChatColor.GRAY + " here to level up");
-			speedIcon.addLore(ChatColor.GRAY + "your max pick speed to level " + ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + (pickaxeData.getPickaxeSpeed() + 1) + ".");
+			speedIcon.addLore(ChatColor.GRAY + "your max pick speed to level " + ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + (currentSpeed + 1) + ".");
 			speedIcon.addLore("");
 		}
 		speedIcon.addLore(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "Shift-click" + ChatColor.GRAY + " here to manually set your");
-		speedIcon.addLore(ChatColor.GRAY + "pick speed to anything up to level " + ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + (pickaxeData.getPickaxeSpeed()) + ".");
+		speedIcon.addLore(ChatColor.GRAY + "pick speed to anything up to level " + ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + (currentSpeed) + ".");
 		speedIcon.addLore("");
 		speedIcon.addLore(ChatColor.GRAY + "" + ChatColor.ITALIC + "Manual setting doesn't use SP, it is for");
 		speedIcon.addLore(ChatColor.GRAY + "" + ChatColor.ITALIC + "when you want your pick to go slower!");

@@ -43,8 +43,12 @@ public class RPGCommands implements CommandExecutor {
 					}
 					for (Player player : Bukkit.getOnlinePlayers()) {
 						PlayerData playerD = PlayerData.getData(player);
+						playerD.reloadConfig();
+						playerD.refreshConfig();
 						playerD.refreshAutoRegenTimers();
+						PickaxeFactory.updatePickaxeInInventory(player);
 					}
+					sender.sendMessage(ChatColor.GREEN + "Player files reloaded.");
 					Ores.initializeOres();
 					Logger.log("&aReload complete.");
 					

@@ -8,6 +8,7 @@ import net.Vala.config.PickaxeData;
 import net.Vala.config.PlayerData;
 import net.Vala.config.YAMLFile;
 import net.Vala.general.RPGTools;
+import net.Vala.pickaxe.Ore.Ores;
 import net.Vala.traits.DropChances;
 import net.Vala.util.EnchantGlow;
 import net.Vala.util.GeneralUtil;
@@ -328,6 +329,14 @@ public class PickaxeFactory {
 				+ (level * YAMLFile.PICKAXECONFIG.getConfig().getDouble("Speed.Multiplier"));
 		return (double)Math.round(newDouble * 100000d) / 100000d;
 	}
+	
+    public static String convertSpeedToReadable(double damage) {
+    	Ore stone = Ores.getOreFromMaterial(Material.STONE, (byte) 0);
+    	double toughness = stone.getToughness();
+    	double ratio = (toughness / damage) / 20; // time in seconds to break 1 stone
+    	double perSecond = (double)Math.round((1 / ratio) * 100000d) / 100000d;
+    	return (perSecond + " stone per second");
+    }
 
 	/**
 	 * Converts the Pickaxe max durability level to the durability for the level

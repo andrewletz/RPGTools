@@ -75,10 +75,12 @@ public class GeneralListener implements Listener{
 	
 	@EventHandler
 	public void onPlayerDeath(PlayerDeathEvent event) {
-		for (ItemStack i : event.getDrops()) {
-			if (PickaxeFactory.isProfessionPickaxe(i)) {
-				event.getDrops().remove(i);
+		try {
+			for (ItemStack i : event.getDrops()) {
+				if (PickaxeFactory.isProfessionPickaxe(i)) {
+					event.getDrops().remove(i);
+				}
 			}
-		}
+		} catch (Exception e) {}
 	}
 }

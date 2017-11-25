@@ -77,6 +77,8 @@ public class PlayerData {
 			configFile = new File(playersFolder, "(" + player.getDisplayName() +  ") " + player.getUniqueId() + ".yml");
 		}
 		config = YamlConfiguration.loadConfiguration(configFile);
+		this.pickaxeData = new PickaxeData(this);
+		this.shovelData = new ShovelData(this);
 	}
 	
 	public FileConfiguration getConfig() {
