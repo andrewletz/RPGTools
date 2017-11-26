@@ -1,1 +1,28 @@
+#       |_,.-'~'-.,__,.-'~'-.,__,.-'~'-.,__,.-'~'-.,__,.-'~'-.,_ ,.-'~'-.,_|
+#       |                   RPG TOOLS MINECRAFT PLUGIN                     |
+#       |_,.-'~'-.,__,.-'~'-.,__,.-'~'-.,__,.-'~'-.,__,.-'~'-.,_ ,.-'~'-.,_|
+#
+# Thank you for downloading and using RPG Tools! If you have any problems or questions, please ask
+# on the plugin page at (spigot link), or message me (Vala/Valamoraus) on any platform.
+#
+# Github page: (github link)
+# (code is under MIT license, so use accordingly)
+#
+# Tips:
+#   - There are shorthands for commands, so use those for efficiency.
+#    /rt or /rpgtools
+#    /pick or /pickaxe
+#   - Mess with the many provided config files to do whatever you want! Make a harder or longer
+#   progression time, make speed have a thousand levels that can mine 100 stone per second, (almost) anything
+#   is possible with some imagination. I hope you use the tools here to make the best experience possible. 
+#   Default values aren't necessarily the best!
+
+# Permissions:
+#
+#  Admin commands:
+#     rpgtools.*: give access to all rpgtools permissions
+#     rpgtools.modifypick: allows player to use /rt modifypick
+#     rpgtools.reload: allows player to reload using /rt reload
+#
+
 DisableConsoleColors: false

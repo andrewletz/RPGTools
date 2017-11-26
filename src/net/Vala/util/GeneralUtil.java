@@ -12,6 +12,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
+import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -63,11 +64,35 @@ public class GeneralUtil {
 		((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
 	}
 	
+	public static boolean needsAdminMessage(CommandSender sender) {
+		if (sender.hasPermission("rpgtools.*") || sender.hasPermission("rpgtools.modifypick") || sender.hasPermission("rpgtools.reload")) {
+			return true;
+		}
+		return false;
+	}
+	
+	public static String[] getAdminHelpMessage() {
+		return new String[] { 
+				"",
+				ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + "RPGTools Commands",
+				ChatColor.DARK_PURPLE  + "/rpgtools menu | gui or /rt menu | gui - " + ChatColor.GRAY + "Opens the RPG tools management menu.",
+				ChatColor.DARK_PURPLE  + "/(pick | shovel | axe) (menu | gui) - " + ChatColor.GRAY + "Easier way to get to specific menus.",
+				ChatColor.DARK_PURPLE  + "/pickaxe or /pick - " + ChatColor.GRAY + "Spawns your personal pickaxe.",
+				ChatColor.DARK_PURPLE  + "/shovel - " + ChatColor.GRAY + "Spawns your personal shovel.",
+				ChatColor.DARK_PURPLE  + "/axe - " + ChatColor.GRAY + "Spawns your personal axe.",
+				ChatColor.DARK_PURPLE  + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + "Admin commands:",
+				ChatColor.DARK_PURPLE  + "/rt modifypick [stat] [player] [value] - " + ChatColor.GRAY + "Modify a player's pick manually.",
+				ChatColor.DARK_PURPLE  + "/rt reload - " + ChatColor.GRAY + "Reload all RPGtools related files.",
+				"",
+				};
+	}
+	
 	public static String[] getHelpMessage() {
 		return new String[] { 
 				"",
 				ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + "RPGTools Commands",
 				ChatColor.DARK_PURPLE  + "/rpgtools menu | gui or /rt menu | gui - " + ChatColor.GRAY + "Opens the RPG tools management menu.",
+				ChatColor.DARK_PURPLE  + "/(pick | shovel | axe) (menu | gui) - " + ChatColor.GRAY + "Easier way to get to specific menus.",
 				ChatColor.DARK_PURPLE  + "/pickaxe or /pick - " + ChatColor.GRAY + "Spawns your personal pickaxe.",
 				ChatColor.DARK_PURPLE  + "/shovel - " + ChatColor.GRAY + "Spawns your personal shovel.",
 				ChatColor.DARK_PURPLE  + "/axe - " + ChatColor.GRAY + "Spawns your personal axe.",

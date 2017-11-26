@@ -3,10 +3,10 @@ main: net.Vala.general.RPGTools
 version: 1.0
 commands:
   pickaxe:
-    description: Pickaxe
+    description: Spawns your personal pickaxe.
   pick:
-    description: Pickaxe
+    description: Short alternative to /pickaxe.
   rpgtools:
-    description: Pickaxe
+    description: Base command for rpgtools.
   rt:
-    description: Pickaxe
+    description: Short alternative to /rpgtools.

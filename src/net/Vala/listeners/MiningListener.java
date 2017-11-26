@@ -67,12 +67,13 @@ public class MiningListener implements Listener {
         }
         
         // Make sure this block wasn't placed by a player
+        boolean placedByPlayer = false;
         List<MetadataValue> metas = targetBlock.getMetadata("placedByPlayer");
         for (MetadataValue m : metas) {
         	if (m.getOwningPlugin() == RPGTools.getPlugin()) {
         		if (m.value() != null) {
         			if ((boolean) m.value()) {
-        				return;
+        				placedByPlayer = true;
         			}
         		}
         	}
@@ -104,7 +105,7 @@ public class MiningListener implements Listener {
 				hasAquaAffinity = true;
 			}
 		}
-		playerData.getPickaxeData().damageBlock(isUnderwater, hasAquaAffinity);
+		playerData.getPickaxeData().damageBlock(isUnderwater, hasAquaAffinity, placedByPlayer);
 	}
 
 	@SuppressWarnings("deprecation")

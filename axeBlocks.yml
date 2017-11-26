@@ -1,6 +1,9 @@
+#
 # If a block material is not included here, it will be mined as it would be without the plugin (vanilla).
-# To include more blocks, find their respective names here: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
+# To include more blocks, find their respective names here: 
+#                                      https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
 # If the name isn't correct it will not work!
+#
 OAK_LOG:
   bukkitMaterial: OAK_LOG
   blockData: 0

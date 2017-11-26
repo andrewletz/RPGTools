@@ -69,7 +69,7 @@ public class PickaxeData {
 		this.targetOre = targetOre;
 	}
 
-	public void damageBlock(boolean isUnderwater, boolean hasAquaAffinity) {
+	public void damageBlock(boolean isUnderwater, boolean hasAquaAffinity, boolean placedByPlayer) {
 		if (canMine) {
 			canMine = false;
 			if (playerData.getTargetBlock() == null || this.targetOre == null) {
@@ -85,7 +85,7 @@ public class PickaxeData {
 			if (playerData.getBlockDamage() >= this.targetOre.getToughness()) {
 				// Break the block
 				GeneralUtil.sendBreakPacket(playerData.getPlayer(), playerData.getTargetBlock(), -1);
-				breakBlock(playerData.getPlayer(), playerData.getTargetBlock(), this.targetOre);
+				breakBlock(playerData.getPlayer(), playerData.getTargetBlock(), this.targetOre, placedByPlayer);
 				playerData.setTargetBlock(null);
 				this.targetOre = null;
 				resetBlockDamage();
@@ -106,7 +106,7 @@ public class PickaxeData {
 	 * @param block the block to be broken
 	 * @param ore the corresponding ore for the block
 	 */
-	private void breakBlock(Player player, Block block, Ore ore) {
+	private void breakBlock(Player player, Block block, Ore ore, boolean placedByPlayer) {
 		if (ore == null) {
 			return;
 		}
@@ -124,11 +124,16 @@ public class PickaxeData {
 		} else {
 			drop = ore.getDrop();
 		}
-		int dropAmount = PickaxeUtil.rollDropAmount(playerData);
-		drop.setAmount(dropAmount);
+		int dropAmount = 1;
+		if (!placedByPlayer) {
+			dropAmount = PickaxeUtil.rollDropAmount(playerData);
+			drop.setAmount(dropAmount);
+		}
 		
-		int expAmount = (int) PickaxeUtil.getFortuneExpMultiplier(dropAmount) * ore.getRandomExp();
-		modifyPickaxeExp(expAmount, dropAmount);
+		if (!placedByPlayer) {
+			int expAmount = (int) PickaxeUtil.getFortuneExpMultiplier(dropAmount) * ore.getRandomExp();
+			modifyPickaxeExp(expAmount, dropAmount);
+		}
 		if (!getPickaxeShouldProtect()) {
 			modifyPickaxeCurrentDurability(-1);
 		} else {
@@ -159,13 +164,13 @@ public class PickaxeData {
 		player.playSound(block.getLocation(), Sound.BLOCK_STONE_BREAK, 1F, 0.8F);
 		block.setType(Material.AIR);
 		block.getLocation().getWorld().dropItemNaturally(block.getLocation(), drop);
-		int randExp = ore.getRandomVanillaExp();
-		if(!getPickaxeSilktouch() && randExp != 0) {
-			((ExperienceOrb)block.getWorld().spawn(block.getLocation(), ExperienceOrb.class)).setExperience(randExp);
+		if (!placedByPlayer) {
+			int randExp = ore.getRandomVanillaExp();
+			if(!getPickaxeSilktouch() && randExp != 0) {
+				((ExperienceOrb)block.getWorld().spawn(block.getLocation(), ExperienceOrb.class)).setExperience(randExp);
+			}
 		}
 		
-//		playerData.resetBlockDamage();
-//		playerData.setTargetBlock(null, null);
 		Pickaxe.updatePickaxeInInventory(player);
 	}
 
