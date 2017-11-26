@@ -16,6 +16,7 @@ import net.Vala.raytrace.RayTrace;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -41,6 +42,7 @@ public class MiningListener implements Listener {
 		PlayerData playerData = PlayerData.getData(player);
 		
 		if (playerData.getPickaxeData().isBroken()) {
+			player.addPotionEffect(MINING_POTION_EFFECT, true); // Stops the cracking
 			return;
 		}
 		
@@ -59,6 +61,7 @@ public class MiningListener implements Listener {
 
         }
 		
+        // There is nothing in their vision path
         if (targetBlock == null) {
         	return;
         }
@@ -75,12 +78,13 @@ public class MiningListener implements Listener {
         	}
         }
         
+        // If the block isn't an RPGTools specified ore
 		Ore ore = Ores.getOreFromMaterial(targetBlock.getType(), targetBlock.getData());
 		if (ore == null) {
 			return;
 		}
 		
-		player.addPotionEffect(MINING_POTION_EFFECT, true); // Stops the cracking
+		player.addPotionEffect(MINING_POTION_EFFECT, true); 
 		
 		if (playerData.getPickaxeData().getPickaxeLevel() < ore.getMinLevel()) {
 			return;
@@ -90,7 +94,17 @@ public class MiningListener implements Listener {
 			playerData.getPickaxeData().setTargetBlock(targetBlock, ore);
 			playerData.getPickaxeData().resetBlockDamage();
 		}
-		playerData.getPickaxeData().damageBlock();
+		boolean isUnderwater = false;
+		boolean hasAquaAffinity = false;
+		if (player.getRemainingAir() < player.getMaximumAir()) {
+			isUnderwater = true;
+		}
+		if (player.getInventory().getHelmet() != null) {
+			if (player.getInventory().getHelmet().containsEnchantment(Enchantment.WATER_WORKER)) {
+				hasAquaAffinity = true;
+			}
+		}
+		playerData.getPickaxeData().damageBlock(isUnderwater, hasAquaAffinity);
 	}
 
 	@SuppressWarnings("deprecation")
