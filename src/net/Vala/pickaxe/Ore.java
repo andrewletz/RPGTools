@@ -25,7 +25,7 @@ public class Ore extends Mineable{
 	@SuppressWarnings("deprecation")
 	@Override
 	public boolean isMineable(PlayerData playerData) {
-		return playerData.getPickaxeData().getPickaxeLevel() >= getMinLevel()
+		return playerData.getPickaxeData().getLevel() >= getMinLevel()
 				&& PickaxeUtil.isPickaxeMaterial(playerData.getPlayer().getItemInHand().getType());
 	}
 	

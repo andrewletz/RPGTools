@@ -3,6 +3,7 @@ package net.Vala.listeners;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.Vala.config.PickaxeData;
 import net.Vala.config.PlayerData;
 import net.Vala.general.Logger;
 import net.Vala.general.RPGTools;
@@ -28,20 +29,23 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
-public class MiningListener implements Listener {
+public class BreakingListener implements Listener {
 
 	private static final PotionEffect MINING_POTION_EFFECT = new PotionEffect(PotionEffectType.SLOW_DIGGING, 10, 2, true, false);
 	
 	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onPlayerAnimation(PlayerAnimationEvent event) throws InstantiationException, IllegalAccessException {
-		if (!PickaxeUtil.isProfessionPickaxe(event.getPlayer().getItemInHand())) {
-			return;
+		if (PickaxeUtil.isProfessionPickaxe(event.getPlayer().getItemInHand())) {
+			pickaxeMine(event.getPlayer());;
 		}
-		Player player = event.getPlayer();
+	}
+	
+	private void pickaxeMine(Player player) {
 		PlayerData playerData = PlayerData.getData(player);
+		PickaxeData pickaxeData = playerData.getPickaxeData();
 		
-		if (playerData.getPickaxeData().isBroken()) {
+		if (pickaxeData.isBroken()) {
 			player.addPotionEffect(MINING_POTION_EFFECT, true); // Stops the cracking
 			return;
 		}
@@ -87,7 +91,7 @@ public class MiningListener implements Listener {
 		
 		player.addPotionEffect(MINING_POTION_EFFECT, true); 
 		
-		if (playerData.getPickaxeData().getPickaxeLevel() < ore.getMinLevel()) {
+		if (pickaxeData.getLevel() < ore.getMinLevel()) {
 			return;
 		}
 		if (playerData.getTargetBlock() == null || !playerData.getTargetBlock().equals(targetBlock)) {
@@ -105,7 +109,7 @@ public class MiningListener implements Listener {
 				hasAquaAffinity = true;
 			}
 		}
-		playerData.getPickaxeData().damageBlock(isUnderwater, hasAquaAffinity, placedByPlayer);
+		pickaxeData.damageBlock(isUnderwater, hasAquaAffinity, placedByPlayer);
 	}
 
 	@SuppressWarnings("deprecation")
@@ -116,12 +120,12 @@ public class MiningListener implements Listener {
 		}
 		
 		PlayerData playerData = PlayerData.getData(event.getPlayer());
-		if (playerData.getPickaxeData().getPickaxeCurrentDurability() <= 0) {
+		if (playerData.getPickaxeData().getCurrentDurability() <= 0) {
 			event.getPlayer().sendMessage(ChatColor.RED + "Your pickaxe has reached its breaking point.");
 			event.setCancelled(true);
 			return;
 		}
-		playerData.getPickaxeData().modifyPickaxeCurrentDurability(-1);
+		playerData.getPickaxeData().modifyCurrentDurability(-1);
 		
 		Pickaxe.updatePickaxeInInventory(event.getPlayer());
 

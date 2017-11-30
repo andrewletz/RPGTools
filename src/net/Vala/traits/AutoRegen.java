@@ -23,7 +23,7 @@ public class AutoRegen {
 		YML = yamlEnum;
 		
 		if (yamlEnum == YAMLFile.PICKAXECONFIG) {
-			initiatePickaxeScheduler(convertLevelToRandomTick(playerData.getPickaxeData().getPickaxeAutoregen()));
+			initiatePickaxeScheduler(convertLevelToRandomTick(playerData.getPickaxeData().getAutoregen()));
 		} else if (yamlEnum == YAMLFile.SHOVELCONFIG) {
 //			initiateShovelScheduler(convertLevelToRandomTick(playerData.getShovelData().getShovelAutoregen()));
 		} else if (yamlEnum == YAMLFile.AXECONFIG) {
@@ -45,8 +45,8 @@ public class AutoRegen {
             @SuppressWarnings("deprecation")
 			@Override
             public void run() {
-            	if (playerData.getPickaxeData().getPickaxeCurrentDurability() < playerData.getPickaxeData().getPickaxeMaxDurability()) {
-            		playerData.getPickaxeData().modifyPickaxeCurrentDurability(1);
+            	if (playerData.getPickaxeData().getCurrentDurability() < playerData.getPickaxeData().getMaxDurability()) {
+            		playerData.getPickaxeData().modifyCurrentDurability(1);
             		if (PickaxeUtil.isProfessionPickaxe(playerData.getPlayer().getItemInHand())) {
             			playerData.getPlayer().getWorld().spawnParticle(Particle.VILLAGER_HAPPY, playerData.getPlayer().getLocation(), 25, 0.5F, 1.05F, 0.5F, 0.05);
             		}

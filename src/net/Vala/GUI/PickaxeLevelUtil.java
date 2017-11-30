@@ -18,14 +18,14 @@ public class PickaxeLevelUtil {
 
 	public static void levelSpeed(Player player) {
 		PickaxeData pickaxeData = PlayerData.getData(player).getPickaxeData();
-		int spReq = GeneralTraitUtil.getPickSpeedSPReq(pickaxeData.getPickaxeSpeed()) + 1;
+		int spReq = GeneralTraitUtil.getPickSpeedSPReq(pickaxeData.getSpeed()) + 1;
 		
-		if(pickaxeData.getPickaxeSpeed() < PickaxeData.getMaxSpeed()) {
-			if(pickaxeData.getPickaxeSP() >= spReq) {
+		if(pickaxeData.getSpeed() < PickaxeUtil.getMaxSpeed()) {
+			if(pickaxeData.getSP() >= spReq) {
 				GeneralUtil.playLevelSound(player);
-				sendLevelUpMessage(player, "speed", pickaxeData.getPickaxeSpeed(), pickaxeData.getPickaxeSpeed() + 1);
-				pickaxeData.modifyPickaxeSpeed(1);
-				pickaxeData.modifyPickaxeSP(-spReq);
+				sendLevelUpMessage(player, "speed", pickaxeData.getSpeed(), pickaxeData.getSpeed() + 1);
+				pickaxeData.modifySpeed(1);
+				pickaxeData.modifySP(-spReq);
 				PickaxeGUI.openManagementInventory(player);
 			} else {
 				GeneralUtil.playErrorSound(player);
@@ -39,14 +39,14 @@ public class PickaxeLevelUtil {
 	
 	public static void levelFortune(Player player) {
 		PickaxeData pickaxeData = PlayerData.getData(player).getPickaxeData();
-		int spReq = GeneralTraitUtil.getPickFortuneSPReq(pickaxeData.getPickaxeFortune()) + 1;
+		int spReq = GeneralTraitUtil.getPickFortuneSPReq(pickaxeData.getFortune()) + 1;
 		
-		if(pickaxeData.getPickaxeFortune() < PickaxeData.getMaxFortune()) {
-			if(pickaxeData.getPickaxeSP() >= spReq) {
+		if(pickaxeData.getFortune() < PickaxeUtil.getMaxFortune()) {
+			if(pickaxeData.getSP() >= spReq) {
 				GeneralUtil.playLevelSound(player);
-				sendLevelUpMessage(player, "fortune", pickaxeData.getPickaxeFortune(), pickaxeData.getPickaxeFortune() + 1);
-				pickaxeData.modifyPickaxeFortune(1);
-				pickaxeData.modifyPickaxeSP(-spReq);
+				sendLevelUpMessage(player, "fortune", pickaxeData.getFortune(), pickaxeData.getFortune() + 1);
+				pickaxeData.modifyFortune(1);
+				pickaxeData.modifySP(-spReq);
 				PickaxeGUI.openManagementInventory(player);
 			} else {
 				GeneralUtil.playErrorSound(player);
@@ -60,14 +60,14 @@ public class PickaxeLevelUtil {
 	
 	public static void levelAutoregen(Player player) {
 		PickaxeData pickaxeData = PlayerData.getData(player).getPickaxeData();
-		int spReq = GeneralTraitUtil.getPickAutoRegenSPReq(pickaxeData.getPickaxeAutoregen()) + 1;
+		int spReq = GeneralTraitUtil.getPickAutoRegenSPReq(pickaxeData.getAutoregen()) + 1;
 		
-		if(pickaxeData.getPickaxeAutoregen() < PickaxeData.getMaxAutoregen()) {
-			if(pickaxeData.getPickaxeSP() >= spReq) {
+		if(pickaxeData.getAutoregen() < PickaxeUtil.getMaxAutoregen()) {
+			if(pickaxeData.getSP() >= spReq) {
 				GeneralUtil.playLevelSound(player);
-				sendLevelUpMessage(player, "autoregen", pickaxeData.getPickaxeAutoregen(), pickaxeData.getPickaxeAutoregen() + 1);
-				pickaxeData.modifyPickaxeAutoregen(1);
-				pickaxeData.modifyPickaxeSP(-spReq);
+				sendLevelUpMessage(player, "autoregen", pickaxeData.getAutoregen(), pickaxeData.getAutoregen() + 1);
+				pickaxeData.modifyAutoregen(1);
+				pickaxeData.modifySP(-spReq);
 				PickaxeGUI.openManagementInventory(player);
 			} else {
 				GeneralUtil.playErrorSound(player);
@@ -81,14 +81,14 @@ public class PickaxeLevelUtil {
 	
 	public static void levelReinforced(Player player) {
 		PickaxeData pickaxeData = PlayerData.getData(player).getPickaxeData();
-		int spReq = GeneralTraitUtil.getPickReinforcedSPReq(pickaxeData.getPickaxeReinforced()) + 1;
+		int spReq = GeneralTraitUtil.getPickReinforcedSPReq(pickaxeData.getReinforced()) + 1;
 		
-		if(pickaxeData.getPickaxeReinforced() < PickaxeData.getMaxReinforced()) {
-			if(pickaxeData.getPickaxeSP() >= spReq) {
+		if(pickaxeData.getReinforced() < PickaxeUtil.getMaxReinforced()) {
+			if(pickaxeData.getSP() >= spReq) {
 				GeneralUtil.playLevelSound(player);
-				sendLevelUpMessage(player, "reinforced", pickaxeData.getPickaxeReinforced(), pickaxeData.getPickaxeReinforced() + 1);
-				pickaxeData.modifyPickaxeReinforced(1);
-				pickaxeData.modifyPickaxeSP(-spReq);
+				sendLevelUpMessage(player, "reinforced", pickaxeData.getReinforced(), pickaxeData.getReinforced() + 1);
+				pickaxeData.modifyReinforced(1);
+				pickaxeData.modifySP(-spReq);
 				PickaxeGUI.openManagementInventory(player);
 			} else {
 				GeneralUtil.playErrorSound(player);
@@ -104,12 +104,12 @@ public class PickaxeLevelUtil {
 		PickaxeData pickaxeData = PlayerData.getData(player).getPickaxeData();
 		int spReq = GeneralTraitUtil.getPickAutosmeltSPReq();
 		
-		if(!pickaxeData.getPickaxeAutosmeltUnlocked()) {
-			if(pickaxeData.getPickaxeSP() >= spReq) {
+		if(!pickaxeData.getAutosmeltUnlocked()) {
+			if(pickaxeData.getSP() >= spReq) {
 				GeneralUtil.playLevelSound(player);
 				sendLevelUpMessage(player, "autosmelt", 0, 1);
-				pickaxeData.setPickaxeAutosmeltUnlocked(true);
-				pickaxeData.modifyPickaxeSP(-spReq);
+				pickaxeData.setAutosmeltUnlocked(true);
+				pickaxeData.modifySP(-spReq);
 				PickaxeGUI.openManagementInventory(player);
 			} else {
 				GeneralUtil.playErrorSound(player);
@@ -125,12 +125,12 @@ public class PickaxeLevelUtil {
 		PickaxeData pickaxeData = PlayerData.getData(player).getPickaxeData();
 		int spReq = GeneralTraitUtil.getPickSilktouchSPReq();
 		
-		if(!pickaxeData.getPickaxeSilktouchUnlocked()) {
-			if(pickaxeData.getPickaxeSP() >= spReq) {
+		if(!pickaxeData.getSilktouchUnlocked()) {
+			if(pickaxeData.getSP() >= spReq) {
 				GeneralUtil.playLevelSound(player);
 				sendLevelUpMessage(player, "silktouch", 0, 1);
-				pickaxeData.setPickaxeSilktouchUnlocked(true);
-				pickaxeData.modifyPickaxeSP(-spReq);
+				pickaxeData.setSilktouchUnlocked(true);
+				pickaxeData.modifySP(-spReq);
 				PickaxeGUI.openManagementInventory(player);
 			} else {
 				GeneralUtil.playErrorSound(player);
@@ -153,10 +153,10 @@ public class PickaxeLevelUtil {
 			break;
 			
 		case "fortune":
-			DropChances currentLevel = new DropChances(pickaxeData.getPickaxeFortune(), YAMLFile.PICKAXECONFIG);
+			DropChances currentLevel = new DropChances(pickaxeData.getFortune(), YAMLFile.PICKAXECONFIG);
 			double currDoubleDrop = (double)Math.round(currentLevel.getDoubleDropChance() * 100 * 1000d) / 1000d;
 			double currTripleDrop = (double)Math.round(currentLevel.getTripleDropChance() * 100 * 1000d) / 1000d;
-			DropChances nextLevel = new DropChances(pickaxeData.getPickaxeFortune() + 1, YAMLFile.PICKAXECONFIG);
+			DropChances nextLevel = new DropChances(pickaxeData.getFortune() + 1, YAMLFile.PICKAXECONFIG);
 			double nextDoubleDrop = (double)Math.round(nextLevel.getDoubleDropChance() * 100 * 1000d) / 1000d;
 			double nextTripleDrop = (double)Math.round(nextLevel.getTripleDropChance() * 100 * 1000d) / 1000d;
 			player.sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Pickaxe Fortune Level " + after);
@@ -175,8 +175,8 @@ public class PickaxeLevelUtil {
 		case "reinforced":
 			player.sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Pickaxe Reinforced Level " + after);
 			Reinforced reinforced = new Reinforced(YAMLFile.PICKAXECONFIG);
-			player.sendMessage(ChatColor.GRAY + "" + ChatColor.BOLD + "Protection chance: " + ChatColor.BLUE + "" + reinforced.getTotalPercent(pickaxeData.getPickaxeReinforced()) + "%" + ChatColor.BOLD + " -> " 
-						+ ChatColor.BLUE + "" + reinforced.getTotalPercent(pickaxeData.getPickaxeReinforced() + 1) + "%");
+			player.sendMessage(ChatColor.GRAY + "" + ChatColor.BOLD + "Protection chance: " + ChatColor.BLUE + "" + reinforced.getTotalPercent(pickaxeData.getReinforced()) + "%" + ChatColor.BOLD + " -> " 
+						+ ChatColor.BLUE + "" + reinforced.getTotalPercent(pickaxeData.getReinforced() + 1) + "%");
 			break;
 			
 		case "autosmelt":

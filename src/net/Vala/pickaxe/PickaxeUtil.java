@@ -14,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 public class PickaxeUtil {
 	
 	private static final Random RANDOM = new Random();
+	private final static YAMLFile YML = YAMLFile.PICKAXECONFIG;
 	
 	/**
 	 * Checks if the player has a Pickaxe profession pickaxe in their inventory
@@ -64,9 +65,9 @@ public class PickaxeUtil {
 	
 	public static double getFortuneExpMultiplier(int dropAmount) {
 		if (dropAmount == 2) {
-			return YAMLFile.PICKAXECONFIG.getConfig().getDouble("Fortune.DoubleExpMultiplier");
+			return YML.getConfig().getDouble("Fortune.DoubleExpMultiplier");
 		} else {
-			return YAMLFile.PICKAXECONFIG.getConfig().getDouble("Fortune.TripleExpMultiplier");
+			return YML.getConfig().getDouble("Fortune.TripleExpMultiplier");
 		}
 	}
 	
@@ -77,8 +78,8 @@ public class PickaxeUtil {
 	 */
 	
 	public static double convertPickSpeedToDamagePerTick(int level) {
-		double newDouble = YAMLFile.PICKAXECONFIG.getConfig().getDouble("Speed.Base") 
-				+ (level * YAMLFile.PICKAXECONFIG.getConfig().getDouble("Speed.Multiplier"));
+		double newDouble =YML.getConfig().getDouble("Speed.Base") 
+				+ (level *YML.getConfig().getDouble("Speed.Multiplier"));
 		return (double)Math.round(newDouble * 100000d) / 100000d;
 	}
 	
@@ -96,7 +97,7 @@ public class PickaxeUtil {
 	 * @return the drop chances
 	 */
 	public static DropChances convertPickaxeLuckLevelToPickaxeDropChances(int level) {
-		return new DropChances(level, YAMLFile.PICKAXECONFIG);
+		return new DropChances(level, YML);
 	}
 
 	/**
@@ -105,7 +106,7 @@ public class PickaxeUtil {
 	 * @return Either 1, 2, or 3 randomly weighted based on the player's drop rates
 	 */
 	public static int rollDropAmount(PlayerData playerData) {
-		DropChances dropChances = playerData.getPickaxeData().getPickaxeFortuneDrop();
+		DropChances dropChances = playerData.getPickaxeData().getFortuneDrop();
 		float doubleDrop = dropChances.getDoubleDropChance();
 		float tripleDrop = doubleDrop + dropChances.getTripleDropChance();
 		float roll = RANDOM.nextFloat();
@@ -116,6 +117,22 @@ public class PickaxeUtil {
 		} else {
 			return 1;
 		}
+	}
+	
+	public static int getMaxSpeed() {
+		return YML.getConfig().getInt("Speed.MaxLevel");
+	}
+	
+	public static int getMaxFortune() {
+		return YML.getConfig().getInt("Fortune.MaxLevel");
+	}
+	
+	public static int getMaxAutoregen() {
+		return YML.getConfig().getInt("Autoregen.MaxLevel");
+	}
+	
+	public static int getMaxReinforced() {
+		return YML.getConfig().getInt("Reinforcement.MaxLevel");
 	}
 
 }

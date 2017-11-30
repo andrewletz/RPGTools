@@ -41,7 +41,7 @@ public class Pickaxe {
 	 * @param level
 	 * @return the corresponding pickaxe material
 	 */
-	public static Material getPickaxeTypeForLevel(int level) {
+	public static Material getTypeForLevel(int level) {
 		if (level >= YAMLFile.PICKAXECONFIG.getConfig().getInt("UnlockLevels.Diamond")) {
 			return Material.DIAMOND_PICKAXE;
 		} else if (level >= YAMLFile.PICKAXECONFIG.getConfig().getInt("UnlockLevels.Gold")) {
@@ -62,15 +62,15 @@ public class Pickaxe {
 	 */
 	public static ItemStack getNewPickaxe(Player player) {
 		PlayerData playerData = PlayerData.getData(player);
-		int pickaxeLevel = playerData.getPickaxeData().getPickaxeLevel();
-		ItemStack pickaxe = new ItemStack(getPickaxeTypeForLevel(pickaxeLevel), 1, (short) 0);
+		int pickaxeLevel = playerData.getPickaxeData().getLevel();
+		ItemStack pickaxe = new ItemStack(getTypeForLevel(pickaxeLevel), 1, (short) 0);
 		ItemMeta pickaxeMeta = pickaxe.getItemMeta();
 		pickaxeMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 		pickaxeMeta.setDisplayName(ChatColor.RESET + "" + ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + player.getName() + "'s Pickaxe");
-		pickaxeMeta.setLore(getPickaxeLore(playerData));
+		pickaxeMeta.setLore(getLore(playerData));
 		pickaxe.setItemMeta(pickaxeMeta);
 		updatePickaxeDurability(playerData, pickaxe);
-		if (playerData.getPickaxeData().getPickaxeAutosmelt() || playerData.getPickaxeData().getPickaxeSilktouch()) {
+		if (playerData.getPickaxeData().getAutosmelt() || playerData.getPickaxeData().getSilktouch()) {
 			EnchantGlow.addGlow(pickaxe);
 		}
 		return pickaxe;
@@ -81,38 +81,38 @@ public class Pickaxe {
 	 * @param playerData
 	 * @return the generated lore
 	 */
-	private static List<String> getPickaxeLore(PlayerData playerData) {
+	private static List<String> getLore(PlayerData playerData) {
 		List<String> pickaxeLore = new ArrayList<>();
 		PickaxeData pickaxeData = playerData.getPickaxeData();
-		pickaxeLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "LVL: " + ChatColor.WHITE + pickaxeData.getPickaxeLevel() + ChatColor.AQUA + " [" + pickaxeData
-				.getPickaxeSP() + " SP available]");
+		pickaxeLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "LVL: " + ChatColor.WHITE + pickaxeData.getLevel() + ChatColor.AQUA + " [" + pickaxeData
+				.getSP() + " SP available]");
 		pickaxeLore.add("");
 		pickaxeLore.add(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + "STATS");
-		pickaxeLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "Speed: " + ChatColor.WHITE + pickaxeData.getPickaxeSpeed());
-		pickaxeLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "Fortune: " + ChatColor.WHITE + pickaxeData.getPickaxeFortune());
-		pickaxeLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "Regen: " + ChatColor.WHITE + pickaxeData.getPickaxeAutoregen());
-		pickaxeLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "Reinforce: " + ChatColor.WHITE + pickaxeData.getPickaxeReinforced());
-//		pickaxeLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "KNOCKBACK: " + ChatColor.WHITE + pickaxeData.getPickaxeKnockback());
-		if (pickaxeData.getPickaxeAutosmelt()) {
+		pickaxeLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "Speed: " + ChatColor.WHITE + pickaxeData.getSpeed());
+		pickaxeLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "Fortune: " + ChatColor.WHITE + pickaxeData.getFortune());
+		pickaxeLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "Regen: " + ChatColor.WHITE + pickaxeData.getAutoregen());
+		pickaxeLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "Reinforce: " + ChatColor.WHITE + pickaxeData.getReinforced());
+//		pickaxeLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "KNOCKBACK: " + ChatColor.WHITE + pickaxeData.getKnockback());
+		if (pickaxeData.getAutosmelt()) {
 			pickaxeLore.add(" ");
 			pickaxeLore.add(ChatColor.BLUE + "" + ChatColor.BOLD + "[ " + ChatColor.BLUE + "Autosmelt Active" + ChatColor.BOLD + " ]");
 		}
-		if (pickaxeData.getPickaxeSilktouch()) {
-			if (!pickaxeData.getPickaxeAutosmelt()) {
+		if (pickaxeData.getSilktouch()) {
+			if (!pickaxeData.getAutosmelt()) {
 				pickaxeLore.add(" ");
 			}
 			pickaxeLore.add(ChatColor.BLUE + "" + ChatColor.BOLD + "[ " + ChatColor.BLUE + "Silktouch Active" + ChatColor.BOLD + " ]");
 		}
 		pickaxeLore.add(" ");
-		pickaxeLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "CURRENT DURA.:" + ChatColor.WHITE + " " + pickaxeData.getPickaxeCurrentDurability() + " uses " + ChatColor.BLUE + "("
+		pickaxeLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "CURRENT DURA.:" + ChatColor.WHITE + " " + pickaxeData.getCurrentDurability() + " uses " + ChatColor.BLUE + "("
 				+ String.format("%.0f",
-						100D * ((double) pickaxeData.getPickaxeCurrentDurability() / (double) pickaxeData.getPickaxeMaxDurability()))
+						100D * ((double) pickaxeData.getCurrentDurability() / (double) pickaxeData.getMaxDurability()))
 				+ "%)");
 		pickaxeLore.add(ChatColor.GRAY + "" + ChatColor.BOLD + "EXP: " + ChatColor.DARK_PURPLE + ChatColor.BOLD + "["
 				+ GeneralUtil.formatPercentageBar("||||||||||||||||||||||||||||||||||||||||||||||||||", ChatColor.DARK_PURPLE,
-						ChatColor.GRAY, (double) pickaxeData.getPickaxeExp() / (double) pickaxeData.getPickaxeExpToNextLevel())
+						ChatColor.GRAY, (double) pickaxeData.getExp() / (double) pickaxeData.getExpToNextLevel())
 				+ ChatColor.DARK_PURPLE + ChatColor.BOLD + "]");
-		pickaxeLore.add(ChatColor.GRAY + "" + ChatColor.ITALIC + "        " + ChatColor.UNDERLINE + "(" + pickaxeData.getPickaxeExp() + " XP / " + pickaxeData.getPickaxeExpToNextLevel() + " XP)");
+		pickaxeLore.add(ChatColor.GRAY + "" + ChatColor.ITALIC + "        " + ChatColor.UNDERLINE + "(" + pickaxeData.getExp() + " XP / " + pickaxeData.getExpToNextLevel() + " XP)");
 		return pickaxeLore;
 	}
 
@@ -132,15 +132,15 @@ public class Pickaxe {
 				}
 				PlayerData playerData = PlayerData.getData(player);
 				ItemMeta pickaxeMeta = pickaxe.getItemMeta();
-				pickaxeMeta.setLore(getPickaxeLore(playerData));
+				pickaxeMeta.setLore(getLore(playerData));
 				pickaxe.setItemMeta(pickaxeMeta);
-				pickaxe.setType(getPickaxeTypeForLevel(playerData.getPickaxeData().getPickaxeLevel()));
+				pickaxe.setType(getTypeForLevel(playerData.getPickaxeData().getLevel()));
 				if(EnchantGlow.isGlowing(pickaxe)) {
-					if(!playerData.getPickaxeData().getPickaxeAutosmelt() && !playerData.getPickaxeData().getPickaxeSilktouch()) {
+					if(!playerData.getPickaxeData().getAutosmelt() && !playerData.getPickaxeData().getSilktouch()) {
 						EnchantGlow.removeGlow(pickaxe);
 					}
 				}
-				if(playerData.getPickaxeData().getPickaxeAutosmelt() || playerData.getPickaxeData().getPickaxeSilktouch()
+				if(playerData.getPickaxeData().getAutosmelt() || playerData.getPickaxeData().getSilktouch()
 						&& !EnchantGlow.isGlowing(pickaxe)) {
 					EnchantGlow.addGlow(pickaxe);
 				}
@@ -155,7 +155,7 @@ public class Pickaxe {
 	 * @param pickaxe the valid pickaxe
 	 */
 	private static void updatePickaxeDurability(PlayerData playerData, ItemStack pickaxe) {
-		float trueDuraPercent = (float) playerData.getPickaxeData().getPickaxeCurrentDurability() / (float) playerData.getPickaxeData().getPickaxeMaxDurability();
+		float trueDuraPercent = (float) playerData.getPickaxeData().getCurrentDurability() / (float) playerData.getPickaxeData().getMaxDurability();
 		short maxDura = getMaxDurabilityOfPickaxeMaterial(pickaxe.getType());
 		pickaxe.setDurability((short) (maxDura - (trueDuraPercent * (float) maxDura)));
 	}

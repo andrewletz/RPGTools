@@ -35,7 +35,7 @@ public class GUI implements Listener {
 		PlayerData playerData = PlayerData.getData(player);
 		Inventory inv = Bukkit.createInventory(player, 18, ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "RPG Tools Management Menu");
 		
-		Icon pickIcon = new Icon(Pickaxe.getPickaxeTypeForLevel(playerData.getPickaxeData().getPickaxeLevel()));
+		Icon pickIcon = new Icon(Pickaxe.getTypeForLevel(playerData.getPickaxeData().getLevel()));
 		pickIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Pickaxe Options");
 		pickIcon.addLore(ChatColor.GRAY + "" + "Click here to access");
 		pickIcon.addLore(ChatColor.GRAY + "" + "your pickaxe options.");
@@ -150,23 +150,23 @@ public class GUI implements Listener {
 						PickaxeLevelUtil.levelReinforced(player);
 						break;
 					case 7:
-						if (!pickaxeData.getPickaxeAutosmeltUnlocked()) {
+						if (!pickaxeData.getAutosmeltUnlocked()) {
 							PickaxeLevelUtil.unlockAutosmelt(player);
 						} else {
-							if (pickaxeData.getPickaxeSilktouch()) { break; }
-							boolean toggleState = pickaxeData.getPickaxeAutosmelt();
-							pickaxeData.setPickaxeAutosmelt(!toggleState);
+							if (pickaxeData.getSilktouch()) { break; }
+							boolean toggleState = pickaxeData.getAutosmelt();
+							pickaxeData.setAutosmelt(!toggleState);
 							Pickaxe.updatePickaxeInInventory(player);
 							PickaxeGUI.openManagementInventory(player);
 						}
 						break;
 					case 8:
-						if (!pickaxeData.getPickaxeSilktouchUnlocked()) {
+						if (!pickaxeData.getSilktouchUnlocked()) {
 							PickaxeLevelUtil.unlockSilktouch(player);
 						} else {
-							if (pickaxeData.getPickaxeAutosmelt()) { break; }
-							boolean toggleState = pickaxeData.getPickaxeSilktouch();
-							pickaxeData.setPickaxeSilktouch(!toggleState);
+							if (pickaxeData.getAutosmelt()) { break; }
+							boolean toggleState = pickaxeData.getSilktouch();
+							pickaxeData.setSilktouch(!toggleState);
 							Pickaxe.updatePickaxeInInventory(player);
 							PickaxeGUI.openManagementInventory(player);
 						}
@@ -177,7 +177,7 @@ public class GUI implements Listener {
 			
 			// In pickaxe repair menu
 			if(title.equals(ChatColor.BLUE + "" + ChatColor.BOLD + "Pickaxe Repair")) {
-				double scrapVal = ScrapUtil.getMaterialScrapValue(event.getCurrentItem().getType(), ScrapUtil.matToString(ScrapUtil.toolMatToScrapMat(Pickaxe.getPickaxeTypeForLevel(pickaxeData.getPickaxeLevel()))));
+				double scrapVal = ScrapUtil.getMaterialScrapValue(event.getCurrentItem().getType(), ScrapUtil.matToString(ScrapUtil.toolMatToScrapMat(Pickaxe.getTypeForLevel(pickaxeData.getLevel()))));
 				Logger.debug(Double.toString(scrapVal));
 				
 			}

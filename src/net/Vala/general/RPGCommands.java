@@ -114,55 +114,55 @@ public class RPGCommands implements CommandExecutor {
 		}
 		switch (input.toLowerCase()) {
 			case "level":
-				pickaxeData.setPickaxeLevel(Integer.parseInt(value));
+				pickaxeData.setLevel(Integer.parseInt(value));
 				return ("'s pickaxe level set to " + value);
 			case "sp":
-				pickaxeData.setPickaxeSP(Integer.parseInt(value));
+				pickaxeData.setSP(Integer.parseInt(value));
 				return ("'s pickaxe SP set to " + value);
 			case "dura":
 			case "durability":
 				if (value.equalsIgnoreCase("max")) {
-					pickaxeData.setPickaxeCurrentDurability(pickaxeData.getPickaxeMaxDurability());
+					pickaxeData.setCurrentDurability(pickaxeData.getMaxDurability());
 				} else {
-					pickaxeData.setPickaxeCurrentDurability(Integer.parseInt(value));
+					pickaxeData.setCurrentDurability(Integer.parseInt(value));
 				}
 				return ("'s pickaxe current durability set to " + value);
 			case "speed":
-				pickaxeData.setPickaxeSpeed(Integer.parseInt(value));
+				pickaxeData.setSpeed(Integer.parseInt(value));
 				return ("'s pickaxe speed set to " + value);
 			case "fortune":
-				pickaxeData.setPickaxeFortune(Integer.parseInt(value));
+				pickaxeData.setFortune(Integer.parseInt(value));
 				return ("'s pickaxe fortune set to " + value);
 			case "autoregen":
-				pickaxeData.setPickaxeAutoregen(Integer.parseInt(value));
+				pickaxeData.setAutoregen(Integer.parseInt(value));
 				return ("'s pickaxe autoregen set to " + value);
 			case "reinforced":
-				pickaxeData.setPickaxeReinforced(Integer.parseInt(value));
+				pickaxeData.setReinforced(Integer.parseInt(value));
 				return ("'s pickaxe reinforced set to " + value);
 			case "knockback":
-				pickaxeData.setPickaxeKnockback(Integer.parseInt(value));
+				pickaxeData.setKnockback(Integer.parseInt(value));
 				return ("'s pickaxe knockback set to " + value);
 			case "autosmelt":
-				if (pickaxeData.getPickaxeSilktouch()) {
+				if (pickaxeData.getSilktouch()) {
 					return ("'s pick " + ChatColor.RED + "has not been modified. " + ChatColor.GREEN + "Cannot modify autosmelt while silktouch is active.");
 				}
-				pickaxeData.setPickaxeAutosmelt(onOrOff);
+				pickaxeData.setAutosmelt(onOrOff);
 				return ("'s pickaxe autosmelt set to " + onOrOff);
 			case "silktouch":
-				if (pickaxeData.getPickaxeAutosmelt()) {
+				if (pickaxeData.getAutosmelt()) {
 					return ("'s pick " + ChatColor.RED + "has not been modified. " + ChatColor.GREEN + "Cannot modify silktouch while autosmelt is active.");
 				}
-				pickaxeData.setPickaxeSilktouch(onOrOff);
+				pickaxeData.setSilktouch(onOrOff);
 				return ("'s pickaxe silktouch set to " + onOrOff);
 			case "au":
 			case "autosmeltul":
 			case "autosmeltunlock":
-				pickaxeData.setPickaxeAutosmeltUnlocked(onOrOff);
+				pickaxeData.setAutosmeltUnlocked(onOrOff);
 				return ("'s pickaxe autosmelt unlock state set to " + onOrOff);
 			case "su":
 			case "silktouchul":
 			case "silktouchunlock":
-				pickaxeData.setPickaxeSilktouchUnlocked(onOrOff);
+				pickaxeData.setSilktouchUnlocked(onOrOff);
 				return ("'s pickaxe silktouch unlock state set to " + onOrOff);
 		}
 		throw new IllegalArgumentException();

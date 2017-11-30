@@ -4,7 +4,7 @@ import net.Vala.GUI.GUI;
 import net.Vala.config.PlayerData;
 import net.Vala.config.YAMLFile;
 import net.Vala.listeners.GeneralListener;
-import net.Vala.listeners.MiningListener;
+import net.Vala.listeners.BreakingListener;
 import net.Vala.pickaxe.PickaxeCommands;
 import net.Vala.pickaxe.Ore.Ores;
 import net.Vala.shovel.ShovelBlock.ShovelBlocks;
@@ -51,7 +51,7 @@ public class RPGTools extends JavaPlugin {
 	
 	private void enableListeners() {
 		this.getServer().getPluginManager().registerEvents(new GeneralListener(), this);
-		this.getServer().getPluginManager().registerEvents(new MiningListener(), this);
+		this.getServer().getPluginManager().registerEvents(new BreakingListener(), this);
 		this.getServer().getPluginManager().registerEvents(new GUI(), this);
 	}
 	
