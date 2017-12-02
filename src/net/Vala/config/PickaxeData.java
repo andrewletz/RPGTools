@@ -2,10 +2,17 @@ package net.Vala.config;
 
 import net.Vala.general.Mineable;
 import net.Vala.pickaxe.PickaxeUtil;
+import net.Vala.pickaxe.Ore;
 import net.Vala.traits.DropChances;
 
+import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
+import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.material.MaterialData;
 
 import tools.RPGPickaxe;
 
@@ -33,11 +40,71 @@ public class PickaxeData extends ToolData {
 	public DropChances getFortuneDrop() {
 		return PickaxeUtil.convertPickaxeLuckLevelToPickaxeDropChances(getFortune());
 	}
-
+	
 	@Override
-	protected void breakBlock(Player player, Block block, Mineable mineable,
-			boolean placedByPlayer) {
-		// TODO Auto-generated method stub
+	protected void breakBlock(Player player, Block block, Mineable mineable, boolean placedByPlayer) {
+		if (mineable == null) {
+			return;
+		}
+		if (!mineable.isMineable(playerData)) {
+			return;
+		}
+		// All checks complete, Pickaxe is safe.
+		
+		// Drops
+		ItemStack drop;
+		if(getAutosmelt()) {
+			drop = ((Ore) mineable).getAutosmeltDrop();
+		} else if(getSilktouch()) {
+			drop = mineable.getSilkDrop();
+		} else {
+			drop = mineable.getDrop();
+		}
+		int dropAmount = 1;
+		if (!placedByPlayer) {
+			dropAmount = PickaxeUtil.rollDropAmount(playerData);
+			drop.setAmount(dropAmount);
+		}
+		
+		if (!placedByPlayer) {
+			int expAmount = (int) PickaxeUtil.getFortuneExpMultiplier(dropAmount) * mineable.getRandomExp();
+			modifyExp(expAmount, dropAmount);
+		}
+		if (!getShouldProtect()) {
+			modifyCurrentDurability(-1);
+		} else {
+			player.playSound(player.getLocation(), Sound.ITEM_SHIELD_BLOCK, 0.06F, 1.7F);
+		}
+		
+		double x, y, z;
+		x = block.getLocation().getX();
+		y = block.getLocation().getY();
+		z = block.getLocation().getZ();
+		
+		if (dropAmount == 3) {
+			// Triple effect
+			player.getWorld().spawnParticle(Particle.DRAGON_BREATH,  x + 0.5, y + 0.5, z + 0.5, 8, 0F, 0F, 0F, 0.01);
+		} else if (dropAmount == 2) {
+			// Double effect
+			player.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, x + 0.5, y + 0.5, z + 0.5, 8, 0F, 0F, 0F, 0.01);
+		}
+		
+		if (getAutosmelt()) {
+			player.getWorld().spawnParticle(Particle.FLAME,  x + 0.5, y + 0.5, z + 0.5, 4, 0F, 0F, 0F, 0.009);
+		}
+		
+		player.getWorld().spawnParticle(Particle.BLOCK_CRACK, x + 0.5, y + 0.5, z + 0.5, 35, 0F, 0F, 0F, 1, new MaterialData(block.getType()));
+		player.playSound(block.getLocation(), Sound.BLOCK_STONE_BREAK, 1F, 0.8F);
+		block.setType(Material.AIR);
+		block.getLocation().getWorld().dropItemNaturally(block.getLocation(), drop);
+		if (!placedByPlayer) {
+			int randExp = mineable.getRandomVanillaExp();
+			if(!getSilktouch() && randExp != 0) {
+				((ExperienceOrb)block.getWorld().spawn(block.getLocation(), ExperienceOrb.class)).setExperience(randExp);
+			}
+		}
+		
+		tool.updateInInventory(player);
 		
 	}
 	

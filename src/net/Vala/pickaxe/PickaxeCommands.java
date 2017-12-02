@@ -1,6 +1,7 @@
 package net.Vala.pickaxe;
 
 import net.Vala.GUI.PickaxeGUI;
+import net.Vala.config.PlayerData;
 import net.Vala.util.GeneralUtil;
 
 import org.bukkit.ChatColor;
@@ -22,12 +23,13 @@ public class PickaxeCommands implements CommandExecutor{
 					return false;
 				}
 				Player player = (Player) sender;
+				PlayerData playerData = PlayerData.getData(player);
 				if (PickaxeUtil.hasPickaxeInInventory(player)) {
 					player.sendMessage(ChatColor.RED + "You already have your pickaxe!");
 					return false;
 				}
 				// Spawn pickaxe
-				if (Pickaxe.giveNewPickaxe(player)) {
+				if (playerData.getPickaxeData().giveNew(player)) {
 					player.sendMessage(ChatColor.GREEN + "Your pickaxe appeared in your inventory.");
 					player.playSound(player.getLocation(), Sound.ENTITY_BLAZE_AMBIENT, 0.25F, 1.8F);
 					return true;

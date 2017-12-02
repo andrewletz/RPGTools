@@ -26,16 +26,18 @@ public abstract class RPGTool extends ItemStack {
 		this.YML = yamlEnum;
 		this.itemMeta = this.getItemMeta();
 		this.data = data;
-		initializeMaterialTiers();
+		this.initializeMaterials();
 		hideItemFlags();
 		refreshItem();
 	}
 	
-	protected abstract void initializeMaterialTiers();
+	protected abstract void initializeMaterials();
 	
 	protected abstract short getMaxDurabilityOfMaterial(Material material);
 	
 	protected abstract List<String> getLore();
+	
+	protected abstract String getDisplayName();
 	
 	protected abstract boolean shouldGlow();
 	
@@ -60,12 +62,18 @@ public abstract class RPGTool extends ItemStack {
 		}
 		refreshType();
 		refreshLore();
+		refreshDisplayName();
 		refreshDurability();
 		refreshGlow();
 	}
 	
 	public void refreshType() {
 		super.setType(getTypeForLevel(data.getLevel()));
+	}
+	
+	public void refreshDisplayName() {
+		itemMeta.setDisplayName(getDisplayName());
+		super.setItemMeta(itemMeta);
 	}
 	
 	public void refreshLore() {
@@ -90,6 +98,10 @@ public abstract class RPGTool extends ItemStack {
 	public void hideItemFlags() {
 		itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 		super.setItemMeta(itemMeta);
+	}
+	
+	public boolean giveNew(Player player) {
+		return player.getInventory().addItem(this).isEmpty();
 	}
 
 }

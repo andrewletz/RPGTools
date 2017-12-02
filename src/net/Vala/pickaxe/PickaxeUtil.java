@@ -11,6 +11,8 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import tools.RPGPickaxe;
+
 public class PickaxeUtil {
 	
 	private static final Random RANDOM = new Random();
@@ -55,7 +57,7 @@ public class PickaxeUtil {
 	 * @return whether or not the material is pickaxe material
 	 */
 	public static boolean isPickaxeMaterial(Material material) {
-		for (Material pickMaterial : Pickaxe.PICKAXE_MATERIAL) {
+		for (Material pickMaterial : RPGPickaxe.PICKAXE_MATERIAL) {
 			if (material == pickMaterial) {
 				return true;
 			}

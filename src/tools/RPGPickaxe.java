@@ -5,14 +5,19 @@ import java.util.List;
 
 import net.Vala.config.ToolData;
 import net.Vala.config.YAMLFile;
+import net.Vala.pickaxe.PickaxeUtil;
 import net.Vala.util.GeneralUtil;
 import net.Vala.config.PickaxeData;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 public class RPGPickaxe extends RPGTool {
+	
+	public static final Material[] PICKAXE_MATERIAL = new Material[] { Material.WOOD_PICKAXE, Material.STONE_PICKAXE,
+		Material.IRON_PICKAXE, Material.GOLD_PICKAXE, Material.DIAMOND_PICKAXE };
 	
 	public RPGPickaxe(PickaxeData data) {
 		super(data, YAMLFile.PICKAXECONFIG);
@@ -20,12 +25,8 @@ public class RPGPickaxe extends RPGTool {
 	}
 
 	@Override
-	public void initializeMaterialTiers() {
-		MATERIAL[0] = Material.WOOD_PICKAXE;
-		MATERIAL[1] = Material.STONE_PICKAXE;
-		MATERIAL[2] = Material.IRON_PICKAXE;
-		MATERIAL[3] = Material.GOLD_PICKAXE;
-		MATERIAL[4] = Material.DIAMOND_PICKAXE;
+	protected void initializeMaterials() {
+		super.MATERIAL = PICKAXE_MATERIAL;
 	}
 
 	@Override
@@ -44,6 +45,10 @@ public class RPGPickaxe extends RPGTool {
 			default:
 				return 1;
 		}
+	}
+	@Override
+	protected String getDisplayName() {
+		return ChatColor.RESET + "" + ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + data.getPlayer().getName() + "'s Pickaxe";
 	}
 
 	@Override
@@ -90,10 +95,11 @@ public class RPGPickaxe extends RPGTool {
 
 	@Override
 	public void updateInInventory(Player player) {
-		// TODO Auto-generated method stub
-		
+		ItemStack pickaxe = PickaxeUtil.getPickaxeInInventory(player);
+		if (pickaxe == null) {
+			return;
+		}
+		pickaxe = this;
 	}
-	
-	
 
 }

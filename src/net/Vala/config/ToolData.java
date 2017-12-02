@@ -77,6 +77,14 @@ public abstract class ToolData {
 		return "Pickaxe";
 	}
 	
+	public boolean giveNew(Player player) {
+		return tool.giveNew(player);
+	}
+	
+	public Player getPlayer() {
+		return playerData.getPlayer();
+	}
+	
 	/*
 	 * Target block
 	 */
