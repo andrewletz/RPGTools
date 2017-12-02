@@ -2,7 +2,6 @@ package net.Vala.util;
 
 import java.util.HashSet;
 
-import net.Vala.pickaxe.Pickaxe;
 import net.Vala.pickaxe.PickaxeUtil;
 import net.Vala.shovel.ShovelFactory;
 import net.minecraft.server.v1_12_R1.BlockPosition;

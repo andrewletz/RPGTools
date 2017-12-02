@@ -4,7 +4,6 @@ import java.util.UUID;
 
 import net.Vala.config.PlayerData;
 import net.Vala.general.RPGTools;
-import net.Vala.pickaxe.Pickaxe;
 import net.Vala.pickaxe.PickaxeUtil;
 
 import org.bukkit.ChatColor;

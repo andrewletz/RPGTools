@@ -7,7 +7,6 @@ import org.bukkit.scheduler.BukkitScheduler;
 import net.Vala.config.PlayerData;
 import net.Vala.config.YAMLFile;
 import net.Vala.general.RPGTools;
-import net.Vala.pickaxe.Pickaxe;
 import net.Vala.pickaxe.PickaxeUtil;
 
 public class AutoRegen {

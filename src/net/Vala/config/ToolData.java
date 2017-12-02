@@ -78,11 +78,21 @@ public abstract class ToolData {
 	}
 	
 	public boolean giveNew(Player player) {
+		tool.refreshItem();
 		return tool.giveNew(player);
 	}
 	
 	public Player getPlayer() {
 		return playerData.getPlayer();
+	}
+	
+	public void updateInInventory() {
+		tool.updateInInventory(getPlayer());
+	}
+	
+	public RPGTool getTool() {
+		tool.refreshItem();
+		return tool;
 	}
 	
 	/*

@@ -4,7 +4,6 @@ import net.Vala.config.PickaxeData;
 import net.Vala.config.PlayerData;
 import net.Vala.config.YAMLFile;
 import net.Vala.general.Logger;
-import net.Vala.pickaxe.Pickaxe;
 import net.Vala.pickaxe.PickaxeUtil;
 import net.Vala.traits.DropChances;
 import net.Vala.traits.GeneralTraitUtil;

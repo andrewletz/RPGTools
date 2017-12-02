@@ -7,7 +7,6 @@ import java.util.Set;
 import net.Vala.config.PickaxeData;
 import net.Vala.config.PlayerData;
 import net.Vala.general.Logger;
-import net.Vala.pickaxe.Pickaxe;
 import net.Vala.util.GeneralUtil;
 import net.Vala.util.ScrapUtil;
 import net.md_5.bungee.api.ChatColor;
@@ -35,7 +34,7 @@ public class GUI implements Listener {
 		PlayerData playerData = PlayerData.getData(player);
 		Inventory inv = Bukkit.createInventory(player, 18, ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "RPG Tools Management Menu");
 		
-		Icon pickIcon = new Icon(Pickaxe.getTypeForLevel(playerData.getPickaxeData().getLevel()));
+		Icon pickIcon = new Icon(playerData.getPickaxeData().getTool().getType());
 		pickIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Pickaxe Options");
 		pickIcon.addLore(ChatColor.GRAY + "" + "Click here to access");
 		pickIcon.addLore(ChatColor.GRAY + "" + "your pickaxe options.");
@@ -156,7 +155,7 @@ public class GUI implements Listener {
 							if (pickaxeData.getSilktouch()) { break; }
 							boolean toggleState = pickaxeData.getAutosmelt();
 							pickaxeData.setAutosmelt(!toggleState);
-							Pickaxe.updatePickaxeInInventory(player);
+							pickaxeData.updateInInventory();
 							PickaxeGUI.openManagementInventory(player);
 						}
 						break;
@@ -167,7 +166,7 @@ public class GUI implements Listener {
 							if (pickaxeData.getAutosmelt()) { break; }
 							boolean toggleState = pickaxeData.getSilktouch();
 							pickaxeData.setSilktouch(!toggleState);
-							Pickaxe.updatePickaxeInInventory(player);
+							pickaxeData.updateInInventory();
 							PickaxeGUI.openManagementInventory(player);
 						}
 						break;
@@ -177,7 +176,7 @@ public class GUI implements Listener {
 			
 			// In pickaxe repair menu
 			if(title.equals(ChatColor.BLUE + "" + ChatColor.BOLD + "Pickaxe Repair")) {
-				double scrapVal = ScrapUtil.getMaterialScrapValue(event.getCurrentItem().getType(), ScrapUtil.matToString(ScrapUtil.toolMatToScrapMat(Pickaxe.getTypeForLevel(pickaxeData.getLevel()))));
+				double scrapVal = ScrapUtil.getMaterialScrapValue(event.getCurrentItem().getType(), ScrapUtil.matToString(ScrapUtil.toolMatToScrapMat(pickaxeData.getTool().getType())));
 				Logger.debug(Double.toString(scrapVal));
 				
 			}

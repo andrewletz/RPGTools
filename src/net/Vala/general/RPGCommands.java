@@ -8,7 +8,6 @@ import net.Vala.GUI.GUI;
 import net.Vala.config.PickaxeData;
 import net.Vala.config.PlayerData;
 import net.Vala.config.YAMLFile;
-import net.Vala.pickaxe.Pickaxe;
 import net.Vala.pickaxe.Ore.Ores;
 import net.Vala.util.GeneralUtil;
 
@@ -47,11 +46,11 @@ public class RPGCommands implements CommandExecutor {
 							sender.sendMessage(ChatColor.GREEN + "" + yaml + " reloaded.");
 						}
 						for (Player player : Bukkit.getOnlinePlayers()) {
-							PlayerData playerD = PlayerData.getData(player);
-							playerD.reloadConfig();
-							playerD.refreshConfig();
-							playerD.refreshAutoRegenTimers();
-							Pickaxe.updatePickaxeInInventory(player);
+							PlayerData playerData = PlayerData.getData(player);
+							playerData.reloadConfig();
+							playerData.refreshConfig();
+							playerData.refreshAutoRegenTimers();
+							playerData.getPickaxeData().updateInInventory();
 						}
 						sender.sendMessage(ChatColor.GREEN + "Player files reloaded.");
 						Ores.initializeOres();
@@ -86,7 +85,7 @@ public class RPGCommands implements CommandExecutor {
 							}
 							playerData.reloadConfig();
 							playerData.refreshAutoRegenTimers();
-							Pickaxe.updatePickaxeInInventory(targetPlayer);
+							playerData.getPickaxeData().updateInInventory();
 							sender.sendMessage(ChatColor.GREEN + args[2] + sendBack);
 						} else {
 							sender.sendMessage(ChatColor.RED + "Player not found!");

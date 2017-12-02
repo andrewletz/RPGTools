@@ -9,7 +9,6 @@ import net.Vala.general.Logger;
 import net.Vala.general.RPGTools;
 import net.Vala.pickaxe.Ore;
 import net.Vala.pickaxe.Ore.Ores;
-import net.Vala.pickaxe.Pickaxe;
 import net.Vala.pickaxe.PickaxeUtil;
 import net.Vala.raytrace.BoundingBox;
 import net.Vala.raytrace.RayTrace;
@@ -127,7 +126,7 @@ public class BreakingListener implements Listener {
 		}
 		playerData.getPickaxeData().modifyCurrentDurability(-1);
 		
-		Pickaxe.updatePickaxeInInventory(event.getPlayer());
+		playerData.getPickaxeData().updateInInventory();
 
 	}
 

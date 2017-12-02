@@ -27,14 +27,14 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.MaterialData;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class Pickaxe {
+public class PickaxeOld {
 
 	public static final int MAX_LEVEL = YAMLFile.PICKAXECONFIG.getConfig().getInt("MaxLevel");
 	public static final int DIFFICULTY_MULTIPLIER = YAMLFile.PICKAXECONFIG.getConfig().getInt("DifficultyMultiplier");
 	public static final Material[] PICKAXE_MATERIAL = new Material[] { Material.WOOD_PICKAXE, Material.STONE_PICKAXE,
 		Material.IRON_PICKAXE, Material.GOLD_PICKAXE, Material.DIAMOND_PICKAXE };
 
-	private Pickaxe() {}
+	private PickaxeOld() {}
 
 	/**
 	 * Gets the corresponding pickaxe material for the level

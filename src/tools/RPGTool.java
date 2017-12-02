@@ -51,8 +51,10 @@ public abstract class RPGTool extends ItemStack {
 		} else if (level >= YML.getConfig().getInt("UnlockLevels.Iron")) {
 			return MATERIAL[2];
 		} else if (level >= YML.getConfig().getInt("UnlockLevels.Stone")) {
+			
 			return MATERIAL[1];
 		}
+		System.out.println(YML.getConfig().getInt("UnlockLevels.Diamond"));
 		return MATERIAL[0];
 	}
 	
@@ -101,6 +103,7 @@ public abstract class RPGTool extends ItemStack {
 	}
 	
 	public boolean giveNew(Player player) {
+		refreshItem();
 		return player.getInventory().addItem(this).isEmpty();
 	}
 

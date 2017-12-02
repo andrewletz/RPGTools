@@ -99,6 +99,8 @@ public class RPGPickaxe extends RPGTool {
 		if (pickaxe == null) {
 			return;
 		}
+		System.out.println("Updating in inventory");
+		refreshItem();
 		pickaxe = this;
 	}
 

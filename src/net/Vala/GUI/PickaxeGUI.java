@@ -7,7 +7,6 @@ import net.Vala.config.PickaxeData;
 import net.Vala.config.PlayerData;
 import net.Vala.config.YAMLFile;
 import net.Vala.general.Logger;
-import net.Vala.pickaxe.Pickaxe;
 import net.Vala.pickaxe.PickaxeUtil;
 import net.Vala.traits.AutoRegen;
 import net.Vala.traits.DropChances;
@@ -33,7 +32,7 @@ public class PickaxeGUI {
 		PickaxeData pickaxeData = PlayerData.getData(player).getPickaxeData();
 		
 		// Get our pick icon for the first slot
-		ItemStack pickIcon = Pickaxe.getNewPickaxe(player);
+		ItemStack pickIcon = pickaxeData.getTool();
 		
 		// Set up speed icon/button
 		Icon speedIcon = new Icon(Material.NETHER_STAR);
@@ -194,11 +193,11 @@ public class PickaxeGUI {
 		repairIcon.addLore(ChatColor.GRAY + "To repair your pickaxe, you need");
 		repairIcon.addLore(ChatColor.GRAY + "to place items that are made of");
 		repairIcon.addLore(ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + 
-				ScrapUtil.matToString(ScrapUtil.toolMatToScrapMat(Pickaxe.getTypeForLevel(pickaxeData.getLevel()))) + ChatColor.GRAY + " in this inventory and left");
+				ScrapUtil.matToString(ScrapUtil.toolMatToScrapMat(pickaxeData.getTool().getType())) + ChatColor.GRAY + " in this inventory and left");
 		repairIcon.addLore(ChatColor.GRAY + "click this button." + ChatColor.RED +  " Must be near an anvil.");
 		
 		// Set all the inventory slots to their respective icons
-		inv.setItem(18, Pickaxe.getNewPickaxe(player));
+		inv.setItem(18, pickaxeData.getTool());
 		inv.setItem(19, GUI.BLANK_PANE);
 		inv.setItem(20, GUI.BLANK_PANE);
 		inv.setItem(21, GUI.BLANK_PANE);
