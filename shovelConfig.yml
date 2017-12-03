@@ -52,7 +52,3 @@ Reinforcement:
   MaxLevel: 10
   # The percent amount per level that the shovel does not consume durability (50% chance at max level with defaults).
   ReductionPerLevel: 5.0
-  
-Silktouch:
-  # Keep this value low so players can't exploit silktouch by remining high exp blocks over and over
-  MaxExpGain: 3

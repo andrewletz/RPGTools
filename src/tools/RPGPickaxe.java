@@ -2,10 +2,7 @@ package tools;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import net.Vala.config.ToolData;
 import net.Vala.config.YAMLFile;
-import net.Vala.pickaxe.PickaxeUtil;
 import net.Vala.util.GeneralUtil;
 import net.Vala.config.PickaxeData;
 
@@ -95,13 +92,12 @@ public class RPGPickaxe extends RPGTool {
 
 	@Override
 	public void updateInInventory(Player player) {
-		ItemStack pickaxe = PickaxeUtil.getPickaxeInInventory(player);
-		if (pickaxe == null) {
-			return;
+		refreshItem(this);
+		for (ItemStack item : player.getInventory().getContents()) {
+			if (item != null && item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().contains("'s Pickaxe")) {
+				refreshItem(item);
+			}		
 		}
-		System.out.println("Updating in inventory");
-		refreshItem();
-		pickaxe = this;
 	}
 
 }

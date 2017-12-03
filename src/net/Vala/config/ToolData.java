@@ -78,7 +78,7 @@ public abstract class ToolData {
 	}
 	
 	public boolean giveNew(Player player) {
-		tool.refreshItem();
+		tool.refreshItem(tool);
 		return tool.giveNew(player);
 	}
 	
@@ -91,7 +91,7 @@ public abstract class ToolData {
 	}
 	
 	public RPGTool getTool() {
-		tool.refreshItem();
+		tool.refreshItem(tool);
 		return tool;
 	}
 	
@@ -280,7 +280,7 @@ public abstract class ToolData {
          */
         
         try {
-         String messageToSend = ChatColor.GRAY + "" + ChatColor.BOLD + "+" + ChatColor.GRAY + value + ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "  EXP";
+         String messageToSend = ChatColor.GRAY + "" + ChatColor.BOLD + "+ " + ChatColor.GRAY + value + ChatColor.DARK_PURPLE + " " + ChatColor.BOLD + TOOL_STRING + " EXP";
          if (dropAmount == 2) {
         	 messageToSend = ChatColor.BOLD + "" + ChatColor.WHITE + "★ " + messageToSend + ChatColor.BOLD + "" + ChatColor.WHITE + " ★";
          } else if (dropAmount == 3) {
@@ -329,8 +329,8 @@ public abstract class ToolData {
 		modifySP(YML.getConfig().getInt("SPPerLevel"));
 		GeneralUtil.playLevelSound(playerData.getPlayer());
 		playerData.getPlayer().sendMessage(" ");
-		playerData.getPlayer().sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + " LEVEL " + getLevel());
-		playerData.getPlayer().sendMessage(ChatColor.AQUA + "" + ChatColor.BOLD + " Stat Points" + ChatColor.AQUA + " + " + YML.getConfig().getInt("SPPerLevel"));
+		playerData.getPlayer().sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + TOOL_STRING + " LEVEL " + getLevel());
+		playerData.getPlayer().sendMessage(ChatColor.AQUA + "" + ChatColor.BOLD + TOOL_STRING + " Stat Points" + ChatColor.AQUA + " + " + YML.getConfig().getInt("SPPerLevel"));
 		playerData.getPlayer().sendMessage(ChatColor.GRAY + "" + ChatColor.ITALIC + getExpToNextLevel() + " xp to lvl " + (getLevel() + 1));
 		playerData.getPlayer().sendMessage(" ");
 		playerData.saveConfig();

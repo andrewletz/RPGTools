@@ -5,7 +5,6 @@ import java.util.List;
 
 import net.Vala.config.PickaxeData;
 import net.Vala.config.PlayerData;
-import net.Vala.general.Logger;
 import net.Vala.general.RPGTools;
 import net.Vala.pickaxe.Ore;
 import net.Vala.pickaxe.Ore.Ores;
@@ -22,7 +21,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerAnimationEvent;
-import org.bukkit.event.player.PlayerAnimationType;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -40,6 +38,7 @@ public class BreakingListener implements Listener {
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	private void pickaxeMine(Player player) {
 		PlayerData playerData = PlayerData.getData(player);
 		PickaxeData pickaxeData = playerData.getPickaxeData();

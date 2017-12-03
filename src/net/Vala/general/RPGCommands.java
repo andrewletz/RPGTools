@@ -1,9 +1,5 @@
 package net.Vala.general;
 
-import java.util.Arrays;
-import java.util.Set;
-import java.util.HashSet;
-
 import net.Vala.GUI.GUI;
 import net.Vala.config.PickaxeData;
 import net.Vala.config.PlayerData;

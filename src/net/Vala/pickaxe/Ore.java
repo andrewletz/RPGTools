@@ -9,13 +9,11 @@ import net.Vala.general.Mineable;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.material.MaterialData;
 
 public class Ore extends Mineable{
 	
 	ItemStack autosmeltDrop;
 
-	@SuppressWarnings("deprecation")
 	protected Ore(Material material, byte blockData, Material drop, byte dropData, Material silkDrop, byte silkDropData, Material autosmeltDrop, byte autosmeltDropData, int minLevel, double toughness, 
 			int minExp, int maxExp, int minVanillaExp, int maxVanillaExp) {
 		super(material, blockData, drop, dropData, silkDrop, silkDropData, minLevel, toughness, minExp, maxExp, minVanillaExp, maxVanillaExp);

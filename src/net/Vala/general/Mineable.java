@@ -6,7 +6,6 @@ import net.Vala.config.PlayerData;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.material.MaterialData;
 
 public abstract class Mineable {
 

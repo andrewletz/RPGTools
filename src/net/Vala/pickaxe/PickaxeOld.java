@@ -2,29 +2,20 @@ package net.Vala.pickaxe;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import net.Vala.config.PickaxeData;
 import net.Vala.config.PlayerData;
 import net.Vala.config.YAMLFile;
 import net.Vala.general.RPGTools;
-import net.Vala.pickaxe.Ore.Ores;
-import net.Vala.traits.DropChances;
 import net.Vala.util.EnchantGlow;
 import net.Vala.util.GeneralUtil;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.Particle;
-import org.bukkit.Sound;
-import org.bukkit.block.Block;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.material.MaterialData;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class PickaxeOld {
@@ -122,8 +113,7 @@ public class PickaxeOld {
 	 */
 	public static void updatePickaxeInInventory(Player player) {
 		new BukkitRunnable() {
-
-			@SuppressWarnings("deprecation")
+			
 			@Override
 			public void run() {
 				ItemStack pickaxe = PickaxeUtil.getPickaxeInInventory(player);

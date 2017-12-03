@@ -4,7 +4,6 @@ import java.util.List;
 
 import net.Vala.config.ToolData;
 import net.Vala.config.YAMLFile;
-import net.Vala.general.Logger;
 import net.Vala.util.EnchantGlow;
 
 import org.bukkit.Material;
@@ -28,7 +27,7 @@ public abstract class RPGTool extends ItemStack {
 		this.data = data;
 		this.initializeMaterials();
 		hideItemFlags();
-		refreshItem();
+		refreshItem(this);
 	}
 	
 	protected abstract void initializeMaterials();
@@ -54,47 +53,46 @@ public abstract class RPGTool extends ItemStack {
 			
 			return MATERIAL[1];
 		}
-		System.out.println(YML.getConfig().getInt("UnlockLevels.Diamond"));
 		return MATERIAL[0];
 	}
 	
-	public void refreshItem() {
+	public void refreshItem(ItemStack item) {
 		if (YML == null) {
 			return;
 		}
-		refreshType();
-		refreshLore();
-		refreshDisplayName();
-		refreshDurability();
-		refreshGlow();
+		refreshType(item);
+		refreshLore(item);
+		refreshDisplayName(item);
+		refreshDurability(item);
+		refreshGlow(item);
 	}
 	
-	public void refreshType() {
-		super.setType(getTypeForLevel(data.getLevel()));
+	public void refreshType(ItemStack item) {
+		item.setType(getTypeForLevel(data.getLevel()));
 	}
 	
-	public void refreshDisplayName() {
+	public void refreshDisplayName(ItemStack item) {
 		itemMeta.setDisplayName(getDisplayName());
-		super.setItemMeta(itemMeta);
+		item.setItemMeta(itemMeta);
 	}
 	
-	public void refreshLore() {
+	public void refreshLore(ItemStack item) {
 		itemMeta.setLore(getLore());
-		super.setItemMeta(itemMeta);
+		item.setItemMeta(itemMeta);
 	}
 	
-	public void refreshDurability() {
+	public void refreshDurability(ItemStack item) {
 		float trueDuraPercent = (float) data.getCurrentDurability() / (float) data.getMaxDurability();
 		short maxDura = getMaxDurabilityOfMaterial(super.getType());
-		super.setDurability((short) (maxDura - (trueDuraPercent * (float) maxDura)));
+		item.setDurability((short) (maxDura - (trueDuraPercent * (float) maxDura)));
 	}
 	
-	public void refreshGlow() {
+	public void refreshGlow(ItemStack item) {
 		if (shouldGlow()) {
-			EnchantGlow.addGlow(this);
+			EnchantGlow.addGlow(item);
 			return;
 		}
-		EnchantGlow.removeGlow(this);
+		EnchantGlow.removeGlow(item);
 	}
 	
 	public void hideItemFlags() {
@@ -103,7 +101,7 @@ public abstract class RPGTool extends ItemStack {
 	}
 	
 	public boolean giveNew(Player player) {
-		refreshItem();
+		refreshItem(this);
 		return player.getInventory().addItem(this).isEmpty();
 	}
 

@@ -1,18 +1,12 @@
 package net.Vala.GUI;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.Vala.config.PickaxeData;
 import net.Vala.config.PlayerData;
 import net.Vala.config.YAMLFile;
-import net.Vala.general.Logger;
 import net.Vala.pickaxe.PickaxeUtil;
-import net.Vala.traits.AutoRegen;
 import net.Vala.traits.DropChances;
 import net.Vala.traits.GeneralTraitUtil;
 import net.Vala.traits.Reinforced;
-import net.Vala.util.EnchantGlow;
 import net.Vala.util.ScrapUtil;
 import net.md_5.bungee.api.ChatColor;
 
@@ -21,14 +15,11 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import tools.RPGPickaxe;
 
 public class PickaxeGUI {
 	
 	public static void openManagementInventory(Player player) {
-		Inventory inv = Bukkit.createInventory(player, 9, ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + " Management");
+		Inventory inv = Bukkit.createInventory(player, 9, ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Pickaxe Management");
 		PickaxeData pickaxeData = PlayerData.getData(player).getPickaxeData();
 		
 		// Get our pick icon for the first slot
@@ -184,7 +175,7 @@ public class PickaxeGUI {
 	}
 	
 	public static void openScrapInventory(Player player) {
-		Inventory inv = Bukkit.createInventory(player, 27, ChatColor.BLUE + "" + ChatColor.BOLD + " Repair");
+		Inventory inv = Bukkit.createInventory(player, 27, ChatColor.BLUE + "" + ChatColor.BOLD + "Pickaxe Repair");
 		PickaxeData pickaxeData = PlayerData.getData(player).getPickaxeData();
 		
 		// Repair button at bottom right of menu set-up
