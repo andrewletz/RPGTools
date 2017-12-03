@@ -42,6 +42,7 @@ public abstract class ToolData {
 		this.YML = yamlFile;
 		this.TOOL_STRING = getToolStringFromYML();
 		this.reinforced = new Reinforced(yamlFile);
+		this.autoRegenTimer = new AutoRegen(this, yamlFile);
 	}
 	
 	public void refreshConfig() {
@@ -411,7 +412,7 @@ public abstract class ToolData {
 		if (autoRegenTimer != null) {
 			autoRegenTimer.cancelTask();
 		}
-		autoRegenTimer = new AutoRegen(playerData, YML);
+		autoRegenTimer = new AutoRegen(this, YML);
 	}
 	
 	public AutoRegen getAutoRegenClass(boolean refresh) {

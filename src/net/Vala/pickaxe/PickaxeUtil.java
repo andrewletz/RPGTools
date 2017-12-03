@@ -90,7 +90,7 @@ public class PickaxeUtil {
     	double toughness = stone.getToughness();
     	double ratio = (toughness / damage) / 20; // time in seconds to break 1 stone
     	double perSecond = (double)Math.round((1 / ratio) * 100000d) / 100000d;
-    	return (perSecond + " stone per second");
+    	return (perSecond + " stone/sec");
     }
     
 	/**

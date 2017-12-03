@@ -324,7 +324,7 @@ public class ShovelData {
 		if (autoRegenTimer != null) {
 			autoRegenTimer.cancelTask();
 		}
-		autoRegenTimer = new AutoRegen(playerData, YAMLFile.SHOVELCONFIG);
+//		autoRegenTimer = new AutoRegen(playerData, YAMLFile.SHOVELCONFIG);
 	}
 	
 	public AutoRegen getAutoRegenClass() {

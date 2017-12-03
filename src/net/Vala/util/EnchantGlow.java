@@ -91,7 +91,9 @@ public class EnchantGlow extends EnchantmentWrapper
 	
 	@SuppressWarnings("deprecation")
 	public static void removeGlow(ItemStack item) {
-		item.removeEnchantment(Enchantment.getById(255));
+		if (item.getEnchantments().containsKey(Enchantment.getById(255))) {
+			item.removeEnchantment(Enchantment.getById(255));
+		}
 	}
 	
 }

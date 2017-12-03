@@ -5,6 +5,7 @@ import org.bukkit.Particle;
 import org.bukkit.scheduler.BukkitScheduler;
 
 import net.Vala.config.PlayerData;
+import net.Vala.config.ToolData;
 import net.Vala.config.YAMLFile;
 import net.Vala.general.RPGTools;
 import net.Vala.pickaxe.PickaxeUtil;
@@ -12,21 +13,21 @@ import net.Vala.pickaxe.PickaxeUtil;
 public class AutoRegen {
 	
 	private BukkitScheduler scheduler;
-	private PlayerData playerData;
+	private ToolData toolData;
 	private YAMLFile YML;
 	private int id;
 	
-	public AutoRegen(PlayerData playerData, YAMLFile yamlEnum) {
-		this.playerData = playerData;
+	public AutoRegen(ToolData toolData, YAMLFile yamlEnum) {
+		this.toolData = toolData;
 		scheduler = RPGTools.getPlugin().getServer().getScheduler();
 		YML = yamlEnum;
 		
 		if (yamlEnum == YAMLFile.PICKAXECONFIG) {
-			initiatePickaxeScheduler(convertLevelToRandomTick(playerData.getPickaxeData().getAutoregen()));
+			initiatePickaxeScheduler(convertLevelToRandomTick(toolData.getAutoregen()));
 		} else if (yamlEnum == YAMLFile.SHOVELCONFIG) {
-//			initiateShovelScheduler(convertLevelToRandomTick(playerData.getShovelData().getShovelAutoregen()));
+//			initiateShovelScheduler(convertLevelToRandomTick(toolData.getShovelAutoregen()));
 		} else if (yamlEnum == YAMLFile.AXECONFIG) {
-//			initiateAxeScheduler(convertLevelToRandomTick(playerData.getAxeData().getAxeAutoregen()));
+//			initiateAxeScheduler(convertLevelToRandomTick(toolData.getAxeAutoregen()));
 		}
 	}
 	
@@ -44,10 +45,10 @@ public class AutoRegen {
             @SuppressWarnings("deprecation")
 			@Override
             public void run() {
-            	if (playerData.getPickaxeData().getCurrentDurability() < playerData.getPickaxeData().getMaxDurability()) {
-            		playerData.getPickaxeData().modifyCurrentDurability(1);
-            		if (PickaxeUtil.isProfessionPickaxe(playerData.getPlayer().getItemInHand())) {
-            			playerData.getPlayer().getWorld().spawnParticle(Particle.VILLAGER_HAPPY, playerData.getPlayer().getLocation(), 25, 0.5F, 1.05F, 0.5F, 0.05);
+            	if (toolData.getCurrentDurability() < toolData.getMaxDurability()) {
+            		toolData.modifyCurrentDurability(1);
+            		if (toolData.getPlayer().getItemInHand() != null && PickaxeUtil.isProfessionPickaxe(toolData.getPlayer().getItemInHand())) {
+            			toolData.getPlayer().getWorld().spawnParticle(Particle.VILLAGER_HAPPY, toolData.getPlayer().getLocation(), 25, 0.5F, 1.05F, 0.5F, 0.05);
             		}
             	}
             }
