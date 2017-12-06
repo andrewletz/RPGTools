@@ -19,29 +19,6 @@ public class PickaxeUtil {
 	private final static YAMLFile YML = YAMLFile.PICKAXECONFIG;
 	
 	/**
-	 * Checks if the player has a Pickaxe profession pickaxe in their inventory
-	 * @param player
-	 * @return whether or not the pickaxe was found
-	 */
-	public static boolean hasPickaxeInInventory(Player player) {
-		return getPickaxeInInventory(player) != null;
-	}
-
-	/**
-	 * Gets the profession pickaxe in the player's inventory
-	 * @param player
-	 * @return the found pickaxe or null if not found
-	 */
-	public static ItemStack getPickaxeInInventory(Player player) {
-		for (ItemStack item : player.getInventory().getContents()) {
-			if (isProfessionPickaxe(item)) {
-				return item;
-			}
-		}
-		return null;
-	}
-	
-	/**
 	 * Checks if item is a profession pickaxe
 	 * @param item
 	 * @return whether or not the item is a profession pickaxe
@@ -119,22 +96,6 @@ public class PickaxeUtil {
 		} else {
 			return 1;
 		}
-	}
-	
-	public static int getMaxSpeed() {
-		return YML.getConfig().getInt("Speed.MaxLevel");
-	}
-	
-	public static int getMaxFortune() {
-		return YML.getConfig().getInt("Fortune.MaxLevel");
-	}
-	
-	public static int getMaxAutoregen() {
-		return YML.getConfig().getInt("Autoregen.MaxLevel");
-	}
-	
-	public static int getMaxReinforced() {
-		return YML.getConfig().getInt("Reinforcement.MaxLevel");
 	}
 
 }

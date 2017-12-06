@@ -40,8 +40,6 @@ public abstract class RPGTool extends ItemStack {
 	
 	protected abstract boolean shouldGlow();
 	
-	public abstract void updateInInventory(Player player);
-	
 	public Material getTypeForLevel(int level) {
 		if (level >= YML.getConfig().getInt("UnlockLevels.Diamond")) {
 			return MATERIAL[4];
@@ -104,5 +102,29 @@ public abstract class RPGTool extends ItemStack {
 		refreshItem(this);
 		return player.getInventory().addItem(this).isEmpty();
 	}
+	
+	public ItemStack getToolInInventory(Player player) {
+		refreshItem(this);
+		for (ItemStack item : player.getInventory().getContents()) {
+			if (item != null && item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().equals(this.itemMeta.getDisplayName())) {
+				return item;
+			}		
+		}
+		return null;
+	}
+	
+	public boolean hasToolInInventory(Player player) {
+		return getToolInInventory(player) != null;
+	}
+
+	public void updateInInventory(Player player) {
+		refreshItem(this);
+		for (ItemStack item : player.getInventory().getContents()) {
+			if (item != null && item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().equals(this.itemMeta.getDisplayName())) {
+				refreshItem(item);
+			}		
+		}
+	}
+	
 
 }

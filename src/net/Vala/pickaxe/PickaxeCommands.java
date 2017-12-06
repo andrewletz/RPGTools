@@ -24,7 +24,7 @@ public class PickaxeCommands implements CommandExecutor{
 				}
 				Player player = (Player) sender;
 				PlayerData playerData = PlayerData.getData(player);
-				if (PickaxeUtil.hasPickaxeInInventory(player)) {
+				if (playerData.getPickaxeData().hasToolInInventory()) {
 					player.sendMessage(ChatColor.RED + "You already have your pickaxe!");
 					return false;
 				}

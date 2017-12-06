@@ -90,14 +90,4 @@ public class RPGPickaxe extends RPGTool {
 		return true;
 	}
 
-	@Override
-	public void updateInInventory(Player player) {
-		refreshItem(this);
-		for (ItemStack item : player.getInventory().getContents()) {
-			if (item != null && item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().contains("'s Pickaxe")) {
-				refreshItem(item);
-			}		
-		}
-	}
-
 }

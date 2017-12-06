@@ -18,7 +18,7 @@ public class PickaxeLevelUtil {
 		PickaxeData pickaxeData = PlayerData.getData(player).getPickaxeData();
 		int spReq = GeneralTraitUtil.getPickSpeedSPReq(pickaxeData.getSpeed()) + 1;
 		
-		if(pickaxeData.getSpeed() < PickaxeUtil.getMaxSpeed()) {
+		if(pickaxeData.getSpeed() < pickaxeData.getMaxSpeed()) {
 			if(pickaxeData.getSP() >= spReq) {
 				GeneralUtil.playLevelSound(player);
 				sendLevelUpMessage(player, "speed", pickaxeData.getSpeed(), pickaxeData.getSpeed() + 1);
@@ -39,7 +39,7 @@ public class PickaxeLevelUtil {
 		PickaxeData pickaxeData = PlayerData.getData(player).getPickaxeData();
 		int spReq = GeneralTraitUtil.getPickFortuneSPReq(pickaxeData.getFortune()) + 1;
 		
-		if(pickaxeData.getFortune() < PickaxeUtil.getMaxFortune()) {
+		if(pickaxeData.getFortune() < pickaxeData.getMaxFortune()) {
 			if(pickaxeData.getSP() >= spReq) {
 				GeneralUtil.playLevelSound(player);
 				sendLevelUpMessage(player, "fortune", pickaxeData.getFortune(), pickaxeData.getFortune() + 1);
@@ -60,7 +60,7 @@ public class PickaxeLevelUtil {
 		PickaxeData pickaxeData = PlayerData.getData(player).getPickaxeData();
 		int spReq = GeneralTraitUtil.getPickAutoRegenSPReq(pickaxeData.getAutoregen()) + 1;
 		
-		if(pickaxeData.getAutoregen() < PickaxeUtil.getMaxAutoregen()) {
+		if(pickaxeData.getAutoregen() < pickaxeData.getMaxAutoregen()) {
 			if(pickaxeData.getSP() >= spReq) {
 				GeneralUtil.playLevelSound(player);
 				sendLevelUpMessage(player, "autoregen", pickaxeData.getAutoregen(), pickaxeData.getAutoregen() + 1);
@@ -81,7 +81,7 @@ public class PickaxeLevelUtil {
 		PickaxeData pickaxeData = PlayerData.getData(player).getPickaxeData();
 		int spReq = GeneralTraitUtil.getPickReinforcedSPReq(pickaxeData.getReinforced()) + 1;
 		
-		if(pickaxeData.getReinforced() < PickaxeUtil.getMaxReinforced()) {
+		if(pickaxeData.getReinforced() < pickaxeData.getMaxReinforced()) {
 			if(pickaxeData.getSP() >= spReq) {
 				GeneralUtil.playLevelSound(player);
 				sendLevelUpMessage(player, "reinforced", pickaxeData.getReinforced(), pickaxeData.getReinforced() + 1);
@@ -146,8 +146,8 @@ public class PickaxeLevelUtil {
 		switch(stat) {
 		case "speed":
 			player.sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Pickaxe Speed Level " + after);
-			player.sendMessage(ChatColor.GRAY + "" + ChatColor.BOLD + "Speed: " + ChatColor.BLUE + PickaxeUtil.convertPickSpeedToDamagePerTick(before) + ChatColor.BOLD + " -> " 
-					+ ChatColor.BLUE + PickaxeUtil.convertPickSpeedToDamagePerTick(after));
+			player.sendMessage(ChatColor.GRAY + "" + ChatColor.BOLD + "Speed: " + ChatColor.BLUE + PickaxeUtil.convertSpeedToReadable(PickaxeUtil.convertPickSpeedToDamagePerTick(before)) + ChatColor.BOLD + " -> " 
+					+ ChatColor.BLUE + PickaxeUtil.convertSpeedToReadable(PickaxeUtil.convertPickSpeedToDamagePerTick(after)));
 			break;
 			
 		case "fortune":

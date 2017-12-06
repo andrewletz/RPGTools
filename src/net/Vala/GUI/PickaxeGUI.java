@@ -35,14 +35,14 @@ public class PickaxeGUI {
 		}
 		speedIcon.addLore(ChatColor.GRAY + "" + ChatColor.BOLD + "Current Level: " + ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + currentSpeed);
 		speedIcon.addLore("");
-		speedIcon.addLore(ChatColor.GRAY + "" + ChatColor.BOLD + "Speed: " + ChatColor.BLUE + PickaxeUtil.convertSpeedToReadable(PickaxeUtil.convertPickSpeedToDamagePerTick(currentSpeed))
-						+ (!pickaxeData.isMaxSpeed() ? ChatColor.BOLD + " -> " + ChatColor.BLUE + PickaxeUtil.convertSpeedToReadable(PickaxeUtil.convertPickSpeedToDamagePerTick(currentSpeed + 1)) : ""));
-		speedIcon.addLore("");
+		speedIcon.addLore(ChatColor.GRAY + "" + ChatColor.BOLD + "Speed: " + ChatColor.BLUE + PickaxeUtil.convertSpeedToReadable(PickaxeUtil.convertPickSpeedToDamagePerTick(currentSpeed)));
 		if (!pickaxeData.isMaxSpeed()) {
+			speedIcon.addLore(ChatColor.BLUE + "" + ChatColor.BOLD + "     -> " + ChatColor.BLUE + PickaxeUtil.convertSpeedToReadable(PickaxeUtil.convertPickSpeedToDamagePerTick(currentSpeed + 1)));
+			speedIcon.addLore("");
 			speedIcon.addLore(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "Left-click" + ChatColor.GRAY + " here to level up");
 			speedIcon.addLore(ChatColor.GRAY + "your max pick speed to level " + ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + (currentSpeed + 1) + ".");
-			speedIcon.addLore("");
 		}
+		speedIcon.addLore("");
 		speedIcon.addLore(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "Shift-click" + ChatColor.GRAY + " here to manually set your");
 		speedIcon.addLore(ChatColor.GRAY + "pick speed to anything up to level " + ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + (currentSpeed) + ".");
 		speedIcon.addLore("");
@@ -86,9 +86,9 @@ public class PickaxeGUI {
 		}
 		regenIcon.addLore(ChatColor.GRAY + "" + ChatColor.BOLD + "Current Level: " + ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + pickaxeData.getAutoregen());
 		regenIcon.addLore("");
-		regenIcon.addLore(ChatColor.GRAY + "" + ChatColor.BOLD + "Regen rate: " + ChatColor.BLUE + "per " + pickaxeData.getAutoRegenClass(false).convertLevelToRandomTick(pickaxeData.getAutoregen()) + " ticks");
+		regenIcon.addLore(ChatColor.GRAY + "" + ChatColor.BOLD + "Rate: " + ChatColor.BLUE + "per " + pickaxeData.getAutoRegenClass(false).convertLevelToRandomTick(pickaxeData.getAutoregen()) + " ticks");
 		if (!pickaxeData.isMaxAutoregen()) {
-			regenIcon.addLore(ChatColor.BLUE + "" + ChatColor.BOLD + "               -> " + ChatColor.BLUE + "per " + pickaxeData.getAutoRegenClass(false).convertLevelToRandomTick(pickaxeData.getAutoregen() + 1) + " ticks");
+			regenIcon.addLore(ChatColor.BLUE + "" + ChatColor.BOLD + "   -> " + ChatColor.BLUE + "per " + pickaxeData.getAutoRegenClass(false).convertLevelToRandomTick(pickaxeData.getAutoregen() + 1) + " ticks");
 			regenIcon.addLore("");
 			regenIcon.addLore(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "Left-click" + ChatColor.GRAY + " here to level up");
 			regenIcon.addLore(ChatColor.GRAY + "your pick auto-regen to level " + ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + (pickaxeData.getAutoregen() + 1) + ".");

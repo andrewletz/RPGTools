@@ -2,9 +2,9 @@ package net.Vala.traits;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Particle;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitScheduler;
 
-import net.Vala.config.PlayerData;
 import net.Vala.config.ToolData;
 import net.Vala.config.YAMLFile;
 import net.Vala.general.RPGTools;
@@ -42,12 +42,12 @@ public class AutoRegen {
 	// Make multiple versions of this for each tool
 	public void initiatePickaxeScheduler(int tickRate) {
 		Integer taskId = scheduler.scheduleSyncRepeatingTask(RPGTools.getPlugin(), new Runnable() {
-            @SuppressWarnings("deprecation")
 			@Override
             public void run() {
             	if (toolData.getCurrentDurability() < toolData.getMaxDurability()) {
             		toolData.modifyCurrentDurability(1);
-            		if (toolData.getPlayer().getItemInHand() != null && PickaxeUtil.isProfessionPickaxe(toolData.getPlayer().getItemInHand())) {
+            		ItemStack itemInHand = toolData.getPlayer().getInventory().getItemInMainHand();
+            		if (itemInHand != null && PickaxeUtil.isProfessionPickaxe(itemInHand)) {
             			toolData.getPlayer().getWorld().spawnParticle(Particle.VILLAGER_HAPPY, toolData.getPlayer().getLocation(), 25, 0.5F, 1.05F, 0.5F, 0.05);
             		}
             	}

@@ -96,6 +96,27 @@ public abstract class ToolData {
 		return tool;
 	}
 	
+	public boolean hasToolInInventory() {
+		return tool.hasToolInInventory(getPlayer());
+	}
+	
+	
+	public int getMaxSpeed() {
+		return YML.getConfig().getInt("Speed.MaxLevel");
+	}
+	
+	public int getMaxFortune() {
+		return YML.getConfig().getInt("Fortune.MaxLevel");
+	}
+	
+	public int getMaxAutoregen() {
+		return YML.getConfig().getInt("Autoregen.MaxLevel");
+	}
+	
+	public int getMaxReinforced() {
+		return YML.getConfig().getInt("Reinforcement.MaxLevel");
+	}
+	
 	/*
 	 * Target block
 	 */
@@ -465,19 +486,19 @@ public abstract class ToolData {
 	}
 	
 	public boolean isMaxSpeed() {
-		return getSpeed() == PickaxeUtil.getMaxSpeed();
+		return getSpeed() == getMaxSpeed();
 	}
 	
 	public boolean isMaxFortune() {
-		return getFortune() == PickaxeUtil.getMaxFortune();
+		return getFortune() == getMaxFortune();
 	}
 	
 	public boolean isMaxAutoregen() {
-		return getAutoregen() == PickaxeUtil.getMaxAutoregen();
+		return getAutoregen() == getMaxAutoregen();
 	}
 	
 	public boolean isMaxReinforced() {
-		return getReinforced() == PickaxeUtil.getMaxReinforced();
+		return getReinforced() == getMaxReinforced();
 	}
 	
 	public boolean isBroken() {
