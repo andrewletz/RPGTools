@@ -44,6 +44,12 @@ public class PickaxeCommands implements CommandExecutor{
 					Player player = (Player) sender;
 					PickaxeGUI.openManagementInventory(player);
 					return true;
+				} else if (args[0].equalsIgnoreCase("repair")) {
+					if (!(sender instanceof Player)) {
+						return false;
+					}
+					Player player = (Player) sender;
+					PickaxeGUI.openScrapInventory(player);
 				} else {
 					sender.sendMessage(GeneralUtil.getHelpMessage());
 				}

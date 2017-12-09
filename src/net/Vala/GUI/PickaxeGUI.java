@@ -4,10 +4,10 @@ import net.Vala.config.PickaxeData;
 import net.Vala.config.PlayerData;
 import net.Vala.config.YAMLFile;
 import net.Vala.pickaxe.PickaxeUtil;
+import net.Vala.repair.Scrap;
 import net.Vala.traits.DropChances;
-import net.Vala.traits.GeneralTraitUtil;
+import net.Vala.traits.TraitUtil;
 import net.Vala.traits.Reinforced;
-import net.Vala.util.ScrapUtil;
 import net.md_5.bungee.api.ChatColor;
 
 import org.bukkit.Bukkit;
@@ -21,6 +21,7 @@ public class PickaxeGUI {
 	public static void openManagementInventory(Player player) {
 		Inventory inv = Bukkit.createInventory(player, 9, ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Pickaxe Management");
 		PickaxeData pickaxeData = PlayerData.getData(player).getPickaxeData();
+		TraitUtil pickaxeUtil = new TraitUtil(YAMLFile.PICKAXESPCOSTS);
 		
 		// Get our pick icon for the first slot
 		ItemStack pickIcon = pickaxeData.getTool();
@@ -31,7 +32,7 @@ public class PickaxeGUI {
 		if (pickaxeData.isMaxSpeed()) {
 			speedIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Mining Speed" + ChatColor.AQUA + " [MAX LEVEL]");
 		} else {
-			speedIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Mining Speed" + ChatColor.AQUA + " [" + GeneralTraitUtil.getPickSpeedSPReq(currentSpeed + 1) + " SP to level]");
+			speedIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Mining Speed" + ChatColor.AQUA + " [" + pickaxeUtil.getSpeedSPReq(currentSpeed + 1) + " SP to level]");
 		}
 		speedIcon.addLore(ChatColor.GRAY + "" + ChatColor.BOLD + "Current Level: " + ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + currentSpeed);
 		speedIcon.addLore("");
@@ -63,7 +64,7 @@ public class PickaxeGUI {
 		if (pickaxeData.isMaxFortune()) {
 			fortuneIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Fortune" + ChatColor.AQUA + " [MAX LEVEL]");
 		} else {
-			fortuneIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Fortune" + ChatColor.AQUA + " [" + GeneralTraitUtil.getPickFortuneSPReq(pickaxeData.getFortune() + 1) + " SP to level]");
+			fortuneIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Fortune" + ChatColor.AQUA + " [" + pickaxeUtil.getFortuneSPReq(pickaxeData.getFortune() + 1) + " SP to level]");
 		}
 		fortuneIcon.addLore(ChatColor.GRAY + "" + ChatColor.BOLD + "Current Level: " + ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + pickaxeData.getFortune());
 		fortuneIcon.addLore("");
@@ -82,7 +83,7 @@ public class PickaxeGUI {
 		if (pickaxeData.isMaxAutoregen()) {
 			regenIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Auto-regen" + ChatColor.AQUA + " [MAX LEVEL]");
 		} else {
-			regenIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Auto-regen" + ChatColor.AQUA + " [" + GeneralTraitUtil.getPickAutoRegenSPReq(pickaxeData.getAutoregen() + 1) + " SP to level]");
+			regenIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Auto-regen" + ChatColor.AQUA + " [" + pickaxeUtil.getAutoRegenSPReq(pickaxeData.getAutoregen() + 1) + " SP to level]");
 		}
 		regenIcon.addLore(ChatColor.GRAY + "" + ChatColor.BOLD + "Current Level: " + ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + pickaxeData.getAutoregen());
 		regenIcon.addLore("");
@@ -100,7 +101,7 @@ public class PickaxeGUI {
 		if (pickaxeData.isMaxReinforced()) {
 			reinforcedIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Reinforced" + ChatColor.AQUA + " [MAX LEVEL]");
 		} else {
-			reinforcedIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Reinforced" + ChatColor.AQUA + " [" + GeneralTraitUtil.getPickReinforcedSPReq(pickaxeData.getReinforced() + 1) + " SP to level]");
+			reinforcedIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Reinforced" + ChatColor.AQUA + " [" + pickaxeUtil.getReinforcedSPReq(pickaxeData.getReinforced() + 1) + " SP to level]");
 		}
 		reinforcedIcon.addLore(ChatColor.GRAY + "" + ChatColor.BOLD + "Current Level: " + ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + pickaxeData.getReinforced());
 		reinforcedIcon.addLore("");
@@ -124,7 +125,7 @@ public class PickaxeGUI {
 		if (pickaxeData.getAutosmeltUnlocked()) {
 			autosmeltIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Autosmelt" + ChatColor.AQUA + " [UNLOCKED]");
 		} else {
-			autosmeltIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Autosmelt" + ChatColor.AQUA + " [" + GeneralTraitUtil.getPickAutosmeltSPReq() + " SP TO UNLOCK]");
+			autosmeltIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Autosmelt" + ChatColor.AQUA + " [" + pickaxeUtil.getAutosmeltSPReq() + " SP TO UNLOCK]");
 		}
 		autosmeltIcon.addLore(ChatColor.GRAY + "" + ChatColor.BOLD + "Toggled: " + ChatColor.WHITE + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + String.valueOf(pickaxeData.getAutosmelt()).toUpperCase());
 		autosmeltIcon.addLore("");
@@ -144,7 +145,7 @@ public class PickaxeGUI {
 		if (pickaxeData.getSilktouchUnlocked()) {
 			silktouchIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Silktouch" + ChatColor.AQUA + " [UNLOCKED]");
 		} else {
-			silktouchIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Silktouch" + ChatColor.AQUA + " [" + GeneralTraitUtil.getPickSilktouchSPReq() + " SP TO UNLOCK]");
+			silktouchIcon.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Silktouch" + ChatColor.AQUA + " [" + pickaxeUtil.getSilktouchSPReq() + " SP TO UNLOCK]");
 		}
 		silktouchIcon.addLore(ChatColor.GRAY + "" + ChatColor.BOLD + "Toggled: " + ChatColor.WHITE + "" + ChatColor.UNDERLINE + "" + ChatColor.BOLD + String.valueOf(pickaxeData.getSilktouch()).toUpperCase());
 		silktouchIcon.addLore("");
@@ -184,7 +185,7 @@ public class PickaxeGUI {
 		repairIcon.addLore(ChatColor.GRAY + "To repair your pickaxe, you need");
 		repairIcon.addLore(ChatColor.GRAY + "to place items that are made of");
 		repairIcon.addLore(ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + 
-				ScrapUtil.matToString(ScrapUtil.toolMatToScrapMat(pickaxeData.getTool().getType())) + ChatColor.GRAY + " in this inventory and left");
+				Scrap.matToString(Scrap.toolMatToScrapMat(pickaxeData.getTool().getType())) + ChatColor.GRAY + " in this inventory and left");
 		repairIcon.addLore(ChatColor.GRAY + "click this button." + ChatColor.RED +  " Must be near an anvil.");
 		
 		// Set all the inventory slots to their respective icons

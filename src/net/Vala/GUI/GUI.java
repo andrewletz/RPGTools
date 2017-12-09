@@ -7,8 +7,9 @@ import java.util.Set;
 import net.Vala.config.PickaxeData;
 import net.Vala.config.PlayerData;
 import net.Vala.general.Logger;
+import net.Vala.repair.Repair;
+import net.Vala.repair.Scrap;
 import net.Vala.util.GeneralUtil;
-import net.Vala.util.ScrapUtil;
 import net.md_5.bungee.api.ChatColor;
 
 import org.bukkit.Bukkit;
@@ -128,58 +129,70 @@ public class GUI implements Listener {
 				}
 			}
 			
-			// We don't need player data until we get to more specific menus
-			PlayerData playerData = PlayerData.getData(player);
-			PickaxeData pickaxeData = playerData.getPickaxeData();
-			
-			// In pickaxe management
-			if (title.equals(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Pickaxe Management")) {
-				event.setCancelled(true);
-				switch (event.getRawSlot()) {
-					case 2:
-						PickaxeLevelUtil.levelSpeed(player);
-						break;
-					case 3:
-						PickaxeLevelUtil.levelFortune(player);
-						break;
-					case 4:
-						PickaxeLevelUtil.levelAutoregen(player);
-						break;
-					case 5:
-						PickaxeLevelUtil.levelReinforced(player);
-						break;
-					case 7:
-						if (!pickaxeData.getAutosmeltUnlocked()) {
-							PickaxeLevelUtil.unlockAutosmelt(player);
-						} else {
-							if (pickaxeData.getSilktouch()) { break; }
-							boolean toggleState = pickaxeData.getAutosmelt();
-							pickaxeData.setAutosmelt(!toggleState);
-							pickaxeData.updateInInventory();
-							PickaxeGUI.openManagementInventory(player);
-						}
-						break;
-					case 8:
-						if (!pickaxeData.getSilktouchUnlocked()) {
-							PickaxeLevelUtil.unlockSilktouch(player);
-						} else {
-							if (pickaxeData.getAutosmelt()) { break; }
-							boolean toggleState = pickaxeData.getSilktouch();
-							pickaxeData.setSilktouch(!toggleState);
-							pickaxeData.updateInInventory();
-							PickaxeGUI.openManagementInventory(player);
-						}
-						break;
+			/*
+			 * In pickaxe related menus
+			 */
+			if (title.contains("Pickaxe")) {
+				// We don't need player data until we get to more specific menus
+				PlayerData playerData = PlayerData.getData(player);
+				PickaxeData pickaxeData = playerData.getPickaxeData();
+				ButtonUtil pickaxeButtons = new ButtonUtil(pickaxeData);
 				
+				// In pickaxe management
+				if (title.equals(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Pickaxe Management")) {
+					
+					event.setCancelled(true);
+					switch (event.getRawSlot()) {
+						case 2:
+							pickaxeButtons.levelSpeed(player);
+							break;
+						case 3:
+							pickaxeButtons.levelFortune(player);
+							break;
+						case 4:
+							pickaxeButtons.levelAutoregen(player);
+							break;
+						case 5:
+							pickaxeButtons.levelReinforced(player);
+							break;
+						case 7:
+							if (!pickaxeData.getAutosmeltUnlocked()) {
+								pickaxeButtons.unlockAutosmelt(player);
+							} else {
+								if (pickaxeData.getSilktouch()) { break; }
+								boolean toggleState = pickaxeData.getAutosmelt();
+								pickaxeData.setAutosmelt(!toggleState);
+								pickaxeData.updateInInventory();
+								PickaxeGUI.openManagementInventory(player);
+							}
+							break;
+						case 8:
+							if (!pickaxeData.getSilktouchUnlocked()) {
+								pickaxeButtons.unlockSilktouch(player);
+							} else {
+								if (pickaxeData.getAutosmelt()) { break; }
+								boolean toggleState = pickaxeData.getSilktouch();
+								pickaxeData.setSilktouch(!toggleState);
+								pickaxeData.updateInInventory();
+								PickaxeGUI.openManagementInventory(player);
+							}
+							break;
+					
+					}
 				}
-			}
-			
-			// In pickaxe repair menu
-			if(title.equals(ChatColor.BLUE + "" + ChatColor.BOLD + "Pickaxe Repair")) {
-				double scrapVal = ScrapUtil.getMaterialScrapValue(event.getCurrentItem().getType(), ScrapUtil.matToString(ScrapUtil.toolMatToScrapMat(pickaxeData.getTool().getType())));
-				Logger.debug(Double.toString(scrapVal));
+				
+				// In pickaxe repair menu
+				if(title.equals(ChatColor.BLUE + "" + ChatColor.BOLD + "Pickaxe Repair")) {
+					if (event.getRawSlot() == 26) {
+						pickaxeButtons.repair(player, event.getInventory());
+						event.getInventory().setItem(18, pickaxeData.getTool());
+						pickaxeData.updateInInventory();
+					}
+					
+				}
 				
 			}
+
 		
 		}
 		

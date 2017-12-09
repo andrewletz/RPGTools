@@ -1,10 +1,10 @@
-package net.Vala.util;
+package net.Vala.repair;
 
 import net.Vala.config.YAMLFile;
 
 import org.bukkit.Material;
 
-public class ScrapUtil {
+public class Scrap {
 
     public static Material toolMatToScrapMat(Material mat) {
     	switch(mat) {

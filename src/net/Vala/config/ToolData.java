@@ -9,6 +9,7 @@ import net.Vala.pickaxe.PickaxeUtil;
 import net.Vala.traits.AutoRegen;
 import net.Vala.traits.DropChances;
 import net.Vala.traits.Reinforced;
+import net.Vala.traits.TraitUtil;
 import net.Vala.util.GeneralUtil;
 
 import org.bukkit.Bukkit;
@@ -25,14 +26,14 @@ public abstract class ToolData {
 	protected PlayerData playerData;
 	protected FileConfiguration config = null;
 	
-	protected AutoRegen autoRegenTimer;
+	protected AutoRegen autoRegenTimer = null;
 	protected Reinforced reinforced;
 	
 	protected Mineable targetMineable;
 	protected boolean canMine = true;
 	
 	protected YAMLFile YML;
-	protected String TOOL_STRING;
+	public String TOOL_STRING;
 	
 	protected RPGTool tool;
 	
@@ -54,7 +55,6 @@ public abstract class ToolData {
 		this.modifyReinforced(0);
 		this.modifyKnockback(0);
 		this.modifyCurrentDurability(0);
-		this.refreshAutoRegenTimer();
 		this.refreshToolSpecific();
 	}
 	

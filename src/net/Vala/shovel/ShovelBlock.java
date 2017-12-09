@@ -20,8 +20,9 @@ public class ShovelBlock extends Mineable{
 	@SuppressWarnings("deprecation")
 	@Override
 	public boolean isMineable(PlayerData playerData) {
-		return playerData.getShovelData().getShovelLevel() >= getMinLevel()
-				&& ShovelFactory.isShovelMaterial(playerData.getPlayer().getItemInHand().getType());
+//		return playerData.getShovelData().getShovelLevel() >= getMinLevel()
+//				&& ShovelFactory.isShovelMaterial(playerData.getPlayer().getItemInHand().getType());
+		return true;
 	}
 	
 	public static class ShovelBlocks {

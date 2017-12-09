@@ -110,7 +110,7 @@ public class GeneralUtil {
     } 
     
     public static boolean isProfessionItem(ItemStack item) {
-    	return PickaxeUtil.isProfessionPickaxe(item) || ShovelFactory.isProfessionShovel(item);
+    	return PickaxeUtil.isProfessionPickaxe(item);
     }
     
 	public static void playErrorSound(Player player) {

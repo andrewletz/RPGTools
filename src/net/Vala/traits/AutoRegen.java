@@ -16,6 +16,7 @@ public class AutoRegen {
 	private ToolData toolData;
 	private YAMLFile YML;
 	private int id;
+	private boolean firstRepair = true;
 	
 	public AutoRegen(ToolData toolData, YAMLFile yamlEnum) {
 		this.toolData = toolData;
@@ -23,6 +24,7 @@ public class AutoRegen {
 		YML = yamlEnum;
 		
 		if (yamlEnum == YAMLFile.PICKAXECONFIG) {
+			System.out.println("Initializing new autoregen!");
 			initiatePickaxeScheduler(convertLevelToRandomTick(toolData.getAutoregen()));
 		} else if (yamlEnum == YAMLFile.SHOVELCONFIG) {
 //			initiateShovelScheduler(convertLevelToRandomTick(toolData.getShovelAutoregen()));
@@ -38,19 +40,24 @@ public class AutoRegen {
 		}
 		return tickRate;
 	}
-
-	// Make multiple versions of this for each tool
+	
 	public void initiatePickaxeScheduler(int tickRate) {
 		Integer taskId = scheduler.scheduleSyncRepeatingTask(RPGTools.getPlugin(), new Runnable() {
 			@Override
             public void run() {
-            	if (toolData.getCurrentDurability() < toolData.getMaxDurability()) {
-            		toolData.modifyCurrentDurability(1);
-            		ItemStack itemInHand = toolData.getPlayer().getInventory().getItemInMainHand();
-            		if (itemInHand != null && PickaxeUtil.isProfessionPickaxe(itemInHand)) {
-            			toolData.getPlayer().getWorld().spawnParticle(Particle.VILLAGER_HAPPY, toolData.getPlayer().getLocation(), 25, 0.5F, 1.05F, 0.5F, 0.05);
-            		}
-            	}
+				if (!firstRepair) { // So it doesn't auto-repair when initialized
+	            	if (toolData.getCurrentDurability() < toolData.getMaxDurability()) {
+	            		toolData.modifyCurrentDurability(1);
+	            		System.out.println("ticked!");
+	            		System.out.println(toolData.getCurrentDurability());
+	            		toolData.updateInInventory();
+	            		ItemStack itemInHand = toolData.getPlayer().getInventory().getItemInMainHand();
+	            		if (itemInHand != null && PickaxeUtil.isProfessionPickaxe(itemInHand)) {
+	            			toolData.getPlayer().getWorld().spawnParticle(Particle.VILLAGER_HAPPY, toolData.getPlayer().getLocation(), 25, 0.5F, 1.05F, 0.5F, 0.05);
+	            		}
+	            	}
+	            	firstRepair = false;
+				}
             }
         }, 0L, tickRate);
 		this.id = taskId;
@@ -62,6 +69,7 @@ public class AutoRegen {
 	
 	public void cancelTask() {
 		Bukkit.getServer().getScheduler().cancelTask(id);
+		System.out.println("Cancelling autoregen!");
 	}
 	
 }

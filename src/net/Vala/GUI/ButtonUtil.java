@@ -2,21 +2,34 @@ package net.Vala.GUI;
 
 import net.Vala.config.PickaxeData;
 import net.Vala.config.PlayerData;
+import net.Vala.config.ToolData;
 import net.Vala.config.YAMLFile;
 import net.Vala.pickaxe.PickaxeUtil;
+import net.Vala.repair.Repair;
 import net.Vala.traits.DropChances;
-import net.Vala.traits.GeneralTraitUtil;
+import net.Vala.traits.TraitUtil;
 import net.Vala.traits.Reinforced;
 import net.Vala.util.GeneralUtil;
 import net.md_5.bungee.api.ChatColor;
 
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 
-public class PickaxeLevelUtil {
+public class ButtonUtil {
+	
+	ToolData data;
+	TraitUtil util;
+	
+	public ButtonUtil(ToolData data) {
+		this.data = data;
+		if (data.getClass().equals(PickaxeData.class)) {
+			util = new TraitUtil(YAMLFile.PICKAXESPCOSTS);
+		}
+	}
 
-	public static void levelSpeed(Player player) {
+	public void levelSpeed(Player player) {
 		PickaxeData pickaxeData = PlayerData.getData(player).getPickaxeData();
-		int spReq = GeneralTraitUtil.getPickSpeedSPReq(pickaxeData.getSpeed()) + 1;
+		int spReq = util.getSpeedSPReq(pickaxeData.getSpeed()) + 1;
 		
 		if(pickaxeData.getSpeed() < pickaxeData.getMaxSpeed()) {
 			if(pickaxeData.getSP() >= spReq) {
@@ -35,9 +48,9 @@ public class PickaxeLevelUtil {
 		}
 	}
 	
-	public static void levelFortune(Player player) {
+	public void levelFortune(Player player) {
 		PickaxeData pickaxeData = PlayerData.getData(player).getPickaxeData();
-		int spReq = GeneralTraitUtil.getPickFortuneSPReq(pickaxeData.getFortune()) + 1;
+		int spReq = util.getFortuneSPReq(pickaxeData.getFortune()) + 1;
 		
 		if(pickaxeData.getFortune() < pickaxeData.getMaxFortune()) {
 			if(pickaxeData.getSP() >= spReq) {
@@ -56,9 +69,9 @@ public class PickaxeLevelUtil {
 		}
 	}
 	
-	public static void levelAutoregen(Player player) {
+	public void levelAutoregen(Player player) {
 		PickaxeData pickaxeData = PlayerData.getData(player).getPickaxeData();
-		int spReq = GeneralTraitUtil.getPickAutoRegenSPReq(pickaxeData.getAutoregen()) + 1;
+		int spReq = util.getAutoRegenSPReq(pickaxeData.getAutoregen()) + 1;
 		
 		if(pickaxeData.getAutoregen() < pickaxeData.getMaxAutoregen()) {
 			if(pickaxeData.getSP() >= spReq) {
@@ -77,9 +90,9 @@ public class PickaxeLevelUtil {
 		}
 	}
 	
-	public static void levelReinforced(Player player) {
+	public void levelReinforced(Player player) {
 		PickaxeData pickaxeData = PlayerData.getData(player).getPickaxeData();
-		int spReq = GeneralTraitUtil.getPickReinforcedSPReq(pickaxeData.getReinforced()) + 1;
+		int spReq = util.getReinforcedSPReq(pickaxeData.getReinforced()) + 1;
 		
 		if(pickaxeData.getReinforced() < pickaxeData.getMaxReinforced()) {
 			if(pickaxeData.getSP() >= spReq) {
@@ -98,9 +111,9 @@ public class PickaxeLevelUtil {
 		}
 	}
 	
-	public static void unlockAutosmelt(Player player) {
+	public void unlockAutosmelt(Player player) {
 		PickaxeData pickaxeData = PlayerData.getData(player).getPickaxeData();
-		int spReq = GeneralTraitUtil.getPickAutosmeltSPReq();
+		int spReq = util.getAutosmeltSPReq();
 		
 		if(!pickaxeData.getAutosmeltUnlocked()) {
 			if(pickaxeData.getSP() >= spReq) {
@@ -119,9 +132,9 @@ public class PickaxeLevelUtil {
 		}
 	}
 	
-	public static void unlockSilktouch(Player player) {
+	public void unlockSilktouch(Player player) {
 		PickaxeData pickaxeData = PlayerData.getData(player).getPickaxeData();
-		int spReq = GeneralTraitUtil.getPickSilktouchSPReq();
+		int spReq = util.getSilktouchSPReq();
 		
 		if(!pickaxeData.getSilktouchUnlocked()) {
 			if(pickaxeData.getSP() >= spReq) {
@@ -188,6 +201,11 @@ public class PickaxeLevelUtil {
 			break;
 		}
 		player.sendMessage("");
+	}
+	
+	public void repair(Player player, Inventory inv) {
+		Repair pickaxeRepair = new Repair(data);
+		pickaxeRepair.repair(player, inv);
 	}
 	
 }
