@@ -17,7 +17,11 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
+import org.bukkit.event.inventory.InventoryMoveItemEvent;
+import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.Inventory;
 
@@ -103,10 +107,20 @@ public class GUI implements Listener {
 			return;
 		}
 		
-		if (GeneralUtil.isProfessionItem(event.getCurrentItem()) && !(event.getInventory() instanceof CraftingInventory)) {
-			// Helpful debug to see which type of inventory they are in
-			// Logger.debug(event.getInventory().getType().toString());
-			event.setCancelled(true);
+		// No hotbar key swapping of RPG picks
+		if (event.getAction() == InventoryAction.HOTBAR_SWAP) {
+			if (GeneralUtil.isProfessionItem(event.getWhoClicked().getInventory().getItem(event.getHotbarButton()))) {
+				event.setCancelled(true);
+			}
+		}
+		if ((GeneralUtil.isProfessionItem(event.getCurrentItem()) || (GeneralUtil.isProfessionItem(event.getCursor())))) {
+			if (!(event.getInventory() instanceof CraftingInventory)) {
+				event.setCancelled(true);
+			}
+			
+			if (event.getRawSlot() <= 4) {
+				event.setCancelled(true);
+			}
 		}
 		
 		String title = event.getInventory().getTitle();
@@ -184,7 +198,11 @@ public class GUI implements Listener {
 				// In pickaxe repair menu
 				if(title.equals(ChatColor.BLUE + "" + ChatColor.BOLD + "Pickaxe Repair")) {
 					if (event.getRawSlot() == 26) {
-						pickaxeButtons.repair(player, event.getInventory());
+						boolean shouldNeedAnvil = true;
+						if (pickaxeData.getTool().getType() == Material.WOOD_PICKAXE || pickaxeData.getTool().getType() == Material.STONE_PICKAXE) {
+							shouldNeedAnvil = false;
+						}
+						pickaxeButtons.repair(player, event.getInventory(), shouldNeedAnvil);
 						event.getInventory().setItem(18, pickaxeData.getTool());
 						pickaxeData.updateInInventory();
 					}

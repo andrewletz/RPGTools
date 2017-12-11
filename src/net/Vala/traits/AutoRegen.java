@@ -56,8 +56,8 @@ public class AutoRegen {
 	            			toolData.getPlayer().getWorld().spawnParticle(Particle.VILLAGER_HAPPY, toolData.getPlayer().getLocation(), 25, 0.5F, 1.05F, 0.5F, 0.05);
 	            		}
 	            	}
-	            	firstRepair = false;
 				}
+				firstRepair = false;
             }
         }, 0L, tickRate);
 		this.id = taskId;

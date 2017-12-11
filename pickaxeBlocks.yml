@@ -1,6 +1,6 @@
 #
 # If a block material is not included here, it will be mined as it would be without the plugin (vanilla).
-# To include more blocks, find their respective names here: 
+# To include more blocks, find their respective bukkitMaterial names here: 
 #                                      https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
 # If the name isn't correct it will not work!
 #
@@ -67,7 +67,7 @@ COAL_ORE:
 IRON_ORE:
   bukkitMaterial: IRON_ORE
   blockData: 0
-  minLevel: 5
+  minLevel: 4
   toughness: 0.8
   minExp: 4
   maxExp: 6
@@ -76,10 +76,22 @@ IRON_ORE:
   drop: IRON_ORE:0
   silkDrop: IRON_ORE:0
   autosmeltDrop: IRON_INGOT:0
+EMERALD_ORE:
+  bukkitMaterial: EMERALD_ORE
+  blockData: 0
+  minLevel: 4
+  toughness: 1.2
+  minExp: 8
+  maxExp: 10
+  minVanillaExp: 4
+  maxVanillaExp: 5
+  drop: EMERALD:0
+  silkDrop: EMERALD_ORE:0
+  autosmeltDrop: EMERALD:0
 GOLD_ORE:
   bukkitMaterial: GOLD_ORE
   blockData: 0
-  minLevel: 15
+  minLevel: 8
   toughness: 0.8
   minExp: 8
   maxExp: 22
@@ -88,3 +100,15 @@ GOLD_ORE:
   drop: GOLD_ORE:0
   silkDrop: GOLD_ORE:0
   autosmeltDrop: GOLD_INGOT:0
+DIAMOND_ORE:
+  bukkitMaterial: DIAMOND_ORE
+  blockData: 0
+  minLevel: 15
+  toughness: 1.2
+  minExp: 24
+  maxExp: 36
+  minVanillaExp: 4
+  maxVanillaExp: 11
+  drop: DIAMOND:0
+  silkDrop: DIAMOND_ORE:0
+  autosmeltDrop: DIAMOND:0

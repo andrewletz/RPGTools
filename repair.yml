@@ -53,8 +53,8 @@ Wood:
 # Stone items
 Stone:
   multiplier: 3.0
-  STONE: 2
-  COBBLESTONE: 1
+  STONE: 1
+  COBBLESTONE: 0.8
   STONE_AXE: 3
   STONE_BUTTON: 2
   STONE_HOE: 2
@@ -69,7 +69,7 @@ Stone:
 # Iron items
 Iron:
   # How much these values should be multiplied by (default 3)
-  multiplier: 9.0
+  multiplier: 12.0
   IRON_AXE: 3
   IRON_BARDING: 6
   IRON_BLOCK: 9
@@ -82,7 +82,7 @@ Iron:
   IRON_INGOT: 1
   IRON_LEGGINGS: 7
   IRON_NUGGET: 0.1
-  IRON_ORE: 0.5
+  IRON_ORE: 0.8
   IRON_PICKAXE: 3
   IRON_PLATE: 2
   IRON_SPADE: 1
@@ -92,7 +92,7 @@ Iron:
 # Gold items
 Gold:
   # How much these values should be multiplied by (default 5)
-  multiplier: 17.0
+  multiplier: 30.0
   GOLD_AXE: 3
   GOLD_BARDING: 6
   GOLD_BLOCK: 9
@@ -103,7 +103,7 @@ Gold:
   GOLD_INGOT: 1
   GOLD_LEGGINGS: 7
   GOLD_NUGGET: 0.1
-  GOLD_ORE: 0.5
+  GOLD_ORE: 0.8
   GOLD_PICKAXE: 3
   GOLD_PLATE: 2
   GOLD_RECORD: 12
@@ -113,16 +113,17 @@ Gold:
 # Diamond items
 Diamond:
   # How much these values should be multiplied by (default 7)
-  multiplier: 35.0
-  DIAMOND_AXE: 3
-  DIAMOND_BARDING: 6
-  DIAMOND_BLOCK: 9
-  DIAMOND_BOOTS: 4
-  DIAMOND_CHESTPLATE: 8
-  DIAMOND_HELMET: 5
-  DIAMOND_HOE: 2
+  multiplier: 50.0
+  DIAMOND: 3
+  DIAMOND_AXE: 9
+  DIAMOND_BARDING: 21
+  DIAMOND_BLOCK: 27
+  DIAMOND_BOOTS: 12
+  DIAMOND_CHESTPLATE: 24
+  DIAMOND_HELMET: 15
+  DIAMOND_HOE: 6
   DIAMOND_LEGGINGS: 7
-  DIAMOND_ORE: 0.5
-  DIAMOND_PICKAXE: 3
-  DIAMOND_SPADE: 1
-  DIAMOND_SWORD: 2
+  DIAMOND_ORE: 3.2
+  DIAMOND_PICKAXE: 9
+  DIAMOND_SPADE: 3
+  DIAMOND_SWORD: 6

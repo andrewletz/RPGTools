@@ -48,10 +48,12 @@ public class BreakingListener implements Listener {
 			return;
 		}
 		
+		// Raytrace to find the correct block in their vision
 		Block targetBlock = null;
         RayTrace rayTrace = new RayTrace(player.getEyeLocation().toVector(),player.getEyeLocation().getDirection());
         ArrayList<Vector> positions = rayTrace.traverse(4.582,0.01); // 4.582 was the best value I could get for mining range by just testing
-        for(int i = 0; i < positions.size();i++) {
+        int posSize = positions.size();
+        for(int i = 0; i < posSize; i++) {
 
             Location position = positions.get(i).toLocation(player.getWorld());
             Block block = player.getWorld().getBlockAt(position);
@@ -87,6 +89,7 @@ public class BreakingListener implements Listener {
 			return;
 		}
 		
+		// We are now safe to stop vanilla mining and take over with our custom system
 		player.addPotionEffect(MINING_POTION_EFFECT, true); 
 		
 		if (pickaxeData.getLevel() < ore.getMinLevel()) {
@@ -94,9 +97,11 @@ public class BreakingListener implements Listener {
 		}
 		if (playerData.getTargetBlock() == null || !playerData.getTargetBlock().equals(targetBlock)) {
 			// New block, reset block damage
-			playerData.getPickaxeData().setTargetBlock(targetBlock, ore);
-			playerData.getPickaxeData().resetBlockDamage();
+			pickaxeData.setTargetBlock(targetBlock, ore);
+			pickaxeData.resetBlockDamage();
 		}
+		
+		// Underwater checks to slow mining speed. Aqua affinity allows mining at normal speed underwater.
 		boolean isUnderwater = false;
 		boolean hasAquaAffinity = false;
 		if (player.getRemainingAir() < player.getMaximumAir()) {

@@ -5,8 +5,10 @@ import java.util.UUID;
 import net.Vala.config.PlayerData;
 import net.Vala.general.RPGTools;
 import net.Vala.pickaxe.PickaxeUtil;
+import net.Vala.util.GeneralUtil;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
@@ -15,7 +17,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -94,5 +98,19 @@ public class GeneralListener implements Listener{
 				}
 			}
 		} catch (Exception e) {}
+	}
+	
+	// Don't allow players to repair default pickaxes with RPG pickaxes
+	@EventHandler
+	public void onPlayerCraft(PrepareItemCraftEvent event) {
+        if (event.isRepair()) {
+            for (ItemStack item : event.getInventory()) {
+            	if (item != null && item.getType() != Material.AIR) {
+            		if (GeneralUtil.isProfessionItem(item)) {
+            			event.getInventory().setResult(null);
+            		}
+            	}
+            }
+        }
 	}
 }

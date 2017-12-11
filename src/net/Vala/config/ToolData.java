@@ -291,6 +291,9 @@ public abstract class ToolData {
 		if (!config.contains(TOOL_STRING + ".Exp")) {
 			setExp(1);
 		}
+		if (value <= 0) {
+			return;
+		}
 		setExp(getExp() + value);
 		
 		

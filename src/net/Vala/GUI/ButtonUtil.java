@@ -203,9 +203,9 @@ public class ButtonUtil {
 		player.sendMessage("");
 	}
 	
-	public void repair(Player player, Inventory inv) {
+	public void repair(Player player, Inventory inv, boolean shouldNeedAnvil) {
 		Repair pickaxeRepair = new Repair(data);
-		pickaxeRepair.repair(player, inv);
+		pickaxeRepair.repair(player, inv, shouldNeedAnvil);
 	}
 	
 }

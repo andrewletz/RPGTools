@@ -64,13 +64,13 @@ public class Repair {
 		return repairValue;
 	}
 	
-	public void repair(Player player, Inventory inv) {
+	public void repair(Player player, Inventory inv, boolean shouldNeedAnvil) {
 		if (data.getCurrentDurability() >= data.getMaxDurability()) {
 			player.sendMessage(ChatColor.RED + "Tool is already max durability!");
 			GeneralUtil.playErrorSound(player);
 			return;
 		}
-		if (!playerIsInAnvilRadius()) {
+		if (!playerIsInAnvilRadius() && shouldNeedAnvil) {
 			player.sendMessage(ChatColor.RED + "Not in radius of anvil!");
 			GeneralUtil.playErrorSound(player);
 			return;
