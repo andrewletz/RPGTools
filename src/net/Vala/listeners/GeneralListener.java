@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import net.Vala.config.PlayerData;
 import net.Vala.general.RPGTools;
-import net.Vala.pickaxe.PickaxeUtil;
+import net.Vala.tools.RPGPickaxe;
 import net.Vala.util.GeneralUtil;
 
 import org.bukkit.ChatColor;
@@ -66,7 +66,7 @@ public class GeneralListener implements Listener{
 		Player player = event.getPlayer();
 		if (event.getItemDrop().getItemStack().hasItemMeta()) {
 			ItemStack item = event.getItemDrop().getItemStack();
-			if (PickaxeUtil.isProfessionPickaxe(item)) {
+			if (RPGPickaxe.isProfessionPickaxe(item)) {
 					event.setCancelled(true);
 					item.setAmount(0);
 					player.getWorld().spawnParticle(Particle.FALLING_DUST, player.getLocation(), 25, 0.5F, 1F, 0.5F, 0.05);
@@ -93,7 +93,7 @@ public class GeneralListener implements Listener{
 	public void onPlayerDeath(PlayerDeathEvent event) {
 		try {
 			for (ItemStack i : event.getDrops()) {
-				if (PickaxeUtil.isProfessionPickaxe(i)) {
+				if (RPGPickaxe.isProfessionPickaxe(i)) {
 					event.getDrops().remove(i);
 				}
 			}

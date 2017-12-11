@@ -3,9 +3,9 @@ package net.Vala.config;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import net.Vala.general.Mineable;
 import net.Vala.general.RPGTools;
-import net.Vala.pickaxe.PickaxeUtil;
+import net.Vala.mineable.Mineable;
+import net.Vala.tools.RPGTool;
 import net.Vala.traits.AutoRegen;
 import net.Vala.traits.DropChances;
 import net.Vala.traits.Reinforced;
@@ -18,8 +18,6 @@ import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import tools.RPGTool;
 
 public abstract class ToolData {
 	

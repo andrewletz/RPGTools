@@ -2,8 +2,7 @@ package net.Vala.util;
 
 import java.util.HashSet;
 
-import net.Vala.pickaxe.PickaxeUtil;
-import net.Vala.shovel.ShovelFactory;
+import net.Vala.tools.RPGPickaxe;
 import net.minecraft.server.v1_12_R1.BlockPosition;
 import net.minecraft.server.v1_12_R1.PacketPlayOutBlockBreakAnimation;
 
@@ -110,7 +109,7 @@ public class GeneralUtil {
     } 
     
     public static boolean isProfessionItem(ItemStack item) {
-    	return PickaxeUtil.isProfessionPickaxe(item);
+    	return RPGPickaxe.isProfessionPickaxe(item);
     }
     
 	public static void playErrorSound(Player player) {

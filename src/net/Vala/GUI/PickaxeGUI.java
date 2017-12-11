@@ -3,8 +3,8 @@ package net.Vala.GUI;
 import net.Vala.config.PickaxeData;
 import net.Vala.config.PlayerData;
 import net.Vala.config.YAMLFile;
-import net.Vala.pickaxe.PickaxeUtil;
 import net.Vala.repair.Scrap;
+import net.Vala.tools.RPGPickaxe;
 import net.Vala.traits.DropChances;
 import net.Vala.traits.TraitUtil;
 import net.Vala.traits.Reinforced;
@@ -36,9 +36,9 @@ public class PickaxeGUI {
 		}
 		speedIcon.addLore(ChatColor.GRAY + "" + ChatColor.BOLD + "Current Level: " + ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + currentSpeed);
 		speedIcon.addLore("");
-		speedIcon.addLore(ChatColor.GRAY + "" + ChatColor.BOLD + "Speed: " + ChatColor.BLUE + PickaxeUtil.convertSpeedToReadable(PickaxeUtil.convertPickSpeedToDamagePerTick(currentSpeed)));
+		speedIcon.addLore(ChatColor.GRAY + "" + ChatColor.BOLD + "Speed: " + ChatColor.BLUE + RPGPickaxe.convertSpeedToReadable(RPGPickaxe.convertPickSpeedToDamagePerTick(currentSpeed)));
 		if (!pickaxeData.isMaxSpeed()) {
-			speedIcon.addLore(ChatColor.BLUE + "" + ChatColor.BOLD + "     -> " + ChatColor.BLUE + PickaxeUtil.convertSpeedToReadable(PickaxeUtil.convertPickSpeedToDamagePerTick(currentSpeed + 1)));
+			speedIcon.addLore(ChatColor.BLUE + "" + ChatColor.BOLD + "     -> " + ChatColor.BLUE + RPGPickaxe.convertSpeedToReadable(RPGPickaxe.convertPickSpeedToDamagePerTick(currentSpeed + 1)));
 			speedIcon.addLore("");
 			speedIcon.addLore(ChatColor.BLUE + "" + ChatColor.UNDERLINE + "Left-click" + ChatColor.GRAY + " here to level up");
 			speedIcon.addLore(ChatColor.GRAY + "your max pick speed to level " + ChatColor.WHITE + "" + ChatColor.BOLD + "" + ChatColor.UNDERLINE + (currentSpeed + 1) + ".");

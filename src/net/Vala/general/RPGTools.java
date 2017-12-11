@@ -5,9 +5,9 @@ import net.Vala.config.PlayerData;
 import net.Vala.config.YAMLFile;
 import net.Vala.listeners.GeneralListener;
 import net.Vala.listeners.BreakingListener;
-import net.Vala.pickaxe.PickaxeCommands;
-import net.Vala.pickaxe.Ore.Ores;
-import net.Vala.shovel.ShovelBlock.ShovelBlocks;
+import net.Vala.mineable.Ore.Ores;
+import net.Vala.mineable.ShovelBlock.ShovelBlocks;
+import net.Vala.tools.ToolCommands;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -56,8 +56,8 @@ public class RPGTools extends JavaPlugin {
 	}
 	
 	private void enableCommands() {
-		getCommand("pickaxe").setExecutor(new PickaxeCommands());
-		getCommand("pick").setExecutor(new PickaxeCommands());
+		getCommand("pickaxe").setExecutor(new ToolCommands());
+		getCommand("pick").setExecutor(new ToolCommands());
 		getCommand("rpgtools").setExecutor(new RPGCommands());
 		getCommand("rt").setExecutor(new RPGCommands());
 	}

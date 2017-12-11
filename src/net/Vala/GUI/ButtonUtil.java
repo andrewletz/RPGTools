@@ -4,8 +4,8 @@ import net.Vala.config.PickaxeData;
 import net.Vala.config.PlayerData;
 import net.Vala.config.ToolData;
 import net.Vala.config.YAMLFile;
-import net.Vala.pickaxe.PickaxeUtil;
 import net.Vala.repair.Repair;
+import net.Vala.tools.RPGPickaxe;
 import net.Vala.traits.DropChances;
 import net.Vala.traits.TraitUtil;
 import net.Vala.traits.Reinforced;
@@ -159,8 +159,8 @@ public class ButtonUtil {
 		switch(stat) {
 		case "speed":
 			player.sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Pickaxe Speed Level " + after);
-			player.sendMessage(ChatColor.GRAY + "" + ChatColor.BOLD + "Speed: " + ChatColor.BLUE + PickaxeUtil.convertSpeedToReadable(PickaxeUtil.convertPickSpeedToDamagePerTick(before)) + ChatColor.BOLD + " -> " 
-					+ ChatColor.BLUE + PickaxeUtil.convertSpeedToReadable(PickaxeUtil.convertPickSpeedToDamagePerTick(after)));
+			player.sendMessage(ChatColor.GRAY + "" + ChatColor.BOLD + "Speed: " + ChatColor.BLUE + RPGPickaxe.convertSpeedToReadable(RPGPickaxe.convertPickSpeedToDamagePerTick(before)) + ChatColor.BOLD + " -> " 
+					+ ChatColor.BLUE + RPGPickaxe.convertSpeedToReadable(RPGPickaxe.convertPickSpeedToDamagePerTick(after)));
 			break;
 			
 		case "fortune":

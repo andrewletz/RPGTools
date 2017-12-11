@@ -1,4 +1,4 @@
-package net.Vala.pickaxe;
+package net.Vala.tools;
 
 import net.Vala.GUI.PickaxeGUI;
 import net.Vala.config.PlayerData;
@@ -11,7 +11,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class PickaxeCommands implements CommandExecutor{
+public class ToolCommands implements CommandExecutor{
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String commandLabel, String[] args) {

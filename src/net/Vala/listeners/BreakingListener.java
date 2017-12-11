@@ -6,11 +6,11 @@ import java.util.List;
 import net.Vala.config.PickaxeData;
 import net.Vala.config.PlayerData;
 import net.Vala.general.RPGTools;
-import net.Vala.pickaxe.Ore;
-import net.Vala.pickaxe.Ore.Ores;
-import net.Vala.pickaxe.PickaxeUtil;
+import net.Vala.mineable.Ore;
+import net.Vala.mineable.Ore.Ores;
 import net.Vala.raytrace.BoundingBox;
 import net.Vala.raytrace.RayTrace;
+import net.Vala.tools.RPGPickaxe;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -33,7 +33,7 @@ public class BreakingListener implements Listener {
 	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onPlayerAnimation(PlayerAnimationEvent event) throws InstantiationException, IllegalAccessException {
-		if (PickaxeUtil.isProfessionPickaxe(event.getPlayer().getItemInHand())) {
+		if (RPGPickaxe.isProfessionPickaxe(event.getPlayer().getItemInHand())) {
 			pickaxeMine(event.getPlayer());;
 		}
 	}
@@ -118,7 +118,7 @@ public class BreakingListener implements Listener {
 	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent event) {
-		if (!PickaxeUtil.isProfessionPickaxe(event.getPlayer().getItemInHand())) {
+		if (!RPGPickaxe.isProfessionPickaxe(event.getPlayer().getItemInHand())) {
 			return;
 		}
 		

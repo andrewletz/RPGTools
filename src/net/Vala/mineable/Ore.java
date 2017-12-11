@@ -1,11 +1,11 @@
-package net.Vala.pickaxe;
+package net.Vala.mineable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import net.Vala.config.PlayerData;
 import net.Vala.config.YAMLFile;
-import net.Vala.general.Mineable;
+import net.Vala.tools.RPGPickaxe;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -24,7 +24,7 @@ public class Ore extends Mineable{
 	@Override
 	public boolean isMineable(PlayerData playerData) {
 		return playerData.getPickaxeData().getLevel() >= getMinLevel()
-				&& PickaxeUtil.isPickaxeMaterial(playerData.getPlayer().getItemInHand().getType());
+				&& RPGPickaxe.isPickaxeMaterial(playerData.getPlayer().getItemInHand().getType());
 	}
 	
 	public ItemStack getAutosmeltDrop() {

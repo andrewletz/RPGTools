@@ -8,7 +8,7 @@ import org.bukkit.scheduler.BukkitScheduler;
 import net.Vala.config.ToolData;
 import net.Vala.config.YAMLFile;
 import net.Vala.general.RPGTools;
-import net.Vala.pickaxe.PickaxeUtil;
+import net.Vala.tools.RPGPickaxe;
 
 public class AutoRegen {
 	
@@ -52,7 +52,7 @@ public class AutoRegen {
 	            		System.out.println(toolData.getCurrentDurability());
 	            		toolData.updateInInventory();
 	            		ItemStack itemInHand = toolData.getPlayer().getInventory().getItemInMainHand();
-	            		if (itemInHand != null && PickaxeUtil.isProfessionPickaxe(itemInHand)) {
+	            		if (itemInHand != null && RPGPickaxe.isProfessionPickaxe(itemInHand)) {
 	            			toolData.getPlayer().getWorld().spawnParticle(Particle.VILLAGER_HAPPY, toolData.getPlayer().getLocation(), 25, 0.5F, 1.05F, 0.5F, 0.05);
 	            		}
 	            	}

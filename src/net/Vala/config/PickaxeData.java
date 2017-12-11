@@ -1,8 +1,8 @@
 package net.Vala.config;
 
-import net.Vala.general.Mineable;
-import net.Vala.pickaxe.PickaxeUtil;
-import net.Vala.pickaxe.Ore;
+import net.Vala.mineable.Mineable;
+import net.Vala.mineable.Ore;
+import net.Vala.tools.RPGPickaxe;
 import net.Vala.traits.DropChances;
 
 import org.bukkit.Material;
@@ -13,8 +13,6 @@ import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
-
-import tools.RPGPickaxe;
 
 public class PickaxeData extends ToolData {
 
@@ -33,12 +31,12 @@ public class PickaxeData extends ToolData {
 
 	@Override
 	public double getTotalSpeed() {
-		return PickaxeUtil.convertPickSpeedToDamagePerTick(getSpeed());
+		return RPGPickaxe.convertPickSpeedToDamagePerTick(getSpeed());
 	}
 
 	@Override
 	public DropChances getFortuneDrop() {
-		return PickaxeUtil.convertPickaxeLuckLevelToPickaxeDropChances(getFortune());
+		return RPGPickaxe.convertPickaxeLuckLevelToPickaxeDropChances(getFortune());
 	}
 	
 	@Override
@@ -62,12 +60,12 @@ public class PickaxeData extends ToolData {
 		}
 		int dropAmount = 1;
 		if (!placedByPlayer) {
-			dropAmount = PickaxeUtil.rollDropAmount(playerData);
+			dropAmount = RPGPickaxe.rollDropAmount(playerData);
 			drop.setAmount(dropAmount);
 		}
 		
 		if (!placedByPlayer) {
-			int expAmount = (int) PickaxeUtil.getFortuneExpMultiplier(dropAmount) * mineable.getRandomExp();
+			int expAmount = (int) RPGPickaxe.getFortuneExpMultiplier(dropAmount) * mineable.getRandomExp();
 			modifyExp(expAmount, dropAmount);
 		}
 		if (!getShouldProtect()) {

@@ -1,11 +1,10 @@
-package net.Vala.shovel;
+package net.Vala.mineable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import net.Vala.config.PlayerData;
 import net.Vala.config.YAMLFile;
-import net.Vala.general.Mineable;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;

@@ -1,4 +1,4 @@
-package net.Vala.general;
+package net.Vala.mineable;
 
 import java.util.Random;
 

@@ -1,4 +1,4 @@
-package tools;
+package net.Vala.tools;
 
 import java.util.List;
 
@@ -125,6 +125,5 @@ public abstract class RPGTool extends ItemStack {
 			}		
 		}
 	}
-	
 
 }

@@ -1,8 +1,14 @@
-package tools;
+package net.Vala.tools;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
+import net.Vala.config.PlayerData;
 import net.Vala.config.YAMLFile;
+import net.Vala.mineable.Ore;
+import net.Vala.mineable.Ore.Ores;
+import net.Vala.traits.DropChances;
 import net.Vala.util.GeneralUtil;
 import net.Vala.config.PickaxeData;
 
@@ -16,8 +22,11 @@ public class RPGPickaxe extends RPGTool {
 	public static final Material[] PICKAXE_MATERIAL = new Material[] { Material.WOOD_PICKAXE, Material.STONE_PICKAXE,
 		Material.IRON_PICKAXE, Material.GOLD_PICKAXE, Material.DIAMOND_PICKAXE };
 	
+	static YAMLFile PickaxeYML = YAMLFile.PICKAXECONFIG;
+	static Random RANDOM = new Random();
+	
 	public RPGPickaxe(PickaxeData data) {
-		super(data, YAMLFile.PICKAXECONFIG);
+		super(data, PickaxeYML);
 		this.data = (PickaxeData) data;
 	}
 
@@ -89,5 +98,64 @@ public class RPGPickaxe extends RPGTool {
 		}
 		return true;
 	}
+	
+	/*
+	 * Static methods for all RPG picks
+	 */
+	
+	public static boolean isPickaxeMaterial(Material material) {
+		for (Material pickMaterial : PICKAXE_MATERIAL) {
+			if (material == pickMaterial) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static boolean isProfessionPickaxe(ItemStack item) {
+		return item != null && isPickaxeMaterial(item.getType()) && item.getItemMeta().hasDisplayName()
+				&& item.getItemMeta().getDisplayName().contains("'s Pickaxe");
+	}
+	
 
+	public static double getFortuneExpMultiplier(int dropAmount) {
+		if (dropAmount == 2) {
+			return PickaxeYML.getConfig().getDouble("Fortune.DoubleExpMultiplier");
+		} else {
+			return PickaxeYML.getConfig().getDouble("Fortune.TripleExpMultiplier");
+		}
+	}
+
+	public static double convertPickSpeedToDamagePerTick(int level) {
+		double newDouble = PickaxeYML.getConfig().getDouble("Speed.Base") 
+				+ (level * PickaxeYML.getConfig().getDouble("Speed.Multiplier"));
+		return (double)Math.round(newDouble * 100000d) / 100000d;
+	}
+	
+    public static String convertSpeedToReadable(double damage) {
+    	Ore stone = Ores.getOreFromMaterial(Material.STONE, (byte) 0);
+    	double toughness = stone.getToughness();
+    	double ratio = (toughness / damage) / 20; // time in seconds to break 1 stone
+    	double perSecond = (double)Math.round((1 / ratio) * 100000d) / 100000d;
+    	return (perSecond + " stone/sec");
+    }
+    
+	public static DropChances convertPickaxeLuckLevelToPickaxeDropChances(int level) {
+		return new DropChances(level, PickaxeYML);
+	}
+	
+	public static int rollDropAmount(PlayerData playerData) {
+		DropChances dropChances = playerData.getPickaxeData().getFortuneDrop();
+		float doubleDrop = dropChances.getDoubleDropChance();
+		float tripleDrop = doubleDrop + dropChances.getTripleDropChance();
+		float roll = RANDOM.nextFloat();
+		if (roll < doubleDrop) {
+			return 2;
+		} else if (roll < tripleDrop) {
+			return 3;
+		} else {
+			return 1;
+		}
+	}
+	
 }

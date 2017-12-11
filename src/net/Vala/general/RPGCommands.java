@@ -4,7 +4,7 @@ import net.Vala.GUI.GUI;
 import net.Vala.config.PickaxeData;
 import net.Vala.config.PlayerData;
 import net.Vala.config.YAMLFile;
-import net.Vala.pickaxe.Ore.Ores;
+import net.Vala.mineable.Ore.Ores;
 import net.Vala.util.GeneralUtil;
 
 import org.bukkit.Bukkit;
