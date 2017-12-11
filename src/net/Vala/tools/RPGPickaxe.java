@@ -144,7 +144,7 @@ public class RPGPickaxe extends RPGTool {
 		return new DropChances(level, PickaxeYML);
 	}
 	
-	public static int rollDropAmount(PlayerData playerData) {
+	public static int rollDropMultiplier(PlayerData playerData) {
 		DropChances dropChances = playerData.getPickaxeData().getFortuneDrop();
 		float doubleDrop = dropChances.getDoubleDropChance();
 		float tripleDrop = doubleDrop + dropChances.getTripleDropChance();

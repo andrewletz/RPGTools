@@ -14,9 +14,9 @@ public class Ore extends Mineable{
 	
 	ItemStack autosmeltDrop;
 
-	protected Ore(Material material, byte blockData, Material drop, byte dropData, Material silkDrop, byte silkDropData, Material autosmeltDrop, byte autosmeltDropData, int minLevel, double toughness, 
-			int minExp, int maxExp, int minVanillaExp, int maxVanillaExp) {
-		super(material, blockData, drop, dropData, silkDrop, silkDropData, minLevel, toughness, minExp, maxExp, minVanillaExp, maxVanillaExp);
+	protected Ore(Material material, byte blockData, Material drop, int minDropAmount, int maxDropAmount, byte dropData, Material silkDrop, byte silkDropData, Material autosmeltDrop, byte autosmeltDropData, int minLevel, double toughness, 
+			int minExp, int maxExp, int minVanillaExp, int maxVanillaExp, boolean fortuneDisabled) {
+		super(material, blockData, drop, minDropAmount, maxDropAmount, dropData, silkDrop, silkDropData, minLevel, toughness, minExp, maxExp, minVanillaExp, maxVanillaExp, fortuneDisabled);
 		this.autosmeltDrop = new ItemStack(autosmeltDrop, 1, autosmeltDropData);
 	}
 
@@ -28,6 +28,7 @@ public class Ore extends Mineable{
 	}
 	
 	public ItemStack getAutosmeltDrop() {
+		autosmeltDrop.setAmount((RANDOM.nextInt((maxDropAmount - minDropAmount) + 1) + minDropAmount));
 		return autosmeltDrop;
 	}
 	
@@ -54,9 +55,30 @@ public class Ore extends Mineable{
 					String autosmeltDrop = autosmeltDropSplit[0];
 					int autosmeltDropData = Integer.parseInt(autosmeltDropSplit[1]);
 					
+					// Get drop amount
+					int minDrop;
+					int maxDrop;
+					try {
+						String[] dropAmnt = YAMLFile.PICKAXEBLOCKS.getConfig().getString(key + ".dropAmount").split("-");
+						minDrop = Integer.parseInt(dropAmnt[0]);
+						maxDrop = Integer.parseInt(dropAmnt[1]);
+					} catch (NullPointerException e) {
+						minDrop = 1;
+						maxDrop = 1;
+					}	
+					
+					boolean fortuneDisabled;
+					try {
+						fortuneDisabled = YAMLFile.PICKAXEBLOCKS.getConfig().getBoolean(key + ".fortuneDisabled");
+					} catch (NullPointerException e) {
+						fortuneDisabled = false;
+					}	
+					
 					Ore newOre = new Ore(Material.getMaterial(YAMLFile.PICKAXEBLOCKS.getConfig().getString(key + ".bukkitMaterial")),
 							(byte) YAMLFile.PICKAXEBLOCKS.getConfig().getInt(key + ".blockData"),
 							Material.getMaterial(drop),
+							minDrop,
+							maxDrop,
 							(byte) dropData,
 							Material.getMaterial(silkDrop),
 							(byte) silkDropData,
@@ -67,7 +89,8 @@ public class Ore extends Mineable{
 							YAMLFile.PICKAXEBLOCKS.getConfig().getInt(key + ".minExp"),
 							YAMLFile.PICKAXEBLOCKS.getConfig().getInt(key + ".maxExp"),
 							YAMLFile.PICKAXEBLOCKS.getConfig().getInt(key + ".minVanillaExp"),
-							YAMLFile.PICKAXEBLOCKS.getConfig().getInt(key + ".maxVanillaExp"));
+							YAMLFile.PICKAXEBLOCKS.getConfig().getInt(key + ".maxVanillaExp"),
+							fortuneDisabled);
 					getOreList().add(newOre);
 				}
 			}

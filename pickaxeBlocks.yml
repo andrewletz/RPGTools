@@ -88,6 +88,19 @@ EMERALD_ORE:
   drop: EMERALD:0
   silkDrop: EMERALD_ORE:0
   autosmeltDrop: EMERALD:0
+LAPIS_ORE:
+  bukkitMaterial: LAPIS_ORE
+  blockData: 0
+  minLevel: 8
+  toughness: 0.8
+  minExp: 6
+  maxExp: 9
+  minVanillaExp: 2
+  maxVanillaExp: 8
+  drop: INK_SACK:4
+  silkDrop: LAPIS_ORE:4
+  autosmeltDrop: INK_SACK:4
+  dropAmount: 4-8
 GOLD_ORE:
   bukkitMaterial: GOLD_ORE
   blockData: 0
@@ -112,3 +125,17 @@ DIAMOND_ORE:
   drop: DIAMOND:0
   silkDrop: DIAMOND_ORE:0
   autosmeltDrop: DIAMOND:0
+# Blocks that are most likely placed by player (should not yield exp)
+COBBLESTONE:
+  bukkitMaterial: COBBLESTONE
+  blockData: 0
+  minLevel: 0
+  toughness: 0.45
+  minExp: 0
+  maxExp: 0
+  minVanillaExp: 0
+  maxVanillaExp: 0
+  drop: COBBLESTONE:0
+  silkDrop: COBBLESTONE:0
+  autosmeltDrop: COBBLESTONE:0
+  fortuneDisabled: true

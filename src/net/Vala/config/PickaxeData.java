@@ -58,15 +58,17 @@ public class PickaxeData extends ToolData {
 		} else {
 			drop = mineable.getDrop();
 		}
-		int dropAmount = 1;
+		int dropMultiplier = 1;
 		if (!placedByPlayer) {
-			dropAmount = RPGPickaxe.rollDropAmount(playerData);
-			drop.setAmount(dropAmount);
-		}
-		
-		if (!placedByPlayer) {
-			int expAmount = (int) RPGPickaxe.getFortuneExpMultiplier(dropAmount) * mineable.getRandomExp();
-			modifyExp(expAmount, dropAmount);
+			if (!mineable.isFortuneDisabled()) {
+				System.out.println(mineable.getMaterial() + "is fortune " + mineable.isFortuneDisabled());
+				dropMultiplier = RPGPickaxe.rollDropMultiplier(playerData);
+			}
+			int amount = drop.getAmount();
+			drop.setAmount(amount * dropMultiplier);
+			
+			int expAmount = (int) RPGPickaxe.getFortuneExpMultiplier(dropMultiplier) * mineable.getRandomExp();
+			modifyExp(expAmount, dropMultiplier);
 		}
 		if (!getShouldProtect()) {
 			modifyCurrentDurability(-1);
@@ -79,10 +81,10 @@ public class PickaxeData extends ToolData {
 		y = block.getLocation().getY();
 		z = block.getLocation().getZ();
 		
-		if (dropAmount == 3) {
+		if (dropMultiplier == 3) {
 			// Triple effect
 			player.getWorld().spawnParticle(Particle.DRAGON_BREATH,  x + 0.5, y + 0.5, z + 0.5, 8, 0F, 0F, 0F, 0.01);
-		} else if (dropAmount == 2) {
+		} else if (dropMultiplier == 2) {
 			// Double effect
 			player.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, x + 0.5, y + 0.5, z + 0.5, 8, 0F, 0F, 0F, 0.01);
 		}

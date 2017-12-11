@@ -11,9 +11,9 @@ import org.bukkit.inventory.ItemStack;
 
 public class ShovelBlock extends Mineable{
 
-	protected ShovelBlock(Material material, byte blockData, Material drop, byte dropData, Material silkDrop, byte silkDropData, int minLevel, double toughness, 
-			int minExp, int maxExp, int minVanillaExp, int maxVanillaExp) {
-		super(material, blockData, drop, dropData, silkDrop, silkDropData, minLevel, toughness, minExp, maxExp, minVanillaExp, maxVanillaExp);
+	protected ShovelBlock(Material material, byte blockData, Material drop, int minDropAmount, int maxDropAmount, byte dropData, Material silkDrop, byte silkDropData, int minLevel, double toughness, 
+			int minExp, int maxExp, int minVanillaExp, int maxVanillaExp, boolean fortuneDisabled) {
+		super(material, blockData, drop, minDropAmount, maxDropAmount, dropData, silkDrop, silkDropData, minLevel, toughness, minExp, maxExp, minVanillaExp, maxVanillaExp, fortuneDisabled);
 	}
 
 	@SuppressWarnings("deprecation")
@@ -42,9 +42,30 @@ public class ShovelBlock extends Mineable{
 					String silkDrop = silkDropSplit[0];
 					int silkDropData = Integer.parseInt(silkDropSplit[1]);
 					
+					// Get drop amount
+					int minDrop;
+					int maxDrop;
+					try {
+						String[] dropAmnt = YAMLFile.SHOVELBLOCKS.getConfig().getString(key + ".dropAmount").split("-");
+						minDrop = Integer.parseInt(dropAmnt[0]);
+						maxDrop = Integer.parseInt(dropAmnt[1]);
+					} catch (NullPointerException e) {
+						minDrop = 1;
+						maxDrop = 1;
+					}	
+					
+					boolean fortuneDisabled;
+					try {
+						fortuneDisabled = YAMLFile.SHOVELBLOCKS.getConfig().getBoolean(key + ".fortuneDisabled");
+					} catch (NullPointerException e) {
+						fortuneDisabled = false;
+					}
+					
 					ShovelBlock newShovelBlock = new ShovelBlock(Material.getMaterial(YAMLFile.SHOVELBLOCKS.getConfig().getString(key + ".bukkitMaterial")),
 							(byte) YAMLFile.SHOVELBLOCKS.getConfig().getInt(key + ".blockData"),
 							Material.getMaterial(drop),
+							minDrop,
+							maxDrop,
 							(byte) dropData,
 							Material.getMaterial(silkDrop),
 							(byte) silkDropData,
@@ -53,7 +74,8 @@ public class ShovelBlock extends Mineable{
 							YAMLFile.SHOVELBLOCKS.getConfig().getInt(key + ".minExp"),
 							YAMLFile.SHOVELBLOCKS.getConfig().getInt(key + ".maxExp"),
 							YAMLFile.SHOVELBLOCKS.getConfig().getInt(key + ".minVanillaExp"),
-							YAMLFile.SHOVELBLOCKS.getConfig().getInt(key + ".maxVanillaExp"));
+							YAMLFile.SHOVELBLOCKS.getConfig().getInt(key + ".maxVanillaExp"),
+							fortuneDisabled);
 					getShovelBlockList().add(newShovelBlock);
 				}
 			}

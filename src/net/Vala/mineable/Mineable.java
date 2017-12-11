@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack;
 
 public abstract class Mineable {
 
-	private static final Random RANDOM = new Random();
+	protected static final Random RANDOM = new Random();
 
 	protected Material material;
 	private byte blockData;
@@ -18,15 +18,20 @@ public abstract class Mineable {
 	private int minExp;
 	private int maxExp;
 	private ItemStack drop;
+	protected int minDropAmount;
+	protected int maxDropAmount;
 	private ItemStack silkDrop;
 	private int minVanillaExp;
 	private int maxVanillaExp;
+	protected boolean fortuneDisabled;
 
-	protected Mineable(Material material, byte blockData, Material drop, byte dropData, Material silkDrop, byte silkDropData, int minLevel, double toughness, 
-			int minExp, int maxExp, int minVanillaExp, int maxVanillaExp) {
+	protected Mineable(Material material, byte blockData, Material drop,  int minDropAmount, int maxDropAmount, byte dropData, Material silkDrop, byte silkDropData, int minLevel, double toughness, 
+			int minExp, int maxExp, int minVanillaExp, int maxVanillaExp, boolean fortuneDisabled) {
 		this.material = material;
 		this.blockData = blockData;
 		this.drop = new ItemStack(drop, 1, dropData);
+		this.minDropAmount = minDropAmount;
+		this.maxDropAmount = maxDropAmount;
 		this.silkDrop = new ItemStack(silkDrop, 1, silkDropData);
 		this.minLevel = minLevel;
 		this.toughness = toughness;
@@ -34,6 +39,7 @@ public abstract class Mineable {
 		this.maxExp = maxExp;
 		this.minVanillaExp = minVanillaExp;
 		this.maxVanillaExp = maxVanillaExp;
+		this.fortuneDisabled = fortuneDisabled;
 	}
 
 	public Material getMaterial() {
@@ -53,10 +59,12 @@ public abstract class Mineable {
 	}
 	
 	public ItemStack getDrop() {
+		drop.setAmount((RANDOM.nextInt((maxDropAmount - minDropAmount) + 1) + minDropAmount));
 		return drop;
 	}
 	
 	public ItemStack getSilkDrop() {
+		silkDrop.setAmount(1);
 		return silkDrop;
 	}
 	
@@ -72,6 +80,9 @@ public abstract class Mineable {
 		return blockData;
 	}
 
+	public boolean isFortuneDisabled() {
+		return fortuneDisabled;
+	}
 	public abstract boolean isMineable(PlayerData playerData);
 
 }
