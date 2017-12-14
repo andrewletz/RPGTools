@@ -24,7 +24,6 @@ public class AutoRegen {
 		YML = yamlEnum;
 		
 		if (yamlEnum == YAMLFile.PICKAXECONFIG) {
-			System.out.println("Initializing new autoregen!");
 			initiatePickaxeScheduler(convertLevelToRandomTick(toolData.getAutoregen()));
 		} else if (yamlEnum == YAMLFile.SHOVELCONFIG) {
 //			initiateShovelScheduler(convertLevelToRandomTick(toolData.getShovelAutoregen()));
@@ -48,8 +47,7 @@ public class AutoRegen {
 				if (!firstRepair) { // So it doesn't auto-repair when initialized
 	            	if (toolData.getCurrentDurability() < toolData.getMaxDurability()) {
 	            		toolData.modifyCurrentDurability(1);
-	            		System.out.println("ticked!");
-	            		System.out.println(toolData.getCurrentDurability());
+	            		System.out.println("[TICK] ID: " + id);
 	            		toolData.updateInInventory();
 	            		ItemStack itemInHand = toolData.getPlayer().getInventory().getItemInMainHand();
 	            		if (itemInHand != null && RPGPickaxe.isProfessionPickaxe(itemInHand)) {
@@ -61,6 +59,7 @@ public class AutoRegen {
             }
         }, 0L, tickRate);
 		this.id = taskId;
+		System.out.println("[START] Autoregen ID " + id + " initialized.");
 	}
 	
 	public int getTaskId() {
@@ -69,7 +68,7 @@ public class AutoRegen {
 	
 	public void cancelTask() {
 		Bukkit.getServer().getScheduler().cancelTask(id);
-		System.out.println("Cancelling autoregen!");
+		System.out.println("[CANCEL] Autoregen ID " + id + " cancelled.");
 	}
 	
 }

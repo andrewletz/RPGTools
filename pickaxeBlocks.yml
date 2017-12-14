@@ -63,7 +63,7 @@ COAL_ORE:
   maxVanillaExp: 2
   drop: COAL:0
   silkDrop: COAL_ORE:0
-  autosmeltDrop: COAL:0
+  autosmeltDrop: COAL:1
 IRON_ORE:
   bukkitMaterial: IRON_ORE
   blockData: 0
@@ -127,15 +127,67 @@ DIAMOND_ORE:
   autosmeltDrop: DIAMOND:0
 # Blocks that are most likely placed by player (should not yield exp)
 COBBLESTONE:
+  fortuneDisabled: true
   bukkitMaterial: COBBLESTONE
   blockData: 0
   minLevel: 0
   toughness: 0.45
-  minExp: 0
-  maxExp: 0
-  minVanillaExp: 0
-  maxVanillaExp: 0
   drop: COBBLESTONE:0
-  silkDrop: COBBLESTONE:0
-  autosmeltDrop: COBBLESTONE:0
+  autosmeltDrop: STONE:0
+GLASS:
   fortuneDisabled: true
+  bukkitMaterial: GLASS
+  blockData: 0
+  minLevel: 0
+  toughness: 0.1
+  drop: AIR:0
+  silkDrop: GLASS:0
+LAPIS_BLOCK:
+  fortuneDisabled: true
+  bukkitMaterial: LAPIS_BLOCK
+  blockData: 0
+  minLevel: 0
+  toughness: 0.8
+  drop: LAPIS_BLOCK:0
+DISPENSER:
+  fortuneDisabled: true
+  bukkitMaterial: DISPENSER
+  blockData: 0
+  minLevel: 0
+  toughness: 0.8
+  drop: DISPENSER:0
+SANDSTONE:
+  fortuneDisabled: true
+  bukkitMaterial: SANDSTONE
+  blockData: 0
+  minLevel: 0
+  toughness: 0.3
+  drop: SANDSTONE:0
+CHISELED_SANDSTONE:
+  fortuneDisabled: true
+  bukkitMaterial: SANDSTONE
+  blockData: 1
+  minLevel: 0
+  toughness: 0.3
+  drop: SANDSTONE:1
+SMOOTH_SANDSTONE:
+  fortuneDisabled: true
+  bukkitMaterial: SANDSTONE
+  blockData: 2
+  minLevel: 0
+  toughness: 0.3
+  drop: SANDSTONE:2
+PISTON_STICKY_BASE:
+  fortuneDisabled: true
+  bukkitMaterial: PISTON_STICKY_BASE
+  blockData: 0
+  minLevel: 0
+  toughness: 0.5
+  drop: PISTON_STICKY_BASE:0
+PISTON_BASE:
+  fortuneDisabled: true
+  bukkitMaterial: PISTON_BASE
+  blockData: 0
+  minLevel: 0
+  toughness: 0.5
+  drop: PISTON_BASE:0

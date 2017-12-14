@@ -119,7 +119,11 @@ public abstract class ToolData {
 	 * Target block
 	 */
 	
-	public Mineable getTargetBlock() {
+	public Block getTargetBlock() {
+		return playerData.getTargetBlock();
+	}
+	
+	public Mineable getTargetMineable() {
 		return targetMineable;
 	}
 

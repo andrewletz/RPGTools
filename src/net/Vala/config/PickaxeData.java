@@ -5,12 +5,14 @@ import net.Vala.mineable.Ore;
 import net.Vala.tools.RPGPickaxe;
 import net.Vala.traits.DropChances;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 
@@ -47,7 +49,6 @@ public class PickaxeData extends ToolData {
 		if (!mineable.isMineable(playerData)) {
 			return;
 		}
-		// All checks complete, Pickaxe is safe.
 		
 		// Drops
 		ItemStack drop;
@@ -61,7 +62,6 @@ public class PickaxeData extends ToolData {
 		int dropMultiplier = 1;
 		if (!placedByPlayer) {
 			if (!mineable.isFortuneDisabled()) {
-				System.out.println(mineable.getMaterial() + "is fortune " + mineable.isFortuneDisabled());
 				dropMultiplier = RPGPickaxe.rollDropMultiplier(playerData);
 			}
 			int amount = drop.getAmount();

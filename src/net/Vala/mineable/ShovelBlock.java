@@ -38,9 +38,16 @@ public class ShovelBlock extends Mineable{
 					int dropData = Integer.parseInt(dropSplit[1]);
 					
 					// Get silk drop and silk drop data
-					String[] silkDropSplit = YAMLFile.SHOVELBLOCKS.getConfig().getString(key + ".silkDrop").split(":");
-					String silkDrop = silkDropSplit[0];
-					int silkDropData = Integer.parseInt(silkDropSplit[1]);
+					String silkDrop;
+					int silkDropData;
+					try {
+						String[] silkDropSplit = YAMLFile.SHOVELBLOCKS.getConfig().getString(key + ".silkDrop").split(":");
+						silkDrop = silkDropSplit[0];
+						silkDropData = Integer.parseInt(silkDropSplit[1]);
+					} catch (NullPointerException e) {
+						silkDrop = drop;
+						silkDropData = dropData;
+					}
 					
 					// Get drop amount
 					int minDrop;
@@ -61,6 +68,26 @@ public class ShovelBlock extends Mineable{
 						fortuneDisabled = false;
 					}
 					
+					int minExp;
+					int maxExp;
+					try {
+						minExp = YAMLFile.SHOVELBLOCKS.getConfig().getInt(key + ".minExp");
+						maxExp = YAMLFile.SHOVELBLOCKS.getConfig().getInt(key + ".maxExp");
+					} catch (NullPointerException e) {
+						minExp = 0;
+						maxExp = 0;
+					}
+					
+					int minVanillaExp;
+					int maxVanillaExp;
+					try {
+						minVanillaExp = YAMLFile.SHOVELBLOCKS.getConfig().getInt(key + ".minVanillaExp");
+						maxVanillaExp = YAMLFile.SHOVELBLOCKS.getConfig().getInt(key + ".maxVanillaExp");
+					} catch (NullPointerException e) {
+						minVanillaExp = 0;
+						maxVanillaExp = 0;
+					}
+					
 					ShovelBlock newShovelBlock = new ShovelBlock(Material.getMaterial(YAMLFile.SHOVELBLOCKS.getConfig().getString(key + ".bukkitMaterial")),
 							(byte) YAMLFile.SHOVELBLOCKS.getConfig().getInt(key + ".blockData"),
 							Material.getMaterial(drop),
@@ -71,10 +98,10 @@ public class ShovelBlock extends Mineable{
 							(byte) silkDropData,
 							YAMLFile.SHOVELBLOCKS.getConfig().getInt(key + ".minLevel"),
 							YAMLFile.SHOVELBLOCKS.getConfig().getDouble(key + ".toughness"),
-							YAMLFile.SHOVELBLOCKS.getConfig().getInt(key + ".minExp"),
-							YAMLFile.SHOVELBLOCKS.getConfig().getInt(key + ".maxExp"),
-							YAMLFile.SHOVELBLOCKS.getConfig().getInt(key + ".minVanillaExp"),
-							YAMLFile.SHOVELBLOCKS.getConfig().getInt(key + ".maxVanillaExp"),
+							minExp,
+							maxExp,
+							minVanillaExp,
+							maxVanillaExp,
 							fortuneDisabled);
 					getShovelBlockList().add(newShovelBlock);
 				}

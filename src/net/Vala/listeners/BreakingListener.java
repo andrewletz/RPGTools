@@ -1,5 +1,7 @@
 package net.Vala.listeners;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,10 +13,17 @@ import net.Vala.mineable.Ore.Ores;
 import net.Vala.raytrace.BoundingBox;
 import net.Vala.raytrace.RayTrace;
 import net.Vala.tools.RPGPickaxe;
+import net.minecraft.server.v1_12_R1.BlockPosition;
+import net.minecraft.server.v1_12_R1.IBlockData;
+import net.minecraft.server.v1_12_R1.World;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.command.CommandSender.Spigot;
+import org.bukkit.craftbukkit.v1_12_R1.block.CraftBlock;
+import org.bukkit.craftbukkit.v1_12_R1.util.CraftMagicNumbers;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -29,10 +38,14 @@ import org.bukkit.util.Vector;
 public class BreakingListener implements Listener {
 
 	private static final PotionEffect MINING_POTION_EFFECT = new PotionEffect(PotionEffectType.SLOW_DIGGING, 10, 2, true, false);
+	private static boolean deduct = true;
 	
 	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onPlayerAnimation(PlayerAnimationEvent event) throws InstantiationException, IllegalAccessException {
+		if (event.isCancelled()) {
+			return;
+		}
 		if (RPGPickaxe.isProfessionPickaxe(event.getPlayer().getItemInHand())) {
 			pickaxeMine(event.getPlayer());;
 		}
@@ -69,6 +82,22 @@ public class BreakingListener implements Listener {
         if (targetBlock == null) {
         	return;
         }
+        
+        deduct = false;
+		BlockBreakEvent testEvent = new BlockBreakEvent(targetBlock, player);
+		Bukkit.getServer().getPluginManager().callEvent(testEvent);
+		if (testEvent.isCancelled()) {
+			return;
+		}
+		testEvent.setCancelled(true);
+		deduct = true;
+        
+//        net.minecraft.server.v1_12_R1.Block b = CraftMagicNumbers.getBlock(targetBlock);
+//        IBlockData meme = null;
+//        World meme1 = null;
+//        BlockPosition meme2 = null;
+//        float s = b.a(meme, meme1, meme2);
+//        System.out.println(s);
         
         // Make sure this block wasn't placed by a player
         boolean placedByPlayer = false;
@@ -118,6 +147,9 @@ public class BreakingListener implements Listener {
 	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent event) {
+		if (event.isCancelled()) {
+			return;
+		}
 		if (!RPGPickaxe.isProfessionPickaxe(event.getPlayer().getItemInHand())) {
 			return;
 		}
@@ -128,7 +160,10 @@ public class BreakingListener implements Listener {
 			event.setCancelled(true);
 			return;
 		}
-		playerData.getPickaxeData().modifyCurrentDurability(-1);
+		
+		if (deduct) {
+			playerData.getPickaxeData().modifyCurrentDurability(-1);
+		}
 		
 		playerData.getPickaxeData().updateInInventory();
 
