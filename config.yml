@@ -5,7 +5,7 @@
 # Thank you for downloading and using RPG Tools! If you have any problems or questions, please ask
 # on the plugin page at (spigot link), or message me (Vala/Valamoraus) on any platform.
 #
-# Github page: (github link)
+# Github page: https://github.com/andrewletz/RPGTools
 # (code is under MIT license, so use accordingly)
 #
 # Tips:
@@ -22,7 +22,7 @@
 #  Admin commands:
 #     rpgtools.*: give access to all rpgtools permissions
 #     rpgtools.modifypick: allows player to use /rt modifypick
-#     rpgtools.reload: allows player to reload using /rt reload
+#     rpgtools.reload: allows player to reload rpgtools files using /rt reload
 #
 
 DisableConsoleColors: false

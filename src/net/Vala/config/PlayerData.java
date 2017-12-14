@@ -28,6 +28,7 @@ public class PlayerData {
 	private Player player;
 	private Block targetBlock;
 	private float blockDamage;
+	private boolean deduct = true;
 	
 	private ShovelData shovelData;
 	private PickaxeData pickaxeData;
@@ -141,6 +142,14 @@ public class PlayerData {
 	
 	public void setTargetBlock(Block block) {
 		this.targetBlock = block;
+	}
+	
+	public void setDeduct(boolean bool) {
+		this.deduct = bool;
+	}
+	
+	public boolean getDeduct() {
+		return this.deduct;
 	}
 
 }

@@ -38,7 +38,6 @@ import org.bukkit.util.Vector;
 public class BreakingListener implements Listener {
 
 	private static final PotionEffect MINING_POTION_EFFECT = new PotionEffect(PotionEffectType.SLOW_DIGGING, 10, 2, true, false);
-	private static boolean deduct = true;
 	
 	@SuppressWarnings("deprecation")
 	@EventHandler
@@ -83,21 +82,21 @@ public class BreakingListener implements Listener {
         	return;
         }
         
-        deduct = false;
+        playerData.setDeduct(false); // So we don't use an extra durability when breaking blocks during the test event
 		BlockBreakEvent testEvent = new BlockBreakEvent(targetBlock, player);
 		Bukkit.getServer().getPluginManager().callEvent(testEvent);
 		if (testEvent.isCancelled()) {
 			return;
 		}
 		testEvent.setCancelled(true);
-		deduct = true;
+		playerData.setDeduct(true);
         
-//        net.minecraft.server.v1_12_R1.Block b = CraftMagicNumbers.getBlock(targetBlock);
-//        IBlockData meme = null;
-//        World meme1 = null;
-//        BlockPosition meme2 = null;
-//        float s = b.a(meme, meme1, meme2);
-//        System.out.println(s);
+        net.minecraft.server.v1_12_R1.Block b = CraftMagicNumbers.getBlock(targetBlock);
+        IBlockData null1 = null; // Have to initialize these as the nms method is ambiguous
+        World null2 = null;
+        BlockPosition null3 = null;
+        float strength = b.a(null1, null2, null3);
+        System.out.println(strength);
         
         // Make sure this block wasn't placed by a player
         boolean placedByPlayer = false;
@@ -161,7 +160,7 @@ public class BreakingListener implements Listener {
 			return;
 		}
 		
-		if (deduct) {
+		if (playerData.getDeduct()) {
 			playerData.getPickaxeData().modifyCurrentDurability(-1);
 		}
 		

@@ -1,12 +1,29 @@
 name: RPGTools
 main: net.Vala.general.RPGTools
+description: A new and rewarding way to experience resource gathering in Minecraft.
+author: Valamoraus
+website: https://github.com/andrewletz/RPGTools
 version: 1.0
 commands:
   pickaxe:
     description: Spawns your personal pickaxe.
   pick:
     description: Short alternative to /pickaxe.
+  axe:
+    description: Spawns your personal axe.
+  shovel:
+    description: Spawns your personal shovel.
   rpgtools:
     description: Base command for rpgtools.
   rt:
     description: Short alternative to /rpgtools.
+permissions:
+  rpgtools.*:
+    description: give access to all rpgtools permissions
+    children:
+      rpgtools.modifypick: true
+      rpgtools.reload: true
+  rpgtools.modifypick:
+    description: allows player to use /rt modifypick
+  rpgtools.reload:
+    description: allows player to reload rpgtools files using /rt reload
