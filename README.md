@@ -19,9 +19,9 @@ There are no other plugin dependencies.
 
 If you have a good idea or feature that you can implement correctly I would love to see it! However, it may be difficult to integrate until the base systems are completed settled.
 
-## Licence
+## License
 
-RPGTools is under the [MIT licence](https://opensource.org/licenses/MIT). Please see [the licence file](LICENCE) for more information.
+RPGTools is under the [MIT license](https://opensource.org/licenses/MIT). Please see [the license file](LICENSE) for more information.
 
 [tl;dr](https://tldrlegal.com/license/mit-license) you can do whatever you want as long as you include the original copyright and license notice in any copy of the software/source.
 
